@@ -1,0 +1,37 @@
+
+=== Start: [2023/04/05 16:49:53] === 
+Analysis started...
+Result file: /home/dvmuser4/C_ACC/bin/r000ti3/r000ti3.inspxe 
+Found target process /home/dvmuser4/C_ACC/bin/bt.S.x (PID = 1147684). Analysis started... 
+Loaded module: /home/dvmuser4/C_ACC/bin/bt.S.x. 
+Loaded module: /lib64/ld-linux-x86-64.so.2. 
+Loaded module: [vdso]. 
+Loaded module: /lib/x86_64-linux-gnu/libm.so.6. 
+Loaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libacchost.so. 
+Loaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libcudadevice.so. 
+Loaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvomp.so. 
+Loaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvcpumath.so. 
+Loaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvc.so. 
+Loaded module: /lib/x86_64-linux-gnu/libc.so.6. 
+Loaded module: /lib/x86_64-linux-gnu/libgcc_s.so.1. 
+Loaded module: /lib/x86_64-linux-gnu/libdl.so.2. 
+Loaded module: /lib/x86_64-linux-gnu/libpthread.so.0. 
+Warning: Detected fatal signal in the application. See result for details. 
+Unloaded module: /home/dvmuser4/C_ACC/bin/bt.S.x. 
+Unloaded module: /lib64/ld-linux-x86-64.so.2. 
+Unloaded module: [vdso]. 
+Unloaded module: /lib/x86_64-linux-gnu/libm.so.6. 
+Unloaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libacchost.so. 
+Unloaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libcudadevice.so. 
+Unloaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvomp.so. 
+Unloaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvcpumath.so. 
+Unloaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvc.so. 
+Unloaded module: /lib/x86_64-linux-gnu/libc.so.6. 
+Unloaded module: /lib/x86_64-linux-gnu/libgcc_s.so.1. 
+Unloaded module: /lib/x86_64-linux-gnu/libdl.so.2. 
+Unloaded module: /lib/x86_64-linux-gnu/libpthread.so.0. 
+Process /home/dvmuser4/C_ACC/bin/bt.S.x (PID = 1147684) has terminated. 
+Application exit code: 130 
+Result file: /home/dvmuser4/C_ACC/bin/r000ti3/r000ti3.inspxe 
+Analysis completed
+=== End: [2023/04/05 16:52:27] === 

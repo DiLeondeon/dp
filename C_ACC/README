@@ -1,0 +1,18 @@
+1. Compilation
+
+      make CLASS=<class> 
+
+   <class> is one of (S, W, A, B, C).  
+
+
+2. Execution
+
+   The executable is named bt.<class>.x and is placed
+   in the bin subdirectory (or in the directory BINDIR specified in
+   make.def, if you've defined it). 
+   Example:
+
+      bin/bt.A.x > result/BT.A_out
+
+
+

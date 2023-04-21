@@ -1,0 +1,37 @@
+
+=== Start: [2023/04/05 17:03:29] === 
+Analysis started...
+Result file: /home/dvmuser4/C_ACC/bin/r002ti3/r002ti3.inspxe 
+Found target process /home/dvmuser4/C_ACC/bin/bt.S.x (PID = 1149953). Analysis started... 
+Loaded module: /home/dvmuser4/C_ACC/bin/bt.S.x. 
+Loaded module: /lib64/ld-linux-x86-64.so.2. 
+Loaded module: [vdso]. 
+Loaded module: /lib/x86_64-linux-gnu/libm.so.6. 
+Loaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libacchost.so. 
+Loaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libcudadevice.so. 
+Loaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvomp.so. 
+Loaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvcpumath.so. 
+Loaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvc.so. 
+Loaded module: /lib/x86_64-linux-gnu/libc.so.6. 
+Loaded module: /lib/x86_64-linux-gnu/libgcc_s.so.1. 
+Loaded module: /lib/x86_64-linux-gnu/libdl.so.2. 
+Loaded module: /lib/x86_64-linux-gnu/libpthread.so.0. 
+Warning: One or more threads in the application accessed the stack of another thread. This may indicate one or more bugs in your application. Setting the Inspector to detect data races on stack accesses and running another analysis may help you locate these and other bugs.
+Unloaded module: /home/dvmuser4/C_ACC/bin/bt.S.x. 
+Unloaded module: /lib64/ld-linux-x86-64.so.2. 
+Unloaded module: [vdso]. 
+Unloaded module: /lib/x86_64-linux-gnu/libm.so.6. 
+Unloaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libacchost.so. 
+Unloaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libcudadevice.so. 
+Unloaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvomp.so. 
+Unloaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvcpumath.so. 
+Unloaded module: /opt/nvidia/hpc_sdk/Linux_x86_64/2023/compilers/lib/libnvc.so. 
+Unloaded module: /lib/x86_64-linux-gnu/libc.so.6. 
+Unloaded module: /lib/x86_64-linux-gnu/libgcc_s.so.1. 
+Unloaded module: /lib/x86_64-linux-gnu/libdl.so.2. 
+Unloaded module: /lib/x86_64-linux-gnu/libpthread.so.0. 
+Process /home/dvmuser4/C_ACC/bin/bt.S.x (PID = 1149953) has terminated. 
+Application exit code: 0 
+Result file: /home/dvmuser4/C_ACC/bin/r002ti3/r002ti3.inspxe 
+Analysis completed
+=== End: [2023/04/05 17:04:16] === 

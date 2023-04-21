@@ -1,0 +1,443 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+Intel(R) C Intel(R) 64 Compiler Classic for applications running on Intel(R) 64, Version 2021.8.0 Build 20221119_000000
+
+Compiler options: -I../common -c -g -Wall -O3 -parallel -qopt-report=5
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: error_norm(double *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (error_norm(double *)) [1/2=50.0%] error.c(9,1)
+  -> EXTERN: (30,9) exact_solution(double, double, double, double *)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at error.c(14,3)
+   remark #25045: Fused Loops: ( 14 20 )
+
+   remark #17108: loop was not parallelized: insufficient computational work
+   remark #15389: vectorization support: reference rms[m] has unaligned access   [ error.c(15,5) ]
+   remark #15388: vectorization support: reference rms_local[m] has aligned access   [ error.c(21,5) ]
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15305: vectorization support: vector length 2
+   remark #15399: vectorization support: unroll factor set to 2
+   remark #15309: vectorization support: normalized vectorization overhead 0.188
+   remark #15301: FUSED LOOP WAS VECTORIZED
+   remark #15449: unmasked aligned unit stride stores: 1 
+   remark #15451: unmasked unaligned unit stride stores: 1 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 8 
+   remark #15477: vector cost: 4.000 
+   remark #15478: estimated potential speedup: 1.480 
+   remark #15488: --- end vector cost summary ---
+   remark #25015: Estimate of max trip count of loop=1
+LOOP END
+
+LOOP BEGIN at error.c(20,3)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at error.c(14,3)
+<Remainder loop for vectorization>
+   remark #25436: completely unrolled by 1  
+LOOP END
+
+LOOP BEGIN at error.c(24,3)
+   remark #17102: loop was not parallelized: not a parallelization candidate
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at error.c(26,5)
+      remark #17102: loop was not parallelized: not a parallelization candidate
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+
+      LOOP BEGIN at error.c(28,7)
+         remark #17102: loop was not parallelized: not a parallelization candidate
+         remark #15542: loop was not vectorized: inner loop was already vectorized
+
+         LOOP BEGIN at error.c(32,9)
+            remark #17108: loop was not parallelized: insufficient computational work
+            remark #15389: vectorization support: reference u[k][j][i][m] has unaligned access   [ error.c(33,17) ]
+            remark #15388: vectorization support: reference u_exact[m] has aligned access   [ error.c(33,31) ]
+            remark #15388: vectorization support: reference rms_local[m] has aligned access   [ error.c(34,11) ]
+            remark #15388: vectorization support: reference rms_local[m] has aligned access   [ error.c(34,26) ]
+            remark #15381: vectorization support: unaligned access used inside loop body
+            remark #15305: vectorization support: vector length 2
+            remark #15399: vectorization support: unroll factor set to 2
+            remark #15309: vectorization support: normalized vectorization overhead 0.179
+            remark #15300: LOOP WAS VECTORIZED
+            remark #15448: unmasked aligned unit stride loads: 2 
+            remark #15449: unmasked aligned unit stride stores: 1 
+            remark #15450: unmasked unaligned unit stride loads: 1 
+            remark #15475: --- begin vector cost summary ---
+            remark #15476: scalar cost: 15 
+            remark #15477: vector cost: 7.000 
+            remark #15478: estimated potential speedup: 1.560 
+            remark #15488: --- end vector cost summary ---
+            remark #25015: Estimate of max trip count of loop=1
+         LOOP END
+
+         LOOP BEGIN at error.c(32,9)
+         <Remainder loop for vectorization>
+            remark #25436: completely unrolled by 1  
+         LOOP END
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at error.c(39,3)
+   remark #17108: loop was not parallelized: insufficient computational work
+   remark #15389: vectorization support: reference rms[m] has unaligned access   [ error.c(41,5) ]
+   remark #15389: vectorization support: reference rms[m] has unaligned access   [ error.c(41,5) ]
+   remark #15388: vectorization support: reference rms_local[m] has aligned access   [ error.c(41,15) ]
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15305: vectorization support: vector length 2
+   remark #15399: vectorization support: unroll factor set to 2
+   remark #15309: vectorization support: normalized vectorization overhead 0.375
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 1 
+   remark #15450: unmasked unaligned unit stride loads: 1 
+   remark #15451: unmasked unaligned unit stride stores: 1 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 7 
+   remark #15477: vector cost: 4.000 
+   remark #15478: estimated potential speedup: 1.200 
+   remark #15488: --- end vector cost summary ---
+   remark #25015: Estimate of max trip count of loop=1
+LOOP END
+
+LOOP BEGIN at error.c(39,3)
+<Remainder loop for vectorization>
+   remark #25436: completely unrolled by 1  
+LOOP END
+
+LOOP BEGIN at error.c(45,3)
+<Distributed chunk1>
+   remark #25426: Loop Distributed (2 way) 
+   remark #17108: loop was not parallelized: insufficient computational work
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+   remark #25015: Estimate of max trip count of loop=5
+
+   LOOP BEGIN at error.c(46,5)
+      remark #17108: loop was not parallelized: insufficient computational work
+      remark #15389: vectorization support: reference grid_points[d] has unaligned access   [ error.c(47,34) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15305: vectorization support: vector length 2
+      remark #15309: vectorization support: normalized vectorization overhead 0.579
+      remark #15355: vectorization support: *(rms+m*8) is double type reduction   [ error.c(47,7) ]
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15450: unmasked unaligned unit stride loads: 1 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 34 
+      remark #15477: vector cost: 19.000 
+      remark #15478: estimated potential speedup: 1.080 
+      remark #15486: divides: 1 
+      remark #15487: type converts: 1 
+      remark #15488: --- end vector cost summary ---
+      remark #25015: Estimate of max trip count of loop=1
+   LOOP END
+
+   LOOP BEGIN at error.c(46,5)
+   <Remainder loop for vectorization>
+      remark #25436: completely unrolled by 1  
+   LOOP END
+LOOP END
+
+LOOP BEGIN at error.c(45,3)
+<Peeled loop for vectorization, Distributed chunk2>
+   remark #25015: Estimate of max trip count of loop=1
+LOOP END
+
+LOOP BEGIN at error.c(45,3)
+<Distributed chunk2>
+   remark #17108: loop was not parallelized: insufficient computational work
+   remark #15388: vectorization support: reference rms[m] has aligned access   [ error.c(49,5) ]
+   remark #15388: vectorization support: reference rms[m] has aligned access   [ error.c(49,19) ]
+   remark #15305: vectorization support: vector length 2
+   remark #15399: vectorization support: unroll factor set to 2
+   remark #15309: vectorization support: normalized vectorization overhead 0.147
+   remark #15301: PARTIAL LOOP WAS VECTORIZED
+   remark #15442: entire loop may be executed in remainder
+   remark #15448: unmasked aligned unit stride loads: 1 
+   remark #15449: unmasked aligned unit stride stores: 1 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 45 
+   remark #15477: vector cost: 17.000 
+   remark #15478: estimated potential speedup: 1.820 
+   remark #15488: --- end vector cost summary ---
+   remark #25015: Estimate of max trip count of loop=1
+LOOP END
+
+LOOP BEGIN at error.c(45,3)
+<Remainder loop for vectorization, Distributed chunk2>
+   remark #25015: Estimate of max trip count of loop=5
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+error.c(9,1):remark #34051: REGISTER ALLOCATION : [error_norm] error.c:9
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   18[ rax rdx rcx rbx rbp rsi rdi r12-r15 zmm0-zmm6]
+        
+    Routine temporaries
+        Total         :      83
+            Global    :      30
+            Local     :      53
+        Regenerable   :       5
+        Spilled       :       9
+        
+    Routine stack
+        Variables     :      80 bytes*
+            Reads     :       8 [1.80e+01 ~ 18.0%]
+            Writes    :       6 [9.01e+00 ~ 9.0%]
+        Spills        :      72 bytes*
+            Reads     :       9 [6.01e+00 ~ 6.0%]
+            Writes    :       9 [4.71e-02 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: rhs_norm(double *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (rhs_norm(double *)) [2/2=100.0%] error.c(55,1)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at error.c(60,3)
+   remark #25045: Fused Loops: ( 60 66 )
+
+   remark #17108: loop was not parallelized: insufficient computational work
+   remark #15389: vectorization support: reference rms[m] has unaligned access   [ error.c(61,5) ]
+   remark #15388: vectorization support: reference rms_local[m] has aligned access   [ error.c(67,5) ]
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15305: vectorization support: vector length 2
+   remark #15399: vectorization support: unroll factor set to 2
+   remark #15309: vectorization support: normalized vectorization overhead 0.188
+   remark #15301: FUSED LOOP WAS VECTORIZED
+   remark #15449: unmasked aligned unit stride stores: 1 
+   remark #15451: unmasked unaligned unit stride stores: 1 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 8 
+   remark #15477: vector cost: 4.000 
+   remark #15478: estimated potential speedup: 1.480 
+   remark #15488: --- end vector cost summary ---
+   remark #25015: Estimate of max trip count of loop=1
+LOOP END
+
+LOOP BEGIN at error.c(66,3)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at error.c(60,3)
+<Remainder loop for vectorization>
+   remark #25436: completely unrolled by 1  
+LOOP END
+
+LOOP BEGIN at error.c(70,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #17104: loop was not parallelized: existence of parallel dependence
+   remark #17106: parallel dependence: assumed OUTPUT dependence between rms_local[m] (75:11) and rms_local[m] (75:11)
+   remark #17106: parallel dependence: assumed OUTPUT dependence between rms_local[m] (75:11) and rms_local[m] (75:11)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at error.c(71,5)
+      remark #17104: loop was not parallelized: existence of parallel dependence
+      remark #17106: parallel dependence: assumed OUTPUT dependence between rms_local[m] (75:11) and rms_local[m] (75:11)
+      remark #17106: parallel dependence: assumed OUTPUT dependence between rms_local[m] (75:11) and rms_local[m] (75:11)
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+
+      LOOP BEGIN at error.c(72,7)
+         remark #17104: loop was not parallelized: existence of parallel dependence
+         remark #17106: parallel dependence: assumed OUTPUT dependence between rms_local[m] (75:11) and rms_local[m] (75:11)
+         remark #17106: parallel dependence: assumed OUTPUT dependence between rms_local[m] (75:11) and rms_local[m] (75:11)
+         remark #15542: loop was not vectorized: inner loop was already vectorized
+
+         LOOP BEGIN at error.c(73,9)
+            remark #17108: loop was not parallelized: insufficient computational work
+            remark #15389: vectorization support: reference rhs[k][j][i][m] has unaligned access   [ error.c(74,17) ]
+            remark #15388: vectorization support: reference rms_local[m] has aligned access   [ error.c(75,11) ]
+            remark #15388: vectorization support: reference rms_local[m] has aligned access   [ error.c(75,26) ]
+            remark #15381: vectorization support: unaligned access used inside loop body
+            remark #15305: vectorization support: vector length 2
+            remark #15399: vectorization support: unroll factor set to 2
+            remark #15309: vectorization support: normalized vectorization overhead 0.208
+            remark #15300: LOOP WAS VECTORIZED
+            remark #15448: unmasked aligned unit stride loads: 1 
+            remark #15449: unmasked aligned unit stride stores: 1 
+            remark #15450: unmasked unaligned unit stride loads: 1 
+            remark #15475: --- begin vector cost summary ---
+            remark #15476: scalar cost: 12 
+            remark #15477: vector cost: 6.000 
+            remark #15478: estimated potential speedup: 1.460 
+            remark #15488: --- end vector cost summary ---
+            remark #25015: Estimate of max trip count of loop=1
+         LOOP END
+
+         LOOP BEGIN at error.c(73,9)
+         <Remainder loop for vectorization>
+            remark #25436: completely unrolled by 1  
+         LOOP END
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at error.c(80,3)
+   remark #17108: loop was not parallelized: insufficient computational work
+   remark #15389: vectorization support: reference rms[m] has unaligned access   [ error.c(82,5) ]
+   remark #15389: vectorization support: reference rms[m] has unaligned access   [ error.c(82,5) ]
+   remark #15388: vectorization support: reference rms_local[m] has aligned access   [ error.c(82,15) ]
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15305: vectorization support: vector length 2
+   remark #15399: vectorization support: unroll factor set to 2
+   remark #15309: vectorization support: normalized vectorization overhead 0.375
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 1 
+   remark #15450: unmasked unaligned unit stride loads: 1 
+   remark #15451: unmasked unaligned unit stride stores: 1 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 7 
+   remark #15477: vector cost: 4.000 
+   remark #15478: estimated potential speedup: 1.200 
+   remark #15488: --- end vector cost summary ---
+   remark #25015: Estimate of max trip count of loop=1
+LOOP END
+
+LOOP BEGIN at error.c(80,3)
+<Remainder loop for vectorization>
+   remark #25436: completely unrolled by 1  
+LOOP END
+
+LOOP BEGIN at error.c(86,3)
+<Distributed chunk1>
+   remark #25426: Loop Distributed (2 way) 
+   remark #17108: loop was not parallelized: insufficient computational work
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+   remark #25015: Estimate of max trip count of loop=5
+
+   LOOP BEGIN at error.c(87,5)
+      remark #17108: loop was not parallelized: insufficient computational work
+      remark #15389: vectorization support: reference grid_points[d] has unaligned access   [ error.c(88,34) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15305: vectorization support: vector length 2
+      remark #15309: vectorization support: normalized vectorization overhead 0.579
+      remark #15355: vectorization support: *(rms+m*8) is double type reduction   [ error.c(88,7) ]
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15450: unmasked unaligned unit stride loads: 1 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 34 
+      remark #15477: vector cost: 19.000 
+      remark #15478: estimated potential speedup: 1.080 
+      remark #15486: divides: 1 
+      remark #15487: type converts: 1 
+      remark #15488: --- end vector cost summary ---
+      remark #25015: Estimate of max trip count of loop=1
+   LOOP END
+
+   LOOP BEGIN at error.c(87,5)
+   <Remainder loop for vectorization>
+      remark #25436: completely unrolled by 1  
+   LOOP END
+LOOP END
+
+LOOP BEGIN at error.c(86,3)
+<Peeled loop for vectorization, Distributed chunk2>
+   remark #25015: Estimate of max trip count of loop=1
+LOOP END
+
+LOOP BEGIN at error.c(86,3)
+<Distributed chunk2>
+   remark #17108: loop was not parallelized: insufficient computational work
+   remark #15388: vectorization support: reference rms[m] has aligned access   [ error.c(90,5) ]
+   remark #15388: vectorization support: reference rms[m] has aligned access   [ error.c(90,19) ]
+   remark #15305: vectorization support: vector length 2
+   remark #15399: vectorization support: unroll factor set to 2
+   remark #15309: vectorization support: normalized vectorization overhead 0.147
+   remark #15301: PARTIAL LOOP WAS VECTORIZED
+   remark #15442: entire loop may be executed in remainder
+   remark #15448: unmasked aligned unit stride loads: 1 
+   remark #15449: unmasked aligned unit stride stores: 1 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 45 
+   remark #15477: vector cost: 17.000 
+   remark #15478: estimated potential speedup: 1.820 
+   remark #15488: --- end vector cost summary ---
+   remark #25015: Estimate of max trip count of loop=1
+LOOP END
+
+LOOP BEGIN at error.c(86,3)
+<Remainder loop for vectorization, Distributed chunk2>
+   remark #25015: Estimate of max trip count of loop=5
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+error.c(55,1):remark #34051: REGISTER ALLOCATION : [rhs_norm] error.c:55
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   19[ rax rdx rcx rbx rbp rsi rdi r8-r11 r15 zmm0-zmm6]
+        
+    Routine temporaries
+        Total         :      65
+            Global    :      30
+            Local     :      35
+        Regenerable   :       4
+        Spilled       :       3
+        
+    Routine stack
+        Variables     :      40 bytes*
+            Reads     :       5 [1.57e+01 ~ 15.7%]
+            Writes    :       6 [1.57e+01 ~ 15.7%]
+        Spills        :      24 bytes*
+            Reads     :       3 [7.15e-05 ~ 0.0%]
+            Writes    :       3 [7.15e-05 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
