@@ -1,3 +1,4 @@
+#pragma acc routine
 void matvec_sub(double ablock[5][5], double avec[5], double bvec[5])
 {
   //---------------------------------------------------------------------
@@ -35,6 +36,7 @@ void matvec_sub(double ablock[5][5], double avec[5], double bvec[5])
 //---------------------------------------------------------------------
 // subtracts a(i,j,k) X b(i,j,k) from c(i,j,k)
 //---------------------------------------------------------------------
+#pragma acc routine
 void matmul_sub(double ablock[5][5], double bblock[5][5], double cblock[5][5])
 {
   cblock[0][0] = cblock[0][0] - ablock[0][0]*bblock[0][0]
@@ -165,6 +167,7 @@ void matmul_sub(double ablock[5][5], double bblock[5][5], double cblock[5][5])
 }
 
 
+#pragma acc routine
 void binvcrhs(double lhs[5][5], double c[5][5], double r[5])
 {
   double pivot, coeff;
@@ -425,6 +428,7 @@ void binvcrhs(double lhs[5][5], double c[5][5], double r[5])
 }
 
 
+#pragma acc routine
 void binvrhs(double lhs[5][5], double r[5])
 {
   double pivot, coeff;
