@@ -12,10 +12,11 @@ void error_norm(double rms[5])
   double xi, eta, zeta, u_exact[5], add;
   double rms_local[5];
 
+  #pragma acc parallel loop private(m)
   for (m = 0; m < 5; m++) {
     rms[m] = 0.0;
   }
-  #pragma acc enter data copyin(rms[0:5])
+  //#pragma acc enter data copyin(rms[0:5])
   #pragma acc parallel private(i,j,k,m,zeta,eta,xi,add,u_exact,rms_local)
   {
   for (m = 0; m < 5; m++) {
@@ -46,6 +47,7 @@ void error_norm(double rms[5])
   }
   } //end parallel
 
+  #pragma acc parallel loop private(m, d)
   for (m = 0; m < 5; m++) {
     for (d = 0; d < 3; d++) {
       rms[m] = rms[m] / (double)(grid_points[d]-2);
@@ -61,6 +63,7 @@ void rhs_norm(double rms[5])
   double add;
   double rms_local[5];
 
+  #pragma acc parallel loop private(m)
   for (m = 0; m < 5; m++) {
     rms[m] = 0.0;
   } 
@@ -89,11 +92,12 @@ void rhs_norm(double rms[5])
   }
   } //end parallel
 
+  #pragma acc parallel loop private(m, d)
   for (m = 0; m < 5; m++) {
     for (d = 0; d < 3; d++) {
       rms[m] = rms[m] / (double)(grid_points[d]-2);
     } 
     rms[m] = sqrt(rms[m]);
   } 
-  #pragma acc exit data copyout(rms[0:5])
+  //#pragma acc exit data copyout(rms[0:5])
 }
