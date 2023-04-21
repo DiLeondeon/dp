@@ -15,11 +15,11 @@ void initialize()
   // to compute the whole thing with a simple loop. Make sure those 
   // values are nonzero by initializing the whole thing here. 
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m) 
+  #pragma acc kernels//#pragma acc parallel loop private(i,j,k,m) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
-      #pragma acc loop
+      //#pragma acc loop
       for (i = 0; i <= grid_points[0]-1; i++) {
         for (m = 0; m < 5; m++) {
           u[k][j][i][m] = 1.0;
@@ -31,28 +31,28 @@ void initialize()
   //---------------------------------------------------------------------
   // first store the "interpolated" values everywhere on the grid    
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,zeta,eta,xi,ix,iy,iz,m,Pface,Pxi,Peta,Pzeta) 
+  #pragma acc kernels//#pragma acc parallel loop private(i,j,k,zeta,eta,xi,ix,iy,iz,m,Pface,Pxi,Peta,Pzeta) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
-      #pragma acc loop
+      //#pragma acc loop
       for (i = 0; i <= grid_points[0]-1; i++) {
         zeta = (double)(k) * dnzm1;
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
 
         for (ix = 0; ix < 2; ix++) {
-          #pragma acc routine (exact_solution) (exact_solution) worker
+          //#pragma acc routine (exact_solution) (exact_solution) worker
           exact_solution((double)ix, eta, zeta, &Pface[ix][0][0]);
         }
 
         for (iy = 0; iy < 2; iy++) {
-          #pragma acc routine (exact_solution) (exact_solution) worker
+          //#pragma acc routine (exact_solution) (exact_solution) worker
           exact_solution(xi, (double)iy , zeta, &Pface[iy][1][0]);
         }
 
         for (iz = 0; iz < 2; iz++) {
-          #pragma acc routine (exact_solution) worker
+          //#pragma acc routine (exact_solution) worker
           exact_solution(xi, eta, (double)iz, &Pface[iz][2][0]);
         }
 
@@ -78,13 +78,13 @@ void initialize()
   //---------------------------------------------------------------------
   i = 0;
   xi = 0.0;
-  #pragma acc parallel loop private(j,k,m,zeta,eta,temp) 
+  #pragma acc kernels//#pragma acc parallel loop private(j,k,m,zeta,eta,temp) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
       zeta = (double)(k) * dnzm1;
       eta = (double)(j) * dnym1;
-      #pragma acc routine (exact_solution) worker
+      //#pragma acc routine (exact_solution) worker
       exact_solution(xi, eta, zeta, temp);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];
@@ -97,13 +97,13 @@ void initialize()
   //---------------------------------------------------------------------
   i = grid_points[0]-1;
   xi = 1.0;
-  #pragma acc parallel loop private(j,k,m,zeta,eta,temp) 
+  #pragma acc kernels//#pragma acc parallel loop private(j,k,m,zeta,eta,temp) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
       zeta = (double)(k) * dnzm1;
       eta = (double)(j) * dnym1;
-      #pragma acc routine (exact_solution) worker
+      //#pragma acc routine (exact_solution) worker
       exact_solution(xi, eta, zeta, temp);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];
@@ -116,13 +116,13 @@ void initialize()
   //---------------------------------------------------------------------
   j = 0;
   eta = 0.0;
-  #pragma acc parallel loop private(i,k,m,zeta,xi,temp) 
+  #pragma acc kernels//#pragma acc parallel loop private(i,k,m,zeta,xi,temp) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (i = 0; i <= grid_points[0]-1; i++) {
       zeta = (double)(k) * dnzm1;
       xi = (double)(i) * dnxm1;
-      #pragma acc routine (exact_solution) worker
+      //#pragma acc routine (exact_solution) worker
       exact_solution(xi, eta, zeta, temp);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];
@@ -135,13 +135,13 @@ void initialize()
   //---------------------------------------------------------------------
   j = grid_points[1]-1;
   eta = 1.0;
-  #pragma acc parallel loop private(i,k,m,zeta,xi,temp) 
+  #pragma acc kernels//#pragma acc parallel loop private(i,k,m,zeta,xi,temp) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (i = 0; i <= grid_points[0]-1; i++) {
       zeta = (double)(k) * dnzm1;
       xi = (double)(i) * dnxm1;
-      #pragma acc routine (exact_solution) worker
+      //#pragma acc routine (exact_solution) worker
       exact_solution(xi, eta, zeta, temp);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];
@@ -154,13 +154,13 @@ void initialize()
   //---------------------------------------------------------------------
   k = 0;
   zeta = 0.0;
-  #pragma acc parallel loop private(i,j,m,eta,xi,temp) 
+  #pragma acc kernels//#pragma acc parallel loop private(i,j,m,eta,xi,temp) 
   for (j = 0; j <= grid_points[1]-1; j++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (i =0; i <= grid_points[0]-1; i++) {
       eta = (double)(j) * dnym1;
       xi = (double)(i) *dnxm1;
-      #pragma acc routine (exact_solution) worker
+      //#pragma acc routine (exact_solution) worker
       exact_solution(xi, eta, zeta, temp);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];
@@ -173,13 +173,13 @@ void initialize()
   //---------------------------------------------------------------------
   k = grid_points[2]-1;
   zeta = 1.0;
-  #pragma acc parallel loop private(i,j,m,eta,xi,temp) 
+  #pragma acc kernels//#pragma acc parallel loop private(i,j,m,eta,xi,temp) 
   for (j = 0; j <= grid_points[1]-1; j++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (i = 0; i <= grid_points[0]-1; i++) {
       eta = (double)(j) * dnym1;
       xi = (double)(i) * dnxm1;
-      #pragma acc routine (exact_solution) worker
+      //#pragma acc routine (exact_solution) worker
       exact_solution(xi, eta, zeta, temp);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];

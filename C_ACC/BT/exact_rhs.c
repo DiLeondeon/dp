@@ -8,16 +8,16 @@ void exact_rhs()
   double dtemp[5], xi, eta, zeta, dtpp;
   int m, i, j, k, ip1, im1, jp1, jm1, km1, kp1;
 
-  #pragma acc enter data create(forcing[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5])
+  //#pragma acc enter data create(forcing[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5])
 
   //---------------------------------------------------------------------
   // initialize                                  
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m)
+  #pragma acc kernels//#pragma acc parallel loop private(i,j,k,m)
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
-      #pragma acc loop
+      //#pragma acc loop
       for (i = 0; i <= grid_points[0]-1; i++) {
         for (m = 0; m < 5; m++) {
           forcing[k][j][i][m] = 0.0;
@@ -26,22 +26,22 @@ void exact_rhs()
     } 
   }
     
-  #pragma acc enter data create(ue[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],buf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],\
+  //#pragma acc enter data create(ue[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],buf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],\
                                 cuf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1],q[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1])
 
   //---------------------------------------------------------------------
   // xi-direction flux differences                      
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,im1,ip1,dtemp)
+  #pragma acc kernels//#pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,im1,ip1,dtemp)
   for (k = 1; k <= grid_points[2]-2; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (j = 1; j <= grid_points[1]-2; j++) {
-      #pragma acc loop
+      //#pragma acc loop
       for (i = 0; i <= grid_points[0]-1; i++) {
         zeta = (double)(k) * dnzm1;
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
-        #pragma acc routine (exact_solution) worker
+        //#pragma acc routine (exact_solution) worker
         exact_solution(xi, eta, zeta, dtemp);
         for (m = 0; m < 5; m++) {
           ue[k][j][i][m] = dtemp[m];
@@ -129,16 +129,16 @@ void exact_rhs()
   //---------------------------------------------------------------------
   // eta-direction flux differences             
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,jm1,jp1,dtemp)
+  #pragma acc kernels//#pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,jm1,jp1,dtemp)
   for (k = 1; k <= grid_points[2]-2; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {
-      #pragma acc loop
+      //#pragma acc loop
       for (j = 0; j <= grid_points[1]-1; j++) {
         zeta = (double)(k) * dnzm1;
         xi = (double)(i) * dnxm1;
         eta = (double)(j) * dnym1;
-        #pragma acc routine (exact_solution) worker
+        //#pragma acc routine (exact_solution) worker
         exact_solution(xi, eta, zeta, dtemp);
         for (m = 0; m < 5; m++) {
           ue[k][i][j][m] = dtemp[m];
@@ -226,16 +226,16 @@ void exact_rhs()
   //---------------------------------------------------------------------
   // zeta-direction flux differences                     
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,km1,kp1,dtemp)
+  #pragma acc kernels//#pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,km1,kp1,dtemp)
   for (j = 1; j <= grid_points[1]-2; j++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {
-      #pragma acc loop
+      //#pragma acc loop
       for (k = 0; k <= grid_points[2]-1; k++) {
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
         zeta = (double)(k) * dnzm1;
-        #pragma acc routine (exact_solution) worker
+        //#pragma acc routine (exact_solution) worker
         exact_solution(xi, eta, zeta, dtemp);
         for (m = 0; m < 5; m++) {
           ue[j][i][k][m] = dtemp[m];
@@ -320,15 +320,15 @@ void exact_rhs()
 
     }
   }
-  #pragma acc exit data delete(ue,buf,cuf,q)
+  //#pragma acc exit data delete(ue,buf,cuf,q)
   //---------------------------------------------------------------------
   // now change the sign of the forcing function, 
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m)
+  #pragma acc kernels//#pragma acc parallel loop private(i,j,k,m)
   for (k = 1; k <= grid_points[2]-2; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (j = 1; j <= grid_points[1]-2; j++) {
-      #pragma acc loop
+      //#pragma acc loop
       for (i = 1; i <= grid_points[0]-2; i++) {
         for (m = 0; m < 5; m++) {
           forcing[k][j][i][m] = -1.0 * forcing[k][j][i][m];

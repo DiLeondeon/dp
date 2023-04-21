@@ -34,11 +34,11 @@ void y_solve()
   // Compute the indices for storing the tri-diagonal matrix;
   // determine a (labeled f) and n jacobians for cell c
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m,n,tmp1,tmp2,tmp3)
+  #pragma acc kernels//#pragma acc parallel loop private(i,j,k,m,n,tmp1,tmp2,tmp3)
   for (k = 1; k <= grid_points[2]-2; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {
-      #pragma acc loop
+      //#pragma acc loop
       for (j = 0; j <= jsize; j++) {
         tmp1 = rho_i[k][j][i];
         tmp2 = tmp1 * tmp1;
@@ -117,7 +117,7 @@ void y_solve()
       //---------------------------------------------------------------------
       // now joacobians set, so form left hand side in y direction
       //---------------------------------------------------------------------
-      #pragma acc routine (lhsinit) worker
+      //#pragma acc routine (lhsinit) worker
       lhsinit(lhs[k][i], jsize);
       for (j = 1; j <= jsize-1; j++) {
         tmp1 = dt * ty1;
@@ -301,7 +301,7 @@ void y_solve()
       // multiply c[k][0][i] by b_inverse and copy back to c
       // multiply rhs(0) by b_inverse(0) and copy to rhs
       //---------------------------------------------------------------------
-      #pragma acc routine (binvcrhs) worker
+      //#pragma acc routine (binvcrhs) worker
       binvcrhs( lhs[k][i][0][BB], lhs[k][i][0][CC], rhs[k][0][i] );
 
       //---------------------------------------------------------------------
@@ -314,27 +314,27 @@ void y_solve()
         // 
         // rhs(j) = rhs(j) - A*rhs(j-1)
         //-------------------------------------------------------------------
-        #pragma acc routine (matvec_sub) worker
+        //#pragma acc routine (matvec_sub) worker
         matvec_sub(lhs[k][i][j][AA], rhs[k][j-1][i], rhs[k][j][i]);
 
         //-------------------------------------------------------------------
         // B(j) = B(j) - C(j-1)*A(j)
         //-------------------------------------------------------------------
-        #pragma acc routine (matmul_sub) worker
+        //#pragma acc routine (matmul_sub) worker
         matmul_sub(lhs[k][i][j][AA], lhs[k][i][j-1][CC], lhs[k][i][j][BB]);
 
         //-------------------------------------------------------------------
         // multiply c[k][j][i] by b_inverse and copy back to c
         // multiply rhs[k][0][i] by b_inverse[k][0][i] and copy to rhs
         //-------------------------------------------------------------------
-        #pragma acc routine (binvcrhs) worker
+        //#pragma acc routine (binvcrhs) worker
         binvcrhs( lhs[k][i][j][BB], lhs[k][i][j][CC], rhs[k][j][i] );
       }
 
       //---------------------------------------------------------------------
       // rhs(jsize) = rhs(jsize) - A*rhs(jsize-1)
       //---------------------------------------------------------------------
-      #pragma acc routine (matvec_sub) worker
+      //#pragma acc routine (matvec_sub) worker
       matvec_sub(lhs[k][i][jsize][AA], rhs[k][jsize-1][i], rhs[k][jsize][i]);
 
       //---------------------------------------------------------------------
@@ -342,13 +342,13 @@ void y_solve()
       // matmul_sub(AA,i,jsize,k,c,
       // $              CC,i,jsize-1,k,c,BB,i,jsize,k)
       //---------------------------------------------------------------------
-      #pragma acc routine (matmul_sub) worker
+      //#pragma acc routine (matmul_sub) worker
       matmul_sub(lhs[k][i][jsize][AA], lhs[k][i][jsize-1][CC], lhs[k][i][jsize][BB]);
 
       //---------------------------------------------------------------------
       // multiply rhs(jsize) by b_inverse(jsize) and copy to rhs
       //---------------------------------------------------------------------
-      #pragma acc routine (binvrhs) worker
+      //#pragma acc routine (binvrhs) worker
       binvrhs( lhs[k][i][jsize][BB], rhs[k][jsize][i] );
 
       //---------------------------------------------------------------------
