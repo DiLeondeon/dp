@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------
 // this function returns the exact solution at point xi, eta, zeta  
 //---------------------------------------------------------------------
-void exact_solution(double xi, double eta, double zeta, double dtemp[5])
+void exact_solution(double xi, double eta, double zeta, double dtemp[5], double ce[5][13])
 {
   int m;
 

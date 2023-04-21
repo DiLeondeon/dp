@@ -31,7 +31,7 @@ void error_norm(double rms[5])
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
         #pragma acc routine (exact_solution) worker
-        exact_solution(xi, eta, zeta, u_exact);
+        exact_solution(xi, eta, zeta, u_exact, ce);
 
         for (m = 0; m < 5; m++) {
           add = u[k][j][i][m]-u_exact[m];
