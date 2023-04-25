@@ -17,9 +17,9 @@ void initialize()
   //---------------------------------------------------------------------
   #pragma acc parallel loop private(i,j,k,m) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
-      #pragma acc loop
+      //#pragma acc loop
       for (i = 0; i <= grid_points[0]-1; i++) {
         for (m = 0; m < 5; m++) {
           u[k][j][i][m] = 1.0;
@@ -33,9 +33,9 @@ void initialize()
   //---------------------------------------------------------------------
   #pragma acc parallel loop private(i,j,k,zeta,eta,xi,ix,iy,iz,m,Pface,Pxi,Peta,Pzeta) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
-      #pragma acc loop
+      //#pragma acc loop
       for (i = 0; i <= grid_points[0]-1; i++) {
         zeta = (double)(k) * dnzm1;
         eta = (double)(j) * dnym1;
@@ -80,7 +80,7 @@ void initialize()
   xi = 0.0;
   #pragma acc parallel loop private(j,k,m,zeta,eta,temp) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
       zeta = (double)(k) * dnzm1;
       eta = (double)(j) * dnym1;
@@ -99,7 +99,7 @@ void initialize()
   xi = 1.0;
   #pragma acc parallel loop private(j,k,m,zeta,eta,temp) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
       zeta = (double)(k) * dnzm1;
       eta = (double)(j) * dnym1;
@@ -118,7 +118,7 @@ void initialize()
   eta = 0.0;
   #pragma acc parallel loop private(i,k,m,zeta,xi,temp) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (i = 0; i <= grid_points[0]-1; i++) {
       zeta = (double)(k) * dnzm1;
       xi = (double)(i) * dnxm1;
@@ -137,7 +137,7 @@ void initialize()
   eta = 1.0;
   #pragma acc parallel loop private(i,k,m,zeta,xi,temp) 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (i = 0; i <= grid_points[0]-1; i++) {
       zeta = (double)(k) * dnzm1;
       xi = (double)(i) * dnxm1;
@@ -156,7 +156,7 @@ void initialize()
   zeta = 0.0;
   #pragma acc parallel loop private(i,j,m,eta,xi,temp) 
   for (j = 0; j <= grid_points[1]-1; j++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (i =0; i <= grid_points[0]-1; i++) {
       eta = (double)(j) * dnym1;
       xi = (double)(i) *dnxm1;
@@ -175,7 +175,7 @@ void initialize()
   zeta = 1.0;
   #pragma acc parallel loop private(i,j,m,eta,xi,temp) 
   for (j = 0; j <= grid_points[1]-1; j++) {
-    #pragma acc loop
+    //#pragma acc loop
     for (i = 0; i <= grid_points[0]-1; i++) {
       eta = (double)(j) * dnym1;
       xi = (double)(i) * dnxm1;
