@@ -99,15 +99,15 @@ void rhs_norm(double rms[5])
       for (i = 1; i <= grid_points[0]-2; i++) {
         //for (m = 0; m < 5; m++) {
           add = rhs[k][j][i][0];
-          rms_local_0 = rms_local[0] + add*add;
+          rms_local_0 = rms_local_0 + add*add;
           add = rhs[k][j][i][1];
-          rms_local_1 = rms_local[1] + add*add;
+          rms_local_1 = rms_local_1 + add*add;
           add = rhs[k][j][i][2];
-          rms_local_2 = rms_local[2] + add*add;
+          rms_local_2 = rms_local_2 + add*add;
           add = rhs[k][j][i][3];
-          rms_local_3 = rms_local[3] + add*add;
+          rms_local_3 = rms_local_3 + add*add;
           add = rhs[k][j][i][4];
-          rms_local_4 = rms_local[4] + add*add;
+          rms_local_4 = rms_local_4 + add*add;
         //} 
       } 
     } 
