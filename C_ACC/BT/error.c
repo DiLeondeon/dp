@@ -10,19 +10,20 @@ void error_norm(double rms[5])
 {
   int i, j, k, m, d;
   double xi, eta, zeta, u_exact[5], add;
-  double rms_local[5];
+  //double rms_local[5];
+  double rms_local_0 = 0.0, rms_local_1 = 0.0, rms_local_2 = 0.0, rms_local_3 = 0.0, rms_local_4 = 0.0;
 
-  #pragma acc parallel loop private(m)
+  //#pragma acc parallel loop private(m)
   for (m = 0; m < 5; m++) {
     rms[m] = 0.0;
   }
   //#pragma acc enter data copyin(rms[0:5])
-  #pragma acc parallel private(i,j,k,m,zeta,eta,xi,add,u_exact,rms_local)
+  #pragma acc parallel private(i,j,k,m,zeta,eta,xi,add,u_exact)
   {
-  for (m = 0; m < 5; m++) {
-    rms_local[m] = 0.0;
-  }
-  #pragma acc loop 
+  //for (m = 0; m < 5; m++) {
+    //rms_local[m] = 0.0;
+  //}
+  #pragma acc loop reduction(+:rms_local_0,rms_local_1,rms_local_2,rms_local_3,rms_local_4)
   for (k = 0; k <= grid_points[2]-1; k++) {
     //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
@@ -34,20 +35,36 @@ void error_norm(double rms[5])
         #pragma acc routine (exact_solution) worker
         exact_solution(xi, eta, zeta, u_exact, ce);
 
-        for (m = 0; m < 5; m++) {
-          add = u[k][j][i][m]-u_exact[m];
-          rms_local[m] = rms_local[m] + add*add;
-        }
+        add = u[k][j][i][0]-u_exact[0];
+        rms_local_0 = rms_local_0 + add*add;
+        add = u[k][j][i][1]-u_exact[1];
+        rms_local_1 = rms_local_1 + add*add;
+        add = u[k][j][i][2]-u_exact[2];
+        rms_local_2 = rms_local_2 + add*add;
+        add = u[k][j][i][3]-u_exact[3];
+        rms_local_3 = rms_local_3 + add*add;
+        add = u[k][j][i][4]-u_exact[4];
+        rms_local_4 = rms_local_4 + add*add;
+        //for (m = 0; m < 5; m++) {
+        //  add = u[k][j][i][m]-u_exact[m];
+        //  rms_local[m] = rms_local[m] + add*add;
+        //}
       }
     }
   }
-  for (m = 0; m < 5; m++) {
-    #pragma acc atomic
-    rms[m] += rms_local[m];
   }
-  } //end parallel
+  rms[0] += rms_local_0;
+  rms[1] += rms_local_1;
+  rms[2] += rms_local_2;
+  rms[3] += rms_local_3;
+  rms[4] += rms_local_4;
+  //for (m = 0; m < 5; m++) {
+    //#pragma acc atomic
+    //rms[m] += rms_local[m];
+  //}
+  //} //end parallel
 
-  #pragma acc parallel loop private(m, d)
+  //#pragma acc parallel loop private(m, d)
   for (m = 0; m < 5; m++) {
     for (d = 0; d < 3; d++) {
       rms[m] = rms[m] / (double)(grid_points[d]-2);
@@ -61,38 +78,52 @@ void rhs_norm(double rms[5])
 {
   int i, j, k, d, m;
   double add;
-  double rms_local[5];
+  //double rms_local[5];
+  double rms_local_0 = 0.0, rms_local_1 = 0.0, rms_local_2 = 0.0, rms_local_3 = 0.0, rms_local_4 = 0.0;
 
-  #pragma acc parallel loop private(m)
+  //#pragma acc parallel loop private(m)
   for (m = 0; m < 5; m++) {
     rms[m] = 0.0;
   } 
 
-  #pragma acc parallel private(i,j,k,m,add,rms_local)
+  #pragma acc parallel private(i,j,k,m,add)
   {
-  for (m = 0; m < 5; m++) {
-    rms_local[m] = 0.0;
-  }
-  #pragma acc loop
+  //for (m = 0; m < 5; m++) {
+    //rms_local[m] = 0.0;
+  //}
+  #pragma acc loop reduction(+:rms_local_0,rms_local_1,rms_local_2,rms_local_3,rms_local_4)
   for (k = 1; k <= grid_points[2]-2; k++) {
     //#pragma acc loop
     for (j = 1; j <= grid_points[1]-2; j++) {
       //#pragma acc loop
       for (i = 1; i <= grid_points[0]-2; i++) {
-        for (m = 0; m < 5; m++) {
-          add = rhs[k][j][i][m];
-          rms_local[m] = rms_local[m] + add*add;
-        } 
+        //for (m = 0; m < 5; m++) {
+          add = rhs[k][j][i][0];
+          rms_local_0 = rms_local[0] + add*add;
+          add = rhs[k][j][i][1];
+          rms_local_1 = rms_local[1] + add*add;
+          add = rhs[k][j][i][2];
+          rms_local_2 = rms_local[2] + add*add;
+          add = rhs[k][j][i][3];
+          rms_local_3 = rms_local[3] + add*add;
+          add = rhs[k][j][i][4];
+          rms_local_4 = rms_local[4] + add*add;
+        //} 
       } 
     } 
   } 
-  for (m = 0; m < 5; m++) {
-    #pragma acc atomic
-    rms[m] += rms_local[m];
-  }
+  //for (m = 0; m < 5; m++) {
+    //#pragma acc atomic
+    //rms[m] += rms_local[m];
+  //}
   } //end parallel
+  rms[0] += rms_local_0;
+  rms[1] += rms_local_1;
+  rms[2] += rms_local_2;
+  rms[3] += rms_local_3;
+  rms[4] += rms_local_4;
 
-  #pragma acc parallel loop private(m, d)
+  //#pragma acc parallel loop private(m, d)
   for (m = 0; m < 5; m++) {
     for (d = 0; d < 3; d++) {
       rms[m] = rms[m] / (double)(grid_points[d]-2);

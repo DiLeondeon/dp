@@ -15,7 +15,7 @@ void verify(int no_time_steps, char *Class, logical *verified)
   //---------------------------------------------------------------------
   epsilon = 1.0e-08;
 
-  #pragma acc enter data create(xce[0:5], xcr[0:5])
+  //#pragma acc enter data create(xce[0:5], xcr[0:5])
   //---------------------------------------------------------------------
   // compute the error norm and the residual norm, and exit if not printing
   //---------------------------------------------------------------------
@@ -24,7 +24,7 @@ void verify(int no_time_steps, char *Class, logical *verified)
 
   rhs_norm(xcr);
 
-  #pragma acc exit data copyout(xce[0:5], xcr[0:5])
+  //#pragma acc exit data copyout(xce[0:5], xcr[0:5])
 
   for (m = 0; m < 5; m++) {
     xcr[m] = xcr[m] / dt;
