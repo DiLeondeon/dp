@@ -189,7 +189,7 @@ void initialize()
   }
 }
 
-
+/*
 void lhsinit(double lhs[][3][5][5], int ni)
 {
   int i, m, n;
@@ -217,3 +217,4 @@ void lhsinit(double lhs[][3][5][5], int ni)
     lhs[i][1][n][n] = 1.0;
   }
 }
+*/
