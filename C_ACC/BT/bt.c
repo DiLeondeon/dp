@@ -138,20 +138,20 @@ int main(int argc, char *argv[])
     timer_clear(i);
   }
 
-  //#pragma acc enter data copyin(grid_points[0:3],ce[0:5][0:13]) create(u[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5]) 
+  #pragma acc enter data copyin(grid_points[0:3],ce[0:5][0:13]) create(u[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5],forcing[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5]) 
 
   initialize();
 
   exact_rhs();
 
-  /*#pragma acc enter data create(rho_i[0:KMAX][0:JMAXP+1][0:IMAXP+1],us[0:KMAX][0:JMAXP+1][0:IMAXP+1],\
+  #pragma acc enter data create(rho_i[0:KMAX][0:JMAXP+1][0:IMAXP+1],us[0:KMAX][0:JMAXP+1][0:IMAXP+1],\
                                 vs[0:KMAX][0:JMAXP+1][0:IMAXP+1],ws[0:KMAX][0:JMAXP+1][0:IMAXP+1],\
                                 qs[0:KMAX][0:JMAXP+1][0:IMAXP+1],square[0:KMAX][0:JMAXP+1][0:IMAXP+1],\
                                 rhs[0:KMAX][0:JMAXP+1][0:IMAXP+1][5],\
                                 fjac[0:PROBLEM_SIZE+1][PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5][0:5],njac[0:PROBLEM_SIZE+1][PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5][0:5],\
                                 lhs[0:PROBLEM_SIZE+1][PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:3][0:5][0:5]) 
   
-  */
+  
   //---------------------------------------------------------------------
   // do one time step to touch all code, and reinitialize
   //---------------------------------------------------------------------
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
 
   verify(niter, &Class, &verified);
 
-  //#pragma acc exit data delete(rhs,ce,grid_points,u,forcing,rho_i,us,vs,ws,qs,square,fjac,njac,lhs)
+  #pragma acc exit data delete(rhs,ce,grid_points,u,forcing,rho_i,us,vs,ws,qs,square,fjac,njac,lhs)
 
   n3 = 1.0*grid_points[0]*grid_points[1]*grid_points[2];
   navg = (grid_points[0]+grid_points[1]+grid_points[2])/3.0;
