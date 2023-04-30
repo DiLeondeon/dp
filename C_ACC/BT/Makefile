@@ -8,8 +8,8 @@ include ../config/make.def
 include ../sys/make.common
 
 OBJS = bt.o  initialize.o exact_rhs.o \
-       set_constants.o adi.o  rhs.o      \
-       x_solve$(VEC).o y_solve$(VEC).o  \
+       set_constants.o adi.o  rhs.o \
+       x_solve$(VEC).o y_solve$(VEC).o \
        z_solve$(VEC).o add.o error.o verify.o \
        ${COMMON}/print_results.o ${COMMON}/c_timers.o ${COMMON}/wtime.o
 
@@ -43,7 +43,7 @@ exec: $(OBJS)
 bt.o:             bt.c  header.h npbparams.h
 initialize.o:     initialize.c  header.h exact_solution.h npbparams.h
 #exact_solution.o: exact_solution.c  header.h npbparams.h
-exact_rhs.o:      exact_rhs.c  header.h npbparams.h
+exact_rhs.o:      exact_rhs.c  header.h exact_solution.h npbparams.h
 set_constants.o:  set_constants.c  header.h npbparams.h
 adi.o:            adi.c  header.h npbparams.h
 rhs.o:            rhs.c  header.h npbparams.h
