@@ -1,6 +1,6 @@
 #include <math.h>
 #include "header.h"
-
+#include "exact_solution.h"
 
 //---------------------------------------------------------------------
 // this function computes the norm of the difference between the
@@ -29,7 +29,7 @@ void error_norm(double rms[5])
         zeta = (double)(k) * dnzm1;
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
-        #pragma acc routine (exact_solution) seq//worker
+        //#pragma acc routine (exact_solution) seq//worker
         exact_solution(xi, eta, zeta, u_exact, ce);
 
         add = u[k][j][i][0]-u_exact[0];
