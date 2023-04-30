@@ -34,7 +34,7 @@ void z_solve()
   // Compute the indices for storing the block-diagonal matrix;
   // determine c (labeled f) and s jacobians
   //---------------------------------------------------------------------
-  #pragma acc parallel loop seq//#pragma acc parallel loop private(i,j,k,m,n,tmp1,tmp2,tmp3)
+  #pragma acc parallel loop private(i,j,k,m,n,tmp1,tmp2,tmp3)
   for (j = 1; j <= grid_points[1]-2; j++) {
     //#pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {

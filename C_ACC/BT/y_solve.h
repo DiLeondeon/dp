@@ -34,7 +34,7 @@ void y_solve()
   // Compute the indices for storing the tri-diagonal matrix;
   // determine a (labeled f) and n jacobians for cell c
   //---------------------------------------------------------------------
-  #pragma acc parallel loop seq//#pragma acc parallel loop private(i,j,k,m,n,tmp1,tmp2,tmp3)
+  #pragma acc parallel loop private(i,j,k,m,n,tmp1,tmp2,tmp3)
   for (k = 1; k <= grid_points[2]-2; k++) {
     //#pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {
