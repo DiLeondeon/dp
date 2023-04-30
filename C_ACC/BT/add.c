@@ -9,7 +9,7 @@ void add()
   int i, j, k, m;
 
   if (timeron) timer_start(t_add);
-  #pragma acc loop seq//#pragma acc parallel loop private(i,j,k,m)
+  #pragma acc parallel loop seq//#pragma acc parallel loop private(i,j,k,m)
   for (k = 1; k <= grid_points[2]-2; k++) {
     //#pragma acc loop
     for (j = 1; j <= grid_points[1]-2; j++) {
