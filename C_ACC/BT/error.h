@@ -1,6 +1,5 @@
 #include <math.h>
 #include "header.h"
-#include "exact_solution.h"
 
 //---------------------------------------------------------------------
 // this function computes the norm of the difference between the

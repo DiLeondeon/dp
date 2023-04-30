@@ -1,5 +1,4 @@
 #include "header.h"
-#include "exact_solution.h"
 
 //---------------------------------------------------------------------
 // compute the right hand side based on exact solution

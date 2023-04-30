@@ -1,7 +1,6 @@
 #include "header.h"
 #include "work_lhs.h"
 #include "timers.h"
-#include "solve_subs.h"
 
 //---------------------------------------------------------------------
 // Performs line solves in Y direction by first factoring

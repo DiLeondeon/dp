@@ -1,5 +1,4 @@
 #include "header.h"
-#include "exact_solution.h"
 
 //---------------------------------------------------------------------
 // This subroutine initializes the field variable u using 

@@ -2,7 +2,6 @@
 #include "work_lhs.h"
 #include "timers.h"
 #include <stdio.h>
-#include "solve_subs.h"
 
 //---------------------------------------------------------------------
 // 
