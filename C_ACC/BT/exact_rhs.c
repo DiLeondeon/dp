@@ -8,7 +8,7 @@ void exact_rhs()
   double dtemp[5], xi, eta, zeta, dtpp;
   int m, i, j, k, ip1, im1, jp1, jm1, km1, kp1;
 
-  #pragma acc enter data create(forcing[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5])
+  //#pragma acc enter data create(forcing[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5])
 
   //---------------------------------------------------------------------
   // initialize                                  
@@ -26,7 +26,7 @@ void exact_rhs()
     } 
   }
     
-  #pragma acc enter data create(ue[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],buf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],\
+  //#pragma acc enter data create(ue[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],buf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],\
                                 cuf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1],q[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1])
 
   //---------------------------------------------------------------------
@@ -320,7 +320,7 @@ void exact_rhs()
 
     }
   }
-  #pragma acc exit data delete(ue,buf,cuf,q)
+  //#pragma acc exit data delete(ue,buf,cuf,q)
   //---------------------------------------------------------------------
   // now change the sign of the forcing function, 
   //---------------------------------------------------------------------
