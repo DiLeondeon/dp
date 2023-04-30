@@ -84,9 +84,9 @@ extern double buf[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][5];
 
 void initialize();
 //#pragma acc routine
-void lhsinit(double lhs[][3][5][5], int ni);
+//void lhsinit(double lhs[][3][5][5], int ni);
 //#pragma acc routine
-void exact_solution(double xi, double eta, double zeta, double dtemp[5], double ce[5][13]);
+//void exact_solution(double xi, double eta, double zeta, double dtemp[5], double ce[5][13]);
 void exact_rhs();
 void set_constants();
 void adi();
@@ -94,13 +94,13 @@ void compute_rhs();
 void x_solve();
 void y_solve();
 //#pragma acc routine
-void matvec_sub(double ablock[5][5], double avec[5], double bvec[5]);
+//void matvec_sub(double ablock[5][5], double avec[5], double bvec[5]);
 //#pragma acc routine
-void matmul_sub(double ablock[5][5], double bblock[5][5], double cblock[5][5]);
+//void matmul_sub(double ablock[5][5], double bblock[5][5], double cblock[5][5]);
 //#pragma acc routine
-void binvcrhs(double lhs[5][5], double c[5][5], double r[5]);
+//void binvcrhs(double lhs[5][5], double c[5][5], double r[5]);
 //#pragma acc routine
-void binvrhs(double lhs[5][5], double r[5]);
+//void binvrhs(double lhs[5][5], double r[5]);
 void z_solve();
 void add();
 void error_norm(double rms[5]);
