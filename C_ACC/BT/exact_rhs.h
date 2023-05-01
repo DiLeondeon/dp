@@ -13,6 +13,7 @@ void exact_rhs()
   //---------------------------------------------------------------------
   // initialize                                  
   //---------------------------------------------------------------------
+  printf("in exact_rhs\n");
   #pragma acc parallel loop private(i,j,k,m)
   for (k = 0; k <= grid_points[2]-1; k++) {
     //#pragma acc loop
@@ -25,7 +26,7 @@ void exact_rhs()
       }
     } 
   }
-    
+  printf("after 1 loop\n");
   #pragma acc enter data create(ue[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],buf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],\
                                 cuf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1],q[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1])
 
