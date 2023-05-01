@@ -139,48 +139,6 @@ void compute_rhs()
     //---------------------------------------------------------------------
     // add fourth order xi-direction dissipation               
     //---------------------------------------------------------------------
-    /*for (j = 1; j <= grid_points[1]-2; j++) {
-      i = 1;
-      for (m = 0; m < 5; m++) {
-        rhs[k][j][i][m] = rhs[k][j][i][m]- dssp * 
-          ( 5.0*u[k][j][i][m] - 4.0*u[k][j][i+1][m] +
-            u[k][j][i+2][m]);
-      }
-
-      i = 2;
-      for (m = 0; m < 5; m++) {
-        rhs[k][j][i][m] = rhs[k][j][i][m] - dssp * 
-          (-4.0*u[k][j][i-1][m] + 6.0*u[k][j][i][m] -
-           4.0*u[k][j][i+1][m] + u[k][j][i+2][m]);
-      }
-    }
-
-    for (j = 1; j <= grid_points[1]-2; j++) {
-      for (i = 3; i <= grid_points[0]-4; i++) {
-        for (m = 0; m < 5; m++) {
-          rhs[k][j][i][m] = rhs[k][j][i][m] - dssp * 
-            (  u[k][j][i-2][m] - 4.0*u[k][j][i-1][m] + 
-               6.0*u[k][j][i][m] - 4.0*u[k][j][i+1][m] + 
-               u[k][j][i+2][m] );
-        }
-      }
-    }
-
-    for (j = 1; j <= grid_points[1]-2; j++) {
-      i = grid_points[0]-3;
-      for (m = 0; m < 5; m++) {
-        rhs[k][j][i][m] = rhs[k][j][i][m] - dssp *
-          ( u[k][j][i-2][m] - 4.0*u[k][j][i-1][m] + 
-            6.0*u[k][j][i][m] - 4.0*u[k][j][i+1][m] );
-      }
-
-      i = grid_points[0]-2;
-      for (m = 0; m < 5; m++) {
-        rhs[k][j][i][m] = rhs[k][j][i][m] - dssp *
-          ( u[k][j][i-2][m] - 4.*u[k][j][i-1][m] +
-            5.*u[k][j][i][m] );
-      }
-    }*/
   }
 
   if (timeron) timer_stop(t_rhsx);

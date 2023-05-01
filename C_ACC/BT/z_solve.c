@@ -118,7 +118,7 @@ void z_solve()
       //---------------------------------------------------------------------
       // now jacobians set, so form left hand side in z direction
       //---------------------------------------------------------------------
-      //#pragma acc routine (lhsinit) seq//worker
+      #pragma acc routine (lhsinit) worker
       lhsinit(lhs[j][i], ksize);
       for (k = 1; k <= ksize-1; k++) {
         tmp1 = dt * tz1;
@@ -306,7 +306,7 @@ void z_solve()
       // multiply c[0][j][i] by b_inverse and copy back to c
       // multiply rhs(0) by b_inverse(0) and copy to rhs
       //---------------------------------------------------------------------
-      //#pragma acc routine (binvcrhs) seq//worker
+      #pragma acc routine (binvcrhs) worker
       binvcrhs( lhs[j][i][0][BB], lhs[j][i][0][CC], rhs[0][j][i] );
 
       //---------------------------------------------------------------------
@@ -319,21 +319,21 @@ void z_solve()
         // 
         // rhs(k) = rhs(k) - A*rhs(k-1)
         //-------------------------------------------------------------------
-        //#pragma acc routine (matvec_sub) seq//worker
+        #pragma acc routine (matvec_sub) worker
         matvec_sub(lhs[j][i][k][AA], rhs[k-1][j][i], rhs[k][j][i]);
 
         //-------------------------------------------------------------------
         // B(k) = B(k) - C(k-1)*A(k)
         // matmul_sub(AA,i,j,k,c,CC,i,j,k-1,c,BB,i,j,k)
         //-------------------------------------------------------------------
-        //#pragma acc routine (matmul_sub) seq//worker
+        #pragma acc routine (matmul_sub) worker
         matmul_sub(lhs[j][i][k][AA], lhs[j][i][k-1][CC], lhs[j][i][k][BB]);
 
         //-------------------------------------------------------------------
         // multiply c[k][j][i] by b_inverse and copy back to c
         // multiply rhs[0][j][i] by b_inverse[0][j][i] and copy to rhs
         //-------------------------------------------------------------------
-        //#pragma acc routine (binvcrhs) seq//worker
+        #pragma acc routine (binvcrhs) worker
         binvcrhs( lhs[j][i][k][BB], lhs[j][i][k][CC], rhs[k][j][i] );
       }
 
@@ -344,7 +344,7 @@ void z_solve()
       //---------------------------------------------------------------------
       // rhs(ksize) = rhs(ksize) - A*rhs(ksize-1)
       //---------------------------------------------------------------------
-      //#pragma acc routine (matvec_sub) seq//worker
+      #pragma acc routine (matvec_sub) worker
       matvec_sub(lhs[j][i][ksize][AA], rhs[ksize-1][j][i], rhs[ksize][j][i]);
 
       //---------------------------------------------------------------------
@@ -352,13 +352,13 @@ void z_solve()
       // matmul_sub(AA,i,j,ksize,c,
       // $              CC,i,j,ksize-1,c,BB,i,j,ksize)
       //---------------------------------------------------------------------
-      //#pragma acc routine (matmul_sub) seq//worker
+      #pragma acc routine (matmul_sub) worker
       matmul_sub(lhs[j][i][ksize][AA], lhs[j][i][ksize-1][CC], lhs[j][i][ksize][BB]);
 
       //---------------------------------------------------------------------
       // multiply rhs(ksize) by b_inverse(ksize) and copy to rhs
       //---------------------------------------------------------------------
-      //#pragma acc routine (binvrhs) seq//worker
+      #pragma acc routine (binvrhs) worker
       binvrhs( lhs[j][i][ksize][BB], rhs[ksize][j][i] );
 
       //---------------------------------------------------------------------

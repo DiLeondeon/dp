@@ -8,12 +8,9 @@ void exact_rhs()
   double dtemp[5], xi, eta, zeta, dtpp;
   int m, i, j, k, ip1, im1, jp1, jm1, km1, kp1;
 
-  //#pragma acc enter data create(forcing[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5])
-
   //---------------------------------------------------------------------
   // initialize                                  
   //---------------------------------------------------------------------
-  printf("in exact_rhs\n");
   #pragma acc parallel loop private(i,j,k,m)
   for (k = 0; k <= grid_points[2]-1; k++) {
     //#pragma acc loop
@@ -26,11 +23,9 @@ void exact_rhs()
       }
     } 
   }
-  printf("after 1 loop\n");
   #pragma acc enter data create(ue[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],buf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],\
                                 cuf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1],q[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1])
 
-  printf("after pragma\n");
   //---------------------------------------------------------------------
   // xi-direction flux differences                      
   //---------------------------------------------------------------------
@@ -43,7 +38,7 @@ void exact_rhs()
         zeta = (double)(k) * dnzm1;
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
-        //#pragma acc routine (exact_solution) seq//worker
+        #pragma acc routine (exact_solution) worker
         exact_solution(xi, eta, zeta, dtemp, ce);
         for (m = 0; m < 5; m++) {
           ue[k][j][i][m] = dtemp[m];
@@ -140,7 +135,7 @@ void exact_rhs()
         zeta = (double)(k) * dnzm1;
         xi = (double)(i) * dnxm1;
         eta = (double)(j) * dnym1;
-        //#pragma acc routine (exact_solution) seq//worker
+        #pragma acc routine (exact_solution) worker
         exact_solution(xi, eta, zeta, dtemp, ce);
         for (m = 0; m < 5; m++) {
           ue[k][i][j][m] = dtemp[m];
@@ -237,7 +232,7 @@ void exact_rhs()
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
         zeta = (double)(k) * dnzm1;
-        //#pragma acc routine (exact_solution) seq//worker
+        #pragma acc routine (exact_solution) worker
         exact_solution(xi, eta, zeta, dtemp, ce);
         for (m = 0; m < 5; m++) {
           ue[j][i][k][m] = dtemp[m];

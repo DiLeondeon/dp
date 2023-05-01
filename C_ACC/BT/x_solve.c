@@ -120,7 +120,7 @@ void x_solve()
       //---------------------------------------------------------------------
       // now jacobians set, so form left hand side in x direction
       //---------------------------------------------------------------------
-      //#pragma acc routine (lhsinit) seq//worker
+      #pragma acc routine (lhsinit) worker
       lhsinit(lhs[k][j], isize);
       for (i = 1; i <= isize-1; i++) {
         tmp1 = dt * tx1;
@@ -308,7 +308,7 @@ void x_solve()
       // multiply c[k][j][0] by b_inverse and copy back to c
       // multiply rhs(0) by b_inverse(0) and copy to rhs
       //---------------------------------------------------------------------
-      //#pragma acc routine (binvcrhs) seq//worker
+      #pragma acc routine (binvcrhs) worker
       binvcrhs( lhs[k][j][0][BB], lhs[k][j][0][CC], rhs[k][j][0] );
 
       //---------------------------------------------------------------------
@@ -319,13 +319,13 @@ void x_solve()
         //-------------------------------------------------------------------
         // rhs(i) = rhs(i) - A*rhs(i-1)
         //-------------------------------------------------------------------
-        //#pragma acc routine (matvec_sub) seq//worker
+        #pragma acc routine (matvec_sub) worker
         matvec_sub(lhs[k][j][i][AA], rhs[k][j][i-1], rhs[k][j][i]);
 
         //-------------------------------------------------------------------
         // B(i) = B(i) - C(i-1)*A(i)
         //-------------------------------------------------------------------
-        //#pragma acc routine (matmul_sub) seq//worker
+        #pragma acc routine (matmul_sub) worker
         matmul_sub(lhs[k][j][i][AA], lhs[k][j][i-1][CC], lhs[k][j][i][BB]);
 
 
@@ -333,26 +333,26 @@ void x_solve()
         // multiply c[k][j][i] by b_inverse and copy back to c
         // multiply rhs[k][j][0] by b_inverse[k][j][0] and copy to rhs
         //-------------------------------------------------------------------
-        //#pragma acc routine (binvcrhs) seq//worker
+        #pragma acc routine (binvcrhs) sworker
         binvcrhs( lhs[k][j][i][BB], lhs[k][j][i][CC], rhs[k][j][i] );
       }
 
       //---------------------------------------------------------------------
       // rhs(isize) = rhs(isize) - A*rhs(isize-1)
       //---------------------------------------------------------------------
-      //#pragma acc routine (matvec_sub) seq//worker
+      #pragma acc routine (matvec_sub) worker
       matvec_sub(lhs[k][j][isize][AA], rhs[k][j][isize-1], rhs[k][j][isize]);
 
       //---------------------------------------------------------------------
       // B(isize) = B(isize) - C(isize-1)*A(isize)
       //---------------------------------------------------------------------
-      //#pragma acc routine (matmul_sub) seq//worker
+      #pragma acc routine (matmul_sub) worker
       matmul_sub(lhs[k][j][isize][AA], lhs[k][j][isize-1][CC], lhs[k][j][isize][BB]);
 
       //---------------------------------------------------------------------
       // multiply rhs() by b_inverse() and copy to rhs
       //---------------------------------------------------------------------
-      //#pragma acc routine (binvrhs) seq//worker
+      #pragma acc routine (binvrhs) worker
       binvrhs( lhs[k][j][isize][BB], rhs[k][j][isize] );
 
       //---------------------------------------------------------------------

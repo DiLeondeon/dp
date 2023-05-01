@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------
 // this function returns the exact solution at point xi, eta, zeta  
 //---------------------------------------------------------------------
-//#pragma acc routine
+#pragma acc routine
 void exact_solution(double xi, double eta, double zeta, double dtemp[5], double ce[5][13])
 {
   int m;

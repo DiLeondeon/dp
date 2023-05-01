@@ -9,7 +9,6 @@ void error_norm(double rms[5])
 {
   int i, j, k, m, d;
   double xi, eta, zeta, u_exact[5], add;
-  //double rms_local[5];
   double rms_local_0 = 0.0, rms_local_1 = 0.0, rms_local_2 = 0.0, rms_local_3 = 0.0, rms_local_4 = 0.0;
 
 
@@ -17,8 +16,7 @@ void error_norm(double rms[5])
     rms[m] = 0.0;
   }
 
-  //#pragma acc parallel private(i,j,k,m,zeta,eta,xi,add,u_exact)
-  //{
+
   #pragma acc loop reduction(+:rms_local_0,rms_local_1,rms_local_2,rms_local_3,rms_local_4)
   for (k = 0; k <= grid_points[2]-1; k++) {
     //#pragma acc loop
@@ -28,7 +26,7 @@ void error_norm(double rms[5])
         zeta = (double)(k) * dnzm1;
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
-        //#pragma acc routine (exact_solution) seq//worker
+        #pragma acc routine (exact_solution) worker
         exact_solution(xi, eta, zeta, u_exact, ce);
 
         add = u[k][j][i][0]-u_exact[0];
@@ -44,7 +42,6 @@ void error_norm(double rms[5])
       }
     }
   }
-  //}
   rms[0] += rms_local_0;
   rms[1] += rms_local_1;
   rms[2] += rms_local_2;
@@ -71,15 +68,12 @@ void rhs_norm(double rms[5])
     rms[m] = 0.0;
   } 
 
-  //#pragma acc parallel private(i,j,k,m,add)
-  //{
   #pragma acc loop reduction(+:rms_local_0,rms_local_1,rms_local_2,rms_local_3,rms_local_4)
   for (k = 1; k <= grid_points[2]-2; k++) {
     //#pragma acc loop
     for (j = 1; j <= grid_points[1]-2; j++) {
       //#pragma acc loop
       for (i = 1; i <= grid_points[0]-2; i++) {
-        //for (m = 0; m < 5; m++) {
           add = rhs[k][j][i][0];
           rms_local_0 = rms_local_0 + add*add;
           add = rhs[k][j][i][1];
@@ -90,11 +84,9 @@ void rhs_norm(double rms[5])
           rms_local_3 = rms_local_3 + add*add;
           add = rhs[k][j][i][4];
           rms_local_4 = rms_local_4 + add*add;
-        //} 
       } 
     } 
   } 
-  //} //end parallel
   rms[0] += rms_local_0;
   rms[1] += rms_local_1;
   rms[2] += rms_local_2;

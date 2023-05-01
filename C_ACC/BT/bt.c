@@ -3,19 +3,6 @@
 #include "header.h"
 #include "timers.h"
 #include "print_results.h"
-#include "initialize.h"
-#include "exact_rhs.h"
-#include "error.h"
-#include "exact_solution.h"
-#include "set_constants.h"
-#include "adi.h"
-#include "rhs.h"
-#include "x_solve.h"
-#include "y_solve.h"
-#include "z_solve.h"
-#include "solve_subs.h"
-#include "add.h"
-#include "verify.h"
 
 /* common /global/ */
 double elapsed_time;
