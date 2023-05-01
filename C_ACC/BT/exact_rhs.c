@@ -24,6 +24,8 @@ void exact_rhs()
   //---------------------------------------------------------------------
   // initialize                                  
   //---------------------------------------------------------------------
+  #pragma acc data present(forcing, ce)
+
   #pragma acc parallel loop private(i,j,k,m)
   for (k = 0; k <= grid_points[2]-1; k++) {
     //#pragma acc loop
