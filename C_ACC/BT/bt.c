@@ -15,7 +15,6 @@
 #include "z_solve.h"
 #include "solve_subs.h"
 #include "add.h"
-#include "error.h"
 #include "verify.h"
 
 /* common /global/ */
