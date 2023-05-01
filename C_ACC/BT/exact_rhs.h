@@ -30,6 +30,7 @@ void exact_rhs()
   #pragma acc enter data create(ue[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],buf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],\
                                 cuf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1],q[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1])
 
+  printf("after pragma\n");
   //---------------------------------------------------------------------
   // xi-direction flux differences                      
   //---------------------------------------------------------------------
