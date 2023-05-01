@@ -4,6 +4,19 @@
 // This subroutine initializes the field variable u using 
 // tri-linear transfinite interpolation of the boundary values     
 //---------------------------------------------------------------------
+void exact_solution_1(double xi, double eta, double zeta, double dtemp[5], double ce[5][13])
+{
+  int m;
+
+  for (m = 0; m < 5; m++) {
+    dtemp[m] =  ce[m][0] +
+      xi*(ce[m][1] + xi*(ce[m][4] + xi*(ce[m][7] + xi*ce[m][10]))) +
+      eta*(ce[m][2] + eta*(ce[m][5] + eta*(ce[m][8] + eta*ce[m][11])))+
+      zeta*(ce[m][3] + zeta*(ce[m][6] + zeta*(ce[m][9] + 
+      zeta*ce[m][12])));
+  }
+}
+
 void initialize()
 {
   int i, j, k, m, ix, iy, iz;
@@ -42,18 +55,18 @@ void initialize()
         xi = (double)(i) * dnxm1;
 
         for (ix = 0; ix < 2; ix++) {
-          #pragma acc routine (exact_solution) worker
-          exact_solution((double)ix, eta, zeta, &Pface[ix][0][0], ce);
+          //#pragma acc routine (exact_solution) worker
+          exact_solution_1((double)ix, eta, zeta, &Pface[ix][0][0], ce);
         }
 
         for (iy = 0; iy < 2; iy++) {
-          #pragma acc routine (exact_solution) worker
-          exact_solution(xi, (double)iy , zeta, &Pface[iy][1][0], ce);
+          //#pragma acc routine (exact_solution) worker
+          exact_solution_1(xi, (double)iy , zeta, &Pface[iy][1][0], ce);
         }
 
         for (iz = 0; iz < 2; iz++) {
-          #pragma acc routine (exact_solution) worker
-          exact_solution(xi, eta, (double)iz, &Pface[iz][2][0], ce);
+          //#pragma acc routine (exact_solution) worker
+          exact_solution_1(xi, eta, (double)iz, &Pface[iz][2][0], ce);
         }
 
         for (m = 0; m < 5; m++) {
@@ -84,8 +97,8 @@ void initialize()
     for (j = 0; j <= grid_points[1]-1; j++) {
       zeta = (double)(k) * dnzm1;
       eta = (double)(j) * dnym1;
-      #pragma acc routine (exact_solution) worker
-      exact_solution(xi, eta, zeta, temp, ce);
+      //#pragma acc routine (exact_solution) worker
+      exact_solution_1(xi, eta, zeta, temp, ce);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];
       }
@@ -103,8 +116,8 @@ void initialize()
     for (j = 0; j <= grid_points[1]-1; j++) {
       zeta = (double)(k) * dnzm1;
       eta = (double)(j) * dnym1;
-      #pragma acc routine (exact_solution) worker
-      exact_solution(xi, eta, zeta, temp, ce);
+      //#pragma acc routine (exact_solution) worker
+      exact_solution_1(xi, eta, zeta, temp, ce);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];
       }
@@ -122,8 +135,8 @@ void initialize()
     for (i = 0; i <= grid_points[0]-1; i++) {
       zeta = (double)(k) * dnzm1;
       xi = (double)(i) * dnxm1;
-      #pragma acc routine (exact_solution) worker
-      exact_solution(xi, eta, zeta, temp, ce);
+      //#pragma acc routine (exact_solution) worker
+      exact_solution_1(xi, eta, zeta, temp, ce);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];
       }
@@ -141,8 +154,8 @@ void initialize()
     for (i = 0; i <= grid_points[0]-1; i++) {
       zeta = (double)(k) * dnzm1;
       xi = (double)(i) * dnxm1;
-      #pragma acc routine (exact_solution) worker
-      exact_solution(xi, eta, zeta, temp, ce);
+      //#pragma acc routine (exact_solution) worker
+      exact_solution_1(xi, eta, zeta, temp, ce);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];
       }
@@ -160,8 +173,8 @@ void initialize()
     for (i =0; i <= grid_points[0]-1; i++) {
       eta = (double)(j) * dnym1;
       xi = (double)(i) *dnxm1;
-      #pragma acc routine (exact_solution) worker
-      exact_solution(xi, eta, zeta, temp, ce);
+      //#pragma acc routine (exact_solution) worker
+      exact_solution_1(xi, eta, zeta, temp, ce);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];
       }
@@ -179,8 +192,8 @@ void initialize()
     for (i = 0; i <= grid_points[0]-1; i++) {
       eta = (double)(j) * dnym1;
       xi = (double)(i) * dnxm1;
-      #pragma acc routine (exact_solution) worker
-      exact_solution(xi, eta, zeta, temp, ce);
+      //#pragma acc routine (exact_solution) worker
+      exact_solution_1(xi, eta, zeta, temp, ce);
       for (m = 0; m < 5; m++) {
         u[k][j][i][m] = temp[m];
       }

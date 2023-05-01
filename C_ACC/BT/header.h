@@ -85,7 +85,7 @@ extern double buf[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][5];
 void initialize();
 #pragma acc routine
 void lhsinit(double lhs[][3][5][5], int ni);
-#pragma acc routine
+//#pragma acc routine
 void exact_solution(double xi, double eta, double zeta, double dtemp[5], double ce[5][13]);
 void exact_rhs();
 void set_constants();
