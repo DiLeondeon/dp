@@ -128,7 +128,9 @@ int main(int argc, char *argv[])
   #pragma acc enter data copyin(grid_points[0:3],ce[0:5][0:13]) create(u[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5],forcing[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5]) 
 
   initialize();
+  printf(" after init\n");
   exact_rhs();
+  printf(" after exact_rhs\n");
 
   #pragma acc enter data create(rho_i[0:KMAX][0:JMAXP+1][0:IMAXP+1],us[0:KMAX][0:JMAXP+1][0:IMAXP+1],\
                                 vs[0:KMAX][0:JMAXP+1][0:IMAXP+1],ws[0:KMAX][0:JMAXP+1][0:IMAXP+1],\
@@ -142,7 +144,9 @@ int main(int argc, char *argv[])
   // do one time step to touch all code, and reinitialize
   //---------------------------------------------------------------------
   adi();
+  printf(" after adi\n");
   initialize();
+  printf(" after init\n");
 
   for (i = 1; i <= t_last; i++) {
     timer_clear(i);
