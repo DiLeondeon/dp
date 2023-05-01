@@ -333,7 +333,7 @@ void x_solve()
         // multiply c[k][j][i] by b_inverse and copy back to c
         // multiply rhs[k][j][0] by b_inverse[k][j][0] and copy to rhs
         //-------------------------------------------------------------------
-        #pragma acc routine (binvcrhs) sworker
+        #pragma acc routine (binvcrhs) worker
         binvcrhs( lhs[k][j][i][BB], lhs[k][j][i][CC], rhs[k][j][i] );
       }
 
