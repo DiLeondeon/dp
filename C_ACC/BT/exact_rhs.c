@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------
 // compute the right hand side based on exact solution
 //---------------------------------------------------------------------
-void exact_solution_2(double xi, double eta, double zeta, double dtemp[5], double ce[5][13])
+/*void exact_solution_2(double xi, double eta, double zeta, double dtemp[5], double ce[5][13])
 {
   int m;
 
@@ -14,7 +14,7 @@ void exact_solution_2(double xi, double eta, double zeta, double dtemp[5], doubl
       zeta*(ce[m][3] + zeta*(ce[m][6] + zeta*(ce[m][9] + 
       zeta*ce[m][12])));
   }
-}
+}*/
 
 void exact_rhs()
 {
