@@ -53,7 +53,7 @@ void exact_rhs()
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
         #pragma acc routine (exact_solution) worker
-        exact_solution_2(xi, eta, zeta, dtemp, ce);
+        exact_solution(xi, eta, zeta, dtemp, ce);
         /*int m;
 
         for (m = 0; m < 5; m++) {
@@ -159,7 +159,7 @@ void exact_rhs()
         xi = (double)(i) * dnxm1;
         eta = (double)(j) * dnym1;
         #pragma acc routine (exact_solution) worker
-        exact_solution_2(xi, eta, zeta, dtemp, ce);
+        exact_solution(xi, eta, zeta, dtemp, ce);
         /*int m;
 
         for (m = 0; m < 5; m++) {
@@ -265,7 +265,7 @@ void exact_rhs()
         xi = (double)(i) * dnxm1;
         zeta = (double)(k) * dnzm1;
         #pragma acc routine (exact_solution) worker
-        exact_solution_2(xi, eta, zeta, dtemp, ce);
+        exact_solution(xi, eta, zeta, dtemp, ce);
         /*int m;
 
         for (m = 0; m < 5; m++) {
