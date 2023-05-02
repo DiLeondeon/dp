@@ -285,7 +285,7 @@ void initialize()
 }
 
 
-void lhsinit(double lhs[][3][5][5], int ni)
+/*void lhsinit(double lhs[][3][5][5], int ni)
 {
   int i, m, n;
 
@@ -310,5 +310,33 @@ void lhsinit(double lhs[][3][5][5], int ni)
       lhs[i][2][n][m] = 0.0;
     }
     lhs[i][1][n][n] = 1.0;
+  }
+}*/
+#pragma acc routine
+void lhsinit(int k, int j, int ni, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5])//(double lhs[][3][5][5], int ni)
+{
+  int i, m, n;
+
+  //---------------------------------------------------------------------
+  // zero the whole left hand side for starters
+  // set all diagonal values to 1. This is overkill, but convenient
+  //---------------------------------------------------------------------
+  i = 0;
+  for (n = 0; n < 5; n++) {
+    for (m = 0; m < 5; m++) {
+      lhs[k][j][i][0][n][m] = 0.0;
+      lhs[k][j][i][1][n][m] = 0.0;
+      lhs[k][j][i][2][n][m] = 0.0;
+    }
+    lhs[k][j][i][1][n][n] = 1.0;
+  }
+  i = ni;
+  for (n = 0; n < 5; n++) {
+    for (m = 0; m < 5; m++) {
+      lhs[k][j][i][0][n][m] = 0.0;
+      lhs[k][j][i][1][n][m] = 0.0;
+      lhs[k][j][i][2][n][m] = 0.0;
+    }
+    lhs[k][j][i][1][n][n] = 1.0;
   }
 }

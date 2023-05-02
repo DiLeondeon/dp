@@ -83,8 +83,8 @@ extern double buf[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][5];
 
 
 void initialize();
-//#pragma acc routine
-void lhsinit(double lhs[][3][5][5], int ni);
+#pragma acc routine
+void lhsinit(int k, int j, int ni, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5]);
 #pragma acc routine
 void exact_solution(double xi, double eta, double zeta, double dtemp[5], double ce[5][13]);
 void exact_rhs();
@@ -93,14 +93,14 @@ void adi();
 void compute_rhs();
 void x_solve();
 void y_solve();
-//#pragma acc routine
-void matvec_sub(double ablock[5][5], double avec[5], double bvec[5]);
-//#pragma acc routine
-void matmul_sub(double ablock[5][5], double bblock[5][5], double cblock[5][5]);
-//#pragma acc routine
-void binvcrhs(double lhs[5][5], double c[5][5], double r[5]);
-//#pragma acc routine
-void binvrhs(double lhs[5][5], double r[5]);
+#pragma acc routine
+void matvec_sub(int k1, int j1, int i1, int first, int k2, int j2, int i2, int k3, int j3, int i3, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5], double rhs[KMAX][JMAXP+1][IMAXP+1][5]);
+#pragma acc routine
+void matmul_sub(int k1, int j1, int i1, int first, int k2, int j2, int i2, int second, int k3, int j3, int i3, int third, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5]);
+#pragma acc routine
+void binvcrhs(int k1, int j1, int i1, int first, int k2, int j2, int i2, int second, int k3, int j3, int i3, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5], double rhs[KMAX][JMAXP+1][IMAXP+1][5]);
+#pragma acc routine
+void binvrhs(int k1, int j1, int i1, int first, int k2, int j2, int i2, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5], double rhs[KMAX][JMAXP+1][IMAXP+1][5]);
 void z_solve();
 void add();
 void error_norm(double rms[5]);
