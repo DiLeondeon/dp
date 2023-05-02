@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
   timer_stop(1);
   tmax = timer_read(1);
 
-  #pragma acc exit data copyout(u[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5])
+  #pragma acc data copyout(u[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5])
 //delete(rhs,ce,grid_points,u,forcing,rho_i,us,vs,ws,qs,square,fjac,njac,lhs)
   verify(niter, &Class, &verified);
   #pragma acc exit data delete(rhs,ce,grid_points,u,forcing,rho_i,us,vs,ws,qs,square,fjac,njac,lhs)
