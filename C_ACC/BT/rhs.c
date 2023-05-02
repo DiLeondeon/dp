@@ -12,7 +12,7 @@ void compute_rhs()
   // compute the reciprocal of density, and the kinetic energy, 
   // and the speed of sound.
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m,rho_inv)
+  //#pragma acc parallel loop private(i,j,k,m,rho_inv)
   for (k = 0; k <= grid_points[2]-1; k++) {
     //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
@@ -37,7 +37,7 @@ void compute_rhs()
   // this forcing term is known, we can store it on the whole grid
   // including the boundary                   
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m)
+  //#pragma acc parallel loop private(i,j,k,m)
   for (k = 0; k <= grid_points[2]-1; k++) {
     //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
@@ -56,7 +56,7 @@ void compute_rhs()
   // compute xi-direction fluxes 
   //---------------------------------------------------------------------
 
-  #pragma acc parallel loop private(i,j,k,m,uijk,up1,um1) 
+  //#pragma acc parallel loop private(i,j,k,m,uijk,up1,um1) 
   for (k = 1; k <= grid_points[2]-2; k++) {
     //#pragma acc loop
     for (j = 1; j <= grid_points[1]-2; j++) {
@@ -149,7 +149,7 @@ void compute_rhs()
   // compute eta-direction fluxes 
   //---------------------------------------------------------------------
 
-  #pragma acc parallel loop private(i,j,k,m,vijk,vp1,vm1) 
+  //#pragma acc parallel loop private(i,j,k,m,vijk,vp1,vm1) 
   for (k = 1; k <= grid_points[2]-2; k++) {
     //#pragma acc loop
     for (j = 1; j <= grid_points[1]-2; j++) {
@@ -262,7 +262,7 @@ void compute_rhs()
   // compute zeta-direction fluxes 
   //---------------------------------------------------------------------
 
-  #pragma acc parallel loop private(k,j,i,m,wijk,wp1,wm1) 
+  //#pragma acc parallel loop private(k,j,i,m,wijk,wp1,wm1) 
   for (k = 1; k <= grid_points[2]-2; k++) {
     //#pragma acc loop
     for (j = 1; j <= grid_points[1]-2; j++) {
@@ -321,7 +321,7 @@ void compute_rhs()
   // add fourth order zeta-direction dissipation                
   //---------------------------------------------------------------------
   k = 1;
-  #pragma acc parallel loop private(i,j,m)
+  //#pragma acc parallel loop private(i,j,m)
   for (j = 1; j <= grid_points[1]-2; j++) {
     //#pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {
@@ -334,7 +334,7 @@ void compute_rhs()
   }
 
   k = 2;
-  #pragma acc parallel loop private(i,j,m)
+  //#pragma acc parallel loop private(i,j,m)
   for (j = 1; j <= grid_points[1]-2; j++) {
     //#pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {
@@ -346,7 +346,7 @@ void compute_rhs()
     }
   }
 
-  #pragma acc parallel loop private(i,j,k,m)
+  //#pragma acc parallel loop private(i,j,k,m)
   for (k = 3; k <= grid_points[2]-4; k++) {
     //#pragma acc loop
     for (j = 1; j <= grid_points[1]-2; j++) {
@@ -363,7 +363,7 @@ void compute_rhs()
   }
 
   k = grid_points[2]-3;
-  #pragma acc parallel loop private(i,j,m)
+  //#pragma acc parallel loop private(i,j,m)
   for (j = 1; j <= grid_points[1]-2; j++) {
     //#pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {
@@ -376,7 +376,7 @@ void compute_rhs()
   }
 
   k = grid_points[2]-2;
-  #pragma acc parallel loop private(i,j,m)
+  //#pragma acc parallel loop private(i,j,m)
   for (j = 1; j <= grid_points[1]-2; j++) {
     //#pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {
@@ -390,7 +390,7 @@ void compute_rhs()
 
   if (timeron) timer_stop(t_rhsz);
 
-  #pragma acc parallel loop private(i,j,k,m)
+  //#pragma acc parallel loop private(i,j,k,m)
   for (k = 1; k <= grid_points[2]-2; k++) {
     //#pragma acc loop
     for (j = 1; j <= grid_points[1]-2; j++) {

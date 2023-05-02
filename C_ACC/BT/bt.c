@@ -164,10 +164,10 @@ int main(int argc, char *argv[])
   timer_stop(1);
   tmax = timer_read(1);
 
-  #pragma acc exit data copyout(u[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5],rhs[0:KMAX][0:JMAXP+1][0:IMAXP+1][5]) delete(rhs,ce,grid_points,u,forcing,rho_i,us,vs,ws,qs,square,fjac,njac,lhs)
-
+  #pragma acc exit data copyout(u[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5],rhs[0:KMAX][0:JMAXP+1][0:IMAXP+1][5],forcing[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5]) delete(ce,grid_points,rho_i,us,vs,ws,qs,square,fjac,njac,lhs)
+//delete(rhs,ce,grid_points,u,forcing,rho_i,us,vs,ws,qs,square,fjac,njac,lhs)
   verify(niter, &Class, &verified);
-
+  #pragma acc exit data delete(rhs,u,forcing)
 
   n3 = 1.0*grid_points[0]*grid_points[1]*grid_points[2];
   navg = (grid_points[0]+grid_points[1]+grid_points[2])/3.0;
