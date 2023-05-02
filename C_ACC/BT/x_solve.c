@@ -43,7 +43,7 @@ void x_lhsinit(int k, int j, int ni, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][
 }
 
 //#pragma acc routine
-void x_matvec_sub(int k, int j, int i, int first, int second, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5], rhs[KMAX][JMAXP+1][IMAXP+1][5])//(double ablock[5][5], double avec[5], double bvec[5])//x_matvec_sub(k, j, i, AA, i-1);//x_matvec_sub(lhs[k][j][i][first], rhs[k][j][second], rhs[k][j][i]);
+void x_matvec_sub(int k, int j, int i, int first, int second, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5], double rhs[KMAX][JMAXP+1][IMAXP+1][5])//(double ablock[5][5], double avec[5], double bvec[5])//x_matvec_sub(k, j, i, AA, i-1);//x_matvec_sub(lhs[k][j][i][first], rhs[k][j][second], rhs[k][j][i]);
 {
   //---------------------------------------------------------------------
   // rhs[kc][jc][ic][i] = rhs[kc][jc][ic][i] 
@@ -213,7 +213,7 @@ void x_matmul_sub(int k, int j, int i, int first, int second, int third, int for
 
 
 //#pragma acc routine
-void x_binvcrhs(int k, int j, int i, int first, int second, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5], rhs[KMAX][JMAXP+1][IMAXP+1][5])//(double lhs[5][5], double c[5][5], double r[5]) //x_binvcrhs( lhs[k][j][i][BB], lhs[k][j][i][CC][, rhs[k][j][i][ );
+void x_binvcrhs(int k, int j, int i, int first, int second, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5], double rhs[KMAX][JMAXP+1][IMAXP+1][5])//(double lhs[5][5], double c[5][5], double r[5]) //x_binvcrhs( lhs[k][j][i][BB], lhs[k][j][i][CC][, rhs[k][j][i][ );
 {
   double pivot, coeff;
 
@@ -475,7 +475,7 @@ void x_binvcrhs(int k, int j, int i, int first, int second, double lhs[PROBLEM_S
 
 //#pragma acc routine
 //x_binvrhs( k, j, isize, BB );//x_binvrhs( lhs[k][j][i][first], rhs[k][j][i][ );
-void x_binvrhs(int k, int j, int i, int first, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5], rhs[KMAX][JMAXP+1][IMAXP+1][5])//(double lhs[5][5], double r[5])
+void x_binvrhs(int k, int j, int i, int first, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5], double rhs[KMAX][JMAXP+1][IMAXP+1][5])//(double lhs[5][5], double r[5])
 {
   double pivot, coeff;
 
