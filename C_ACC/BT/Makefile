@@ -9,8 +9,7 @@ include ../sys/make.common
 
 OBJS = bt.o  initialize.o exact_solution.o exact_rhs.o \
        set_constants.o adi.o  rhs.o      \
-       x_solve$(VEC).o y_solve$(VEC).o solve_subs.o\
-       z_solve$(VEC).o add.o error.o verify.o \
+       add.o error.o verify.o \
        ${COMMON}/print_results.o ${COMMON}/c_timers.o ${COMMON}/wtime.o
 
 
@@ -45,12 +44,12 @@ initialize.o:     initialize.c  header.h npbparams.h
 exact_solution.o: exact_solution.c  header.h npbparams.h
 exact_rhs.o:      exact_rhs.c  header.h npbparams.h
 set_constants.o:  set_constants.c  header.h npbparams.h
-adi.o:            adi.c  header.h npbparams.h
+adi.o:            adi.c  header.h solve_subs.h x_solve.h y_solve.h z_solve.h npbparams.h
 rhs.o:            rhs.c  header.h npbparams.h
-x_solve$(VEC).o:  x_solve$(VEC).c  header.h work_lhs$(VEC).h npbparams.h
-y_solve$(VEC).o:  y_solve$(VEC).c  header.h work_lhs$(VEC).h npbparams.h
-z_solve$(VEC).o:  z_solve$(VEC).c  header.h work_lhs$(VEC).h npbparams.h
-solve_subs.o:     solve_subs.c  npbparams.h
+#x_solve$(VEC).o:  x_solve$(VEC).c  header.h work_lhs$(VEC).h npbparams.h
+#y_solve$(VEC).o:  y_solve$(VEC).c  header.h work_lhs$(VEC).h npbparams.h
+#z_solve$(VEC).o:  z_solve$(VEC).c  header.h work_lhs$(VEC).h npbparams.h
+#solve_subs.o:     solve_subs.c  npbparams.h
 add.o:            add.c  header.h npbparams.h
 error.o:          error.c  header.h npbparams.h
 verify.o:         verify.c  header.h npbparams.h
