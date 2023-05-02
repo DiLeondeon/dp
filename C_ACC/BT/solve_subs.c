@@ -563,6 +563,7 @@ void binvrhs(double lhs[5][5], double r[5])
   r[3]   = r[3]   - coeff*r[4];
 }
 */
+#include "header.h"
 #pragma acc routine
 void matvec_sub(int k1, int j1, int i1, int first, int k2, int j2, int i2, int k3, int j3, int i3, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5], double rhs[KMAX][JMAXP+1][IMAXP+1][5])//(double ablock[5][5], double avec[5], double bvec[5])//x_matvec_sub(k, j, i, AA, i-1);//x_matvec_sub(lhs[k][j][i][first], rhs[k][j][second], rhs[k][j][i]);
 {
