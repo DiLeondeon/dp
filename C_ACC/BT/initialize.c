@@ -312,7 +312,7 @@ void initialize()
     lhs[i][1][n][n] = 1.0;
   }
 }*/
-#pragma acc routine
+/*#pragma acc routine
 void lhsinit(int k, int j, int ni, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5])//(double lhs[][3][5][5], int ni)
 {
   int i, m, n;
@@ -339,4 +339,4 @@ void lhsinit(int k, int j, int ni, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PR
     }
     lhs[k][j][i][1][n][n] = 1.0;
   }
-}
+}*/

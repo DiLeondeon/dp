@@ -1,4 +1,6 @@
 #include "header.h"
+#include "solve_subs.h"
+#include "x_solve.h"
 
 void adi()
 {
