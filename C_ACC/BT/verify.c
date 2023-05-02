@@ -20,6 +20,7 @@ void verify(int no_time_steps, char *Class, logical *verified)
   //---------------------------------------------------------------------
   error_norm(xce);
   compute_rhs();
+  #pragma acc exit data copyout(rhs[0:KMAX][0:JMAXP+1][0:IMAXP+1][5])
 
   rhs_norm(xcr);
 
