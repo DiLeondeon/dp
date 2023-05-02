@@ -14,7 +14,7 @@
 // of the sweep.
 // 
 //---------------------------------------------------------------------
-/*void x_lhsinit(int k, int j, int ni, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5])//(double lhs[][3][5][5], int ni)
+void x_lhsinit(int k, int j, int ni, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5])//(double lhs[][3][5][5], int ni)
 {
   int i, m, n;
 
@@ -616,7 +616,7 @@ void x_binvrhs(int k1, int j1, int i1, int first, int k2, int j2, int i2, double
 
   coeff = lhs[k1][j1][i1][first][4][3];
   rhs[k2][j2][i2][3]   = rhs[k2][j2][i2][3]   - coeff*rhs[k2][j2][i2][4];
-}*/
+}
 
 void x_solve()
 {
@@ -725,7 +725,7 @@ void x_solve()
       // now jacobians set, so form left hand side in x direction
       //---------------------------------------------------------------------
       //#pragma acc routine (lhsinit) worker
-      lhsinit(k, j, isize, lhs);//x_lhsinit(lhs[k][j], isize);
+      x_lhsinit(k, j, isize, lhs);//x_lhsinit(lhs[k][j], isize);
       for (i = 1; i <= isize-1; i++) {
         tmp1 = dt * tx1;
         tmp2 = dt * tx2;
@@ -913,7 +913,7 @@ void x_solve()
       // multiply rhs(0) by b_inverse(0) and copy to rhs
       //---------------------------------------------------------------------
       //#pragma acc routine (binvcrhs) worker
-      binvcrhs( k, j, 0, BB, k, j, 0, CC, k, j, 0, lhs, rhs );//x_binvcrhs( lhs[k][j][0][BB], lhs[k][j][0][CC], rhs[k][j][0] );
+      x_binvcrhs( k, j, 0, BB, k, j, 0, CC, k, j, 0, lhs, rhs );//x_binvcrhs( lhs[k][j][0][BB], lhs[k][j][0][CC], rhs[k][j][0] );
 
       //---------------------------------------------------------------------
       // begin inner most do loop
@@ -924,13 +924,13 @@ void x_solve()
         // rhs(i) = rhs(i) - A*rhs(i-1)
         //-------------------------------------------------------------------
         //#pragma acc routine (matvec_sub) worker
-        matvec_sub(k, j, i, AA, k, j, i-1, k, j, i, lhs, rhs);//x_matvec_sub(lhs[k][j][i][AA], rhs[k][j][i-1], rhs[k][j][i]);
+        x_matvec_sub(k, j, i, AA, k, j, i-1, k, j, i, lhs, rhs);//x_matvec_sub(lhs[k][j][i][AA], rhs[k][j][i-1], rhs[k][j][i]);
 
         //-------------------------------------------------------------------
         // B(i) = B(i) - C(i-1)*A(i)
         //-------------------------------------------------------------------
         //#pragma acc routine (matmul_sub) worker
-        matmul_sub(k, j, i, AA, k, j, i-1, CC, k, j, i, BB, lhs);//x_matmul_sub(lhs[k][j][i][AA], lhs[k][j][i-1][CC], lhs[k][j][i][BB]);
+        x_matmul_sub(k, j, i, AA, k, j, i-1, CC, k, j, i, BB, lhs);//x_matmul_sub(lhs[k][j][i][AA], lhs[k][j][i-1][CC], lhs[k][j][i][BB]);
 
 
         //-------------------------------------------------------------------
@@ -938,26 +938,26 @@ void x_solve()
         // multiply rhs[k][j][0] by b_inverse[k][j][0] and copy to rhs
         //-------------------------------------------------------------------
         //#pragma acc routine (binvcrhs) worker
-        binvcrhs( k, j, i, BB, k, j, i, CC, k, j, i, lhs, rhs );//x_binvcrhs( lhs[k][j][i][BB], lhs[k][j][i][CC], rhs[k][j][i] );
+        x_binvcrhs( k, j, i, BB, k, j, i, CC, k, j, i, lhs, rhs );//x_binvcrhs( lhs[k][j][i][BB], lhs[k][j][i][CC], rhs[k][j][i] );
       }
 
       //---------------------------------------------------------------------
       // rhs(isize) = rhs(isize) - A*rhs(isize-1)
       //---------------------------------------------------------------------
       //#pragma acc routine (matvec_sub) worker
-      matvec_sub(k, j, isize, AA, k, j, isize-1, k, j, isize, lhs, rhs);//x_matvec_sub(lhs[k][j][isize][AA], rhs[k][j][isize-1], rhs[k][j][isize]);
+      x_matvec_sub(k, j, isize, AA, k, j, isize-1, k, j, isize, lhs, rhs);//x_matvec_sub(lhs[k][j][isize][AA], rhs[k][j][isize-1], rhs[k][j][isize]);
 
       //---------------------------------------------------------------------
       // B(isize) = B(isize) - C(isize-1)*A(isize)
       //---------------------------------------------------------------------
       //#pragma acc routine (matmul_sub) worker
-      matmul_sub(k, j, isize, AA, k, j, isize-1, CC, k, j, isize, BB, lhs);//x_matmul_sub(lhs[k][j][isize][AA], lhs[k][j][isize-1][CC], lhs[k][j][isize][BB]);
+      x_matmul_sub(k, j, isize, AA, k, j, isize-1, CC, k, j, isize, BB, lhs);//x_matmul_sub(lhs[k][j][isize][AA], lhs[k][j][isize-1][CC], lhs[k][j][isize][BB]);
 
       //---------------------------------------------------------------------
       // multiply rhs() by b_inverse() and copy to rhs
       //---------------------------------------------------------------------
       //#pragma acc routine (binvrhs) worker
-      binvrhs( k, j, isize, BB, k, j, isize, lhs, rhs );//x_binvrhs( lhs[k][j][isize][BB], rhs[k][j][isize] );
+      x_binvrhs( k, j, isize, BB, k, j, isize, lhs, rhs );//x_binvrhs( lhs[k][j][isize][BB], rhs[k][j][isize] );
 
       //---------------------------------------------------------------------
       // back solve: if last cell, then generate U(isize)=rhs(isize)
