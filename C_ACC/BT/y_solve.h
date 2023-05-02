@@ -36,9 +36,9 @@ void y_solve()
   //---------------------------------------------------------------------
   #pragma acc parallel loop private(i,j,k,m,n,tmp1,tmp2,tmp3)
   for (k = 1; k <= grid_points[2]-2; k++) {
-    //#pragma acc loop
+    #pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {
-      //#pragma acc loop
+      #pragma acc loop
       for (j = 0; j <= jsize; j++) {
         tmp1 = rho_i[k][j][i];
         tmp2 = tmp1 * tmp1;
