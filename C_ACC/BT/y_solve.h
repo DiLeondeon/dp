@@ -36,7 +36,7 @@ void y_solve()
   //---------------------------------------------------------------------
   //#pragma acc parallel num_gangs(32) num_workers(16) vector_length(128) private(i,j,k,m,n,tmp1,tmp2,tmp3)
   //{
-  #pragma acc parallel loop gang vector_length(128) private(i,j,k,m,n,tmp1,tmp2,tmp3)
+  #pragma acc parallel loop gang worker num_workers(16) vector_length(128) private(i,j,k,m,n,tmp1,tmp2,tmp3)
   for (k = 1; k <= grid_points[2]-2; k++) {
     #pragma acc loop vector
     for (i = 1; i <= grid_points[0]-2; i++) {
