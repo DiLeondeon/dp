@@ -38,9 +38,9 @@ void x_solve()
   //---------------------------------------------------------------------
   #pragma acc parallel loop collapse(2) private(i,j,k,m,n,tmp1,tmp2,tmp3)
   for (k = 1; k <= grid_points[2]-2; k++) {
-    #pragma acc loop 
+    //#pragma acc loop 
     for (j = 1; j <= grid_points[1]-2; j++) {
-      #pragma acc loop
+      //#pragma acc loop
       for (i = 0; i <= isize; i++) {
         tmp1 = rho_i[k][j][i];
         tmp2 = tmp1 * tmp1;
