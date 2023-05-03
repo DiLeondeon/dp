@@ -136,8 +136,8 @@ int main(int argc, char *argv[])
                                 vs[0:KMAX][0:JMAXP+1][0:IMAXP+1],ws[0:KMAX][0:JMAXP+1][0:IMAXP+1],\
                                 qs[0:KMAX][0:JMAXP+1][0:IMAXP+1],square[0:KMAX][0:JMAXP+1][0:IMAXP+1],\
                                 rhs[0:KMAX][0:JMAXP+1][0:IMAXP+1][5],\
-                                fjac[0:PROBLEM_SIZE+1][PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5][0:5],njac[0:PROBLEM_SIZE+1][PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5][0:5],\
-                                lhs[0:PROBLEM_SIZE+1][PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:3][0:5][0:5]) 
+                                fjac[0:5][0:5][0:PROBLEM_SIZE+1][PROBLEM_SIZE+1][0:PROBLEM_SIZE+1],njac[0:5][0:5][0:PROBLEM_SIZE+1][PROBLEM_SIZE+1][0:PROBLEM_SIZE+1],\
+                                lhs[0:3][0:5][0:5][0:PROBLEM_SIZE+1][PROBLEM_SIZE+1][0:PROBLEM_SIZE+1]) 
   
   
   //---------------------------------------------------------------------
