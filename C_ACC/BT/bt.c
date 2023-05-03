@@ -3,7 +3,7 @@
 #include "header.h"
 #include "timers.h"
 #include "print_results.h"
-///////it works succsessfully
+///////it works succsessfully with collapse speed ~x2
 /* common /global/ */
 double elapsed_time;
 int grid_points[3];
