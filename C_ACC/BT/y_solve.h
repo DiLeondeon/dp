@@ -34,7 +34,7 @@ void y_solve()
   // Compute the indices for storing the tri-diagonal matrix;
   // determine a (labeled f) and n jacobians for cell c
   //---------------------------------------------------------------------
-  #pragma acc parallel num_gangs(64) num_workers(64) vector_length(64) private(i,j,k,m,n,tmp1,tmp2,tmp3)
+  #pragma acc parallel num_gangs(64) num_workers(16) vector_length(64) private(i,j,k,m,n,tmp1,tmp2,tmp3)
   {
   #pragma acc loop gang
   for (k = 1; k <= grid_points[2]-2; k++) {
