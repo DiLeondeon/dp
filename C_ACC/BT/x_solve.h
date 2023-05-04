@@ -36,7 +36,7 @@ void x_solve()
   //---------------------------------------------------------------------
   // determine a (labeled f) and n jacobians
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m,n,tmp1,tmp2,tmp3)
+  #pragma acc parallel loop collapse(2) private(i,j,k,m,n,tmp1,tmp2,tmp3)
   for (k = 1; k <= grid_points[2]-2; k++) {
     //#pragma acc loop 
     for (j = 1; j <= grid_points[1]-2; j++) {
