@@ -37,9 +37,9 @@ void x_solve()
   //---------------------------------------------------------------------
   // determine a (labeled f) and n jacobians
   //---------------------------------------------------------------------
-  #pragma acc parallel loop collapse(2) private(i,j,k,m,m1,n,tmp1,tmp2,tmp3,pivot,coeff)
+  #pragma acc parallel loop private(i,j,k,m,m1,n,tmp1,tmp2,tmp3,pivot,coeff)
   for (k = 1; k <= ksize; k++) {
-    //#pragma acc loop 
+    #pragma acc loop 
     for (j = 1; j <= jsize; j++) {
       //#pragma acc loop
       for (i = 0; i <= isize; i++) {

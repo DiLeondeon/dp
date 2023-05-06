@@ -39,7 +39,7 @@ void exact_rhs()
   }
   //#pragma acc enter data create(ue[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],buf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],\
                                 cuf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1],q[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1])
-  printf("1\n");
+  
   //---------------------------------------------------------------------
   // xi-direction flux differences                      
   //---------------------------------------------------------------------
@@ -52,7 +52,7 @@ void exact_rhs()
         zeta = (double)(k) * dnzm1;
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
-        //#pragma acc routine (exact_solution) worker
+        //
         //exact_solution(xi, eta, zeta, dtemp, ce);
         
 
@@ -145,7 +145,7 @@ void exact_rhs()
       }
     }
   }
-  printf("2\n");
+  
 
   //---------------------------------------------------------------------
   // eta-direction flux differences             
@@ -159,7 +159,7 @@ void exact_rhs()
         zeta = (double)(k) * dnzm1;
         xi = (double)(i) * dnxm1;
         eta = (double)(j) * dnym1;
-        //#pragma acc routine (exact_solution) worker
+        //
         //exact_solution(xi, eta, zeta, dtemp, ce);
         
 
@@ -252,7 +252,7 @@ void exact_rhs()
       }
     }
   }
-  printf("3\n");
+  
   //---------------------------------------------------------------------
   // zeta-direction flux differences                     
   //---------------------------------------------------------------------
@@ -265,7 +265,7 @@ void exact_rhs()
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
         zeta = (double)(k) * dnzm1;
-        //#pragma acc routine (exact_solution) worker
+        //
         //exact_solution(xi, eta, zeta, dtemp, ce);
         
 
@@ -359,7 +359,7 @@ void exact_rhs()
 
     }
   }
-  printf("4\n");
+  
   #pragma acc enter data copyin(forcing[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5])
   //---------------------------------------------------------------------
   // now change the sign of the forcing function, 
