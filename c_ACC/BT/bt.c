@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
     timer_clear(i);
   }
   timer_start(1);
-
+  #pragma acc cache(rho_i[0:KMAX][0:JMAXP+1][0:IMAXP+1],square[0:KMAX][0:JMAXP+1][0:IMAXP+1])
   for (step = 1; step <= niter; step++) {
     if ((step % 20) == 0 || step == 1) {
       printf(" Time step %4d\n", step);

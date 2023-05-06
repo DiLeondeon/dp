@@ -54,7 +54,7 @@ void exact_rhs()
         xi = (double)(i) * dnxm1;
         #pragma acc routine (exact_solution) worker
         exact_solution(xi, eta, zeta, dtemp, ce);
-        /*int m;
+        /*
 
         for (m = 0; m < 5; m++) {
           dtemp[m] =  ce[m][0] +
@@ -160,7 +160,7 @@ void exact_rhs()
         eta = (double)(j) * dnym1;
         #pragma acc routine (exact_solution) worker
         exact_solution(xi, eta, zeta, dtemp, ce);
-        /*int m;
+        /*
 
         for (m = 0; m < 5; m++) {
           dtemp[m] =  ce[m][0] +
@@ -266,7 +266,7 @@ void exact_rhs()
         zeta = (double)(k) * dnzm1;
         #pragma acc routine (exact_solution) worker
         exact_solution(xi, eta, zeta, dtemp, ce);
-        /*int m;
+        /*
 
         for (m = 0; m < 5; m++) {
           dtemp[m] =  ce[m][0] +
