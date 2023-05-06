@@ -205,9 +205,9 @@ void matmul_sub(int k1, int j1, int i1, int first, int k2, int j2, int i2, int s
 void binvcrhs(int k1, int j1, int i1, int first, int k2, int j2, int i2, int second, int k3, int j3, int i3, double lhs[PROBLEM_SIZE+1][PROBLEM_SIZE+1][PROBLEM_SIZE+1][3][5][5], double rhs[KMAX][JMAXP+1][IMAXP+1][5])//(double lhs[5][5], double c[5][5], double r[5]) //x_binvcrhs( lhs[k][j][i][BB], lhs[k][j][i][CC][, rhs[k][j][i][ );
 {
   double pivot, coeff;
-  int m1;
+  int n,m,m1;
 
-  for (m=0;m<5:m++){
+  for (m=0;m<5;m++){
     pivot = 1.00/lhs[k1][j1][i1][first][m][m];
     for (n=m+1;n<5;n++){
       lhs[k1][j1][i1][first][n][m] = lhs[k1][j1][i1][first][n][m]*pivot;
@@ -481,8 +481,8 @@ void binvcrhs(int k1, int j1, int i1, int first, int k2, int j2, int i2, int sec
   lhs[k2][j2][i2][second][2][3] = lhs[k2][j2][i2][second][2][3] - coeff*lhs[k2][j2][i2][second][2][4];
   lhs[k2][j2][i2][second][3][3] = lhs[k2][j2][i2][second][3][3] - coeff*lhs[k2][j2][i2][second][3][4];
   lhs[k2][j2][i2][second][4][3] = lhs[k2][j2][i2][second][4][3] - coeff*lhs[k2][j2][i2][second][4][4];
-  rhs[k3][j3][i3][3]   = rhs[k3][j3][i3][3]   - coeff*rhs[k3][j3][i3][4];
-}*/
+  rhs[k3][j3][i3][3]   = rhs[k3][j3][i3][3]   - coeff*rhs[k3][j3][i3][4];*/
+}
 
 
 //#pragma acc routine
