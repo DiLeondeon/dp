@@ -25,7 +25,7 @@ void exact_rhs()
   // initialize                                  
   //---------------------------------------------------------------------
 
-  #pragma acc parallel loop private(i,j,k,m)
+  //#pragma acc parallel loop private(i,j,k,m)
   for (k = 0; k <= grid_points[2]-1; k++) {
     //#pragma acc loop
     for (j = 0; j <= grid_points[1]-1; j++) {
@@ -37,7 +37,7 @@ void exact_rhs()
       }
     } 
   }
-  #pragma acc enter data create(ue[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],buf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],\
+  //#pragma acc enter data create(ue[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],buf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],\
                                 cuf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1],q[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1])
   printf("1\n");
   //---------------------------------------------------------------------
@@ -150,7 +150,7 @@ void exact_rhs()
   //---------------------------------------------------------------------
   // eta-direction flux differences             
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,jm1,jp1,dtemp)
+  //#pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,jm1,jp1,dtemp)
   for (k = 1; k <= grid_points[2]-2; k++) {
     //#pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {
@@ -256,7 +256,7 @@ void exact_rhs()
   //---------------------------------------------------------------------
   // zeta-direction flux differences                     
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,km1,kp1,dtemp)
+  //#pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,km1,kp1,dtemp)
   for (j = 1; j <= grid_points[1]-2; j++) {
     //#pragma acc loop
     for (i = 1; i <= grid_points[0]-2; i++) {
@@ -360,7 +360,7 @@ void exact_rhs()
     }
   }
   printf("4\n");
-  #pragma acc exit data delete(ue,buf,cuf,q)
+  #pragma acc enter data copyin(forcing[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5])
   //---------------------------------------------------------------------
   // now change the sign of the forcing function, 
   //---------------------------------------------------------------------

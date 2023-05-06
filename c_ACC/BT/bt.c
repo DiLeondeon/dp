@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
     timer_clear(i);
   }
 
-  #pragma acc enter data copyin(grid_points[0:3],ce[0:5][0:13]) create(u[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5],forcing[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5]) 
+  #pragma acc enter data copyin(grid_points[0:3],ce[0:5][0:13]) create(u[0:KMAX][0:JMAXP+1][0:IMAXP+1][0:5]) 
 
   initialize();
 
