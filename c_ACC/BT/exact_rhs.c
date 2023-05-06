@@ -1,5 +1,5 @@
 #include "header.h"
-
+#include <stdio.h>
 //---------------------------------------------------------------------
 // compute the right hand side based on exact solution
 //---------------------------------------------------------------------
@@ -39,7 +39,7 @@ void exact_rhs()
   }
   #pragma acc enter data create(ue[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],buf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:5],\
                                 cuf[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1],q[0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1][0:PROBLEM_SIZE+1])
-
+  printf("1\n");
   //---------------------------------------------------------------------
   // xi-direction flux differences                      
   //---------------------------------------------------------------------
@@ -52,9 +52,9 @@ void exact_rhs()
         zeta = (double)(k) * dnzm1;
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
-        #pragma acc routine (exact_solution) worker
-        exact_solution(xi, eta, zeta, dtemp, ce);
-        /*
+        //#pragma acc routine (exact_solution) worker
+        //exact_solution(xi, eta, zeta, dtemp, ce);
+        
 
         for (m = 0; m < 5; m++) {
           dtemp[m] =  ce[m][0] +
@@ -62,7 +62,7 @@ void exact_rhs()
           eta*(ce[m][2] + eta*(ce[m][5] + eta*(ce[m][8] + eta*ce[m][11])))+
           zeta*(ce[m][3] + zeta*(ce[m][6] + zeta*(ce[m][9] + 
           zeta*ce[m][12])));
-        }*/
+        }
         for (m = 0; m < 5; m++) {
           ue[k][j][i][m] = dtemp[m];
         }
@@ -145,6 +145,7 @@ void exact_rhs()
       }
     }
   }
+  printf("2\n");
 
   //---------------------------------------------------------------------
   // eta-direction flux differences             
@@ -158,9 +159,9 @@ void exact_rhs()
         zeta = (double)(k) * dnzm1;
         xi = (double)(i) * dnxm1;
         eta = (double)(j) * dnym1;
-        #pragma acc routine (exact_solution) worker
-        exact_solution(xi, eta, zeta, dtemp, ce);
-        /*
+        //#pragma acc routine (exact_solution) worker
+        //exact_solution(xi, eta, zeta, dtemp, ce);
+        
 
         for (m = 0; m < 5; m++) {
           dtemp[m] =  ce[m][0] +
@@ -168,7 +169,7 @@ void exact_rhs()
           eta*(ce[m][2] + eta*(ce[m][5] + eta*(ce[m][8] + eta*ce[m][11])))+
           zeta*(ce[m][3] + zeta*(ce[m][6] + zeta*(ce[m][9] + 
           zeta*ce[m][12])));
-        }*/
+        }
         for (m = 0; m < 5; m++) {
           ue[k][i][j][m] = dtemp[m];
         }
@@ -251,7 +252,7 @@ void exact_rhs()
       }
     }
   }
-
+  printf("3\n");
   //---------------------------------------------------------------------
   // zeta-direction flux differences                     
   //---------------------------------------------------------------------
@@ -264,9 +265,9 @@ void exact_rhs()
         eta = (double)(j) * dnym1;
         xi = (double)(i) * dnxm1;
         zeta = (double)(k) * dnzm1;
-        #pragma acc routine (exact_solution) worker
-        exact_solution(xi, eta, zeta, dtemp, ce);
-        /*
+        //#pragma acc routine (exact_solution) worker
+        //exact_solution(xi, eta, zeta, dtemp, ce);
+        
 
         for (m = 0; m < 5; m++) {
           dtemp[m] =  ce[m][0] +
@@ -274,7 +275,7 @@ void exact_rhs()
           eta*(ce[m][2] + eta*(ce[m][5] + eta*(ce[m][8] + eta*ce[m][11])))+
           zeta*(ce[m][3] + zeta*(ce[m][6] + zeta*(ce[m][9] + 
           zeta*ce[m][12])));
-        }*/
+        }
         for (m = 0; m < 5; m++) {
           ue[j][i][k][m] = dtemp[m];
         }
@@ -358,6 +359,7 @@ void exact_rhs()
 
     }
   }
+  printf("4\n");
   #pragma acc exit data delete(ue,buf,cuf,q)
   //---------------------------------------------------------------------
   // now change the sign of the forcing function, 
