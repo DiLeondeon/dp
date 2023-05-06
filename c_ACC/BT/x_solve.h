@@ -371,7 +371,132 @@ void x_solve()
         // B(i) = B(i) - C(i-1)*A(i)
         //-------------------------------------------------------------------
         //#pragma acc routine (matmul_sub) worker
-        matmul_sub(k, j, i, AA, k, j, i-1, CC, k, j, i, BB, lhs);//x_matmul_sub(lhs[k][j][i][AA], lhs[k][j][i-1][CC], lhs[k][j][i][BB]);
+        //matmul_sub(k, j, i, AA, k, j, i-1, CC, k, j, i, BB, lhs);//x_matmul_sub(lhs[k][j][i][AA], lhs[k][j][i-1][CC], lhs[k][j][i][BB]);
+        lhs[k][j][i][BB][0][0] = lhs[k][j][i][BB][0][0] - lhs[k][j][i][AA][0][0]*lhs[k][j][i-1][CC][0][0]
+                              - lhs[k][j][i][AA][1][0]*lhs[k][j][i-1][CC][0][1]
+                              - lhs[k][j][i][AA][2][0]*lhs[k][j][i-1][CC][0][2]
+                              - lhs[k][j][i][AA][3][0]*lhs[k][j][i-1][CC][0][3]
+                              - lhs[k][j][i][AA][4][0]*lhs[k][j][i-1][CC][0][4];
+        lhs[k][j][i][BB][0][1] = lhs[k][j][i][BB][0][1] - lhs[k][j][i][AA][0][1]*lhs[k][j][i-1][CC][0][0]
+                              - lhs[k][j][i][AA][1][1]*lhs[k][j][i-1][CC][0][1]
+                              - lhs[k][j][i][AA][2][1]*lhs[k][j][i-1][CC][0][2]
+                              - lhs[k][j][i][AA][3][1]*lhs[k][j][i-1][CC][0][3]
+                              - lhs[k][j][i][AA][4][1]*lhs[k][j][i-1][CC][0][4];
+        lhs[k][j][i][BB][0][2] = lhs[k][j][i][BB][0][2] - lhs[k][j][i][AA][0][2]*lhs[k][j][i-1][CC][0][0]
+                              - lhs[k][j][i][AA][1][2]*lhs[k][j][i-1][CC][0][1]
+                              - lhs[k][j][i][AA][2][2]*lhs[k][j][i-1][CC][0][2]
+                              - lhs[k][j][i][AA][3][2]*lhs[k][j][i-1][CC][0][3]
+                              - lhs[k][j][i][AA][4][2]*lhs[k][j][i-1][CC][0][4];
+        lhs[k][j][i][BB][0][3] = lhs[k][j][i][BB][0][3] - lhs[k][j][i][AA][0][3]*lhs[k][j][i-1][CC][0][0]
+                              - lhs[k][j][i][AA][1][3]*lhs[k][j][i-1][CC][0][1]
+                              - lhs[k][j][i][AA][2][3]*lhs[k][j][i-1][CC][0][2]
+                              - lhs[k][j][i][AA][3][3]*lhs[k][j][i-1][CC][0][3]
+                              - lhs[k][j][i][AA][4][3]*lhs[k][j][i-1][CC][0][4];
+        lhs[k][j][i][BB][0][4] = lhs[k][j][i][BB][0][4] - lhs[k][j][i][AA][0][4]*lhs[k][j][i-1][CC][0][0]
+                              - lhs[k][j][i][AA][1][4]*lhs[k][j][i-1][CC][0][1]
+                              - lhs[k][j][i][AA][2][4]*lhs[k][j][i-1][CC][0][2]
+                              - lhs[k][j][i][AA][3][4]*lhs[k][j][i-1][CC][0][3]
+                              - lhs[k][j][i][AA][4][4]*lhs[k][j][i-1][CC][0][4];
+        lhs[k][j][i][BB][1][0] = lhs[k][j][i][BB][1][0] - lhs[k][j][i][AA][0][0]*lhs[k][j][i-1][CC][1][0]
+                              - lhs[k][j][i][AA][1][0]*lhs[k][j][i-1][CC][1][1]
+                              - lhs[k][j][i][AA][2][0]*lhs[k][j][i-1][CC][1][2]
+                              - lhs[k][j][i][AA][3][0]*lhs[k][j][i-1][CC][1][3]
+                              - lhs[k][j][i][AA][4][0]*lhs[k][j][i-1][CC][1][4];
+        lhs[k][j][i][BB][1][1] = lhs[k][j][i][BB][1][1] - lhs[k][j][i][AA][0][1]*lhs[k][j][i-1][CC][1][0]
+                              - lhs[k][j][i][AA][1][1]*lhs[k][j][i-1][CC][1][1]
+                              - lhs[k][j][i][AA][2][1]*lhs[k][j][i-1][CC][1][2]
+                              - lhs[k][j][i][AA][3][1]*lhs[k][j][i-1][CC][1][3]
+                              - lhs[k][j][i][AA][4][1]*lhs[k][j][i-1][CC][1][4];
+        lhs[k][j][i][BB][1][2] = lhs[k][j][i][BB][1][2] - lhs[k][j][i][AA][0][2]*lhs[k][j][i-1][CC][1][0]
+                              - lhs[k][j][i][AA][1][2]*lhs[k][j][i-1][CC][1][1]
+                              - lhs[k][j][i][AA][2][2]*lhs[k][j][i-1][CC][1][2]
+                              - lhs[k][j][i][AA][3][2]*lhs[k][j][i-1][CC][1][3]
+                              - lhs[k][j][i][AA][4][2]*lhs[k][j][i-1][CC][1][4];
+        lhs[k][j][i][BB][1][3] = lhs[k][j][i][BB][1][3] - lhs[k][j][i][AA][0][3]*lhs[k][j][i-1][CC][1][0]
+                              - lhs[k][j][i][AA][1][3]*lhs[k][j][i-1][CC][1][1]
+                              - lhs[k][j][i][AA][2][3]*lhs[k][j][i-1][CC][1][2]
+                              - lhs[k][j][i][AA][3][3]*lhs[k][j][i-1][CC][1][3]
+                              - lhs[k][j][i][AA][4][3]*lhs[k][j][i-1][CC][1][4];
+        lhs[k][j][i][BB][1][4] = lhs[k][j][i][BB][1][4] - lhs[k][j][i][AA][0][4]*lhs[k][j][i-1][CC][1][0]
+                              - lhs[k][j][i][AA][1][4]*lhs[k][j][i-1][CC][1][1]
+                              - lhs[k][j][i][AA][2][4]*lhs[k][j][i-1][CC][1][2]
+                              - lhs[k][j][i][AA][3][4]*lhs[k][j][i-1][CC][1][3]
+                              - lhs[k][j][i][AA][4][4]*lhs[k][j][i-1][CC][1][4];
+        lhs[k][j][i][BB][2][0] = lhs[k][j][i][BB][2][0] - lhs[k][j][i][AA][0][0]*lhs[k][j][i-1][CC][2][0]
+                              - lhs[k][j][i][AA][1][0]*lhs[k][j][i-1][CC][2][1]
+                              - lhs[k][j][i][AA][2][0]*lhs[k][j][i-1][CC][2][2]
+                              - lhs[k][j][i][AA][3][0]*lhs[k][j][i-1][CC][2][3]
+                              - lhs[k][j][i][AA][4][0]*lhs[k][j][i-1][CC][2][4];
+        lhs[k][j][i][BB][2][1] = lhs[k][j][i][BB][2][1] - lhs[k][j][i][AA][0][1]*lhs[k][j][i-1][CC][2][0]
+                              - lhs[k][j][i][AA][1][1]*lhs[k][j][i-1][CC][2][1]
+                              - lhs[k][j][i][AA][2][1]*lhs[k][j][i-1][CC][2][2]
+                              - lhs[k][j][i][AA][3][1]*lhs[k][j][i-1][CC][2][3]
+                              - lhs[k][j][i][AA][4][1]*lhs[k][j][i-1][CC][2][4];
+        lhs[k][j][i][BB][2][2] = lhs[k][j][i][BB][2][2] - lhs[k][j][i][AA][0][2]*lhs[k][j][i-1][CC][2][0]
+                              - lhs[k][j][i][AA][1][2]*lhs[k][j][i-1][CC][2][1]
+                              - lhs[k][j][i][AA][2][2]*lhs[k][j][i-1][CC][2][2]
+                              - lhs[k][j][i][AA][3][2]*lhs[k][j][i-1][CC][2][3]
+                              - lhs[k][j][i][AA][4][2]*lhs[k][j][i-1][CC][2][4];
+        lhs[k][j][i][BB][2][3] = lhs[k][j][i][BB][2][3] - lhs[k][j][i][AA][0][3]*lhs[k][j][i-1][CC][2][0]
+                              - lhs[k][j][i][AA][1][3]*lhs[k][j][i-1][CC][2][1]
+                              - lhs[k][j][i][AA][2][3]*lhs[k][j][i-1][CC][2][2]
+                              - lhs[k][j][i][AA][3][3]*lhs[k][j][i-1][CC][2][3]
+                              - lhs[k][j][i][AA][4][3]*lhs[k][j][i-1][CC][2][4];
+        lhs[k][j][i][BB][2][4] = lhs[k][j][i][BB][2][4] - lhs[k][j][i][AA][0][4]*lhs[k][j][i-1][CC][2][0]
+                              - lhs[k][j][i][AA][1][4]*lhs[k][j][i-1][CC][2][1]
+                              - lhs[k][j][i][AA][2][4]*lhs[k][j][i-1][CC][2][2]
+                              - lhs[k][j][i][AA][3][4]*lhs[k][j][i-1][CC][2][3]
+                              - lhs[k][j][i][AA][4][4]*lhs[k][j][i-1][CC][2][4];
+        lhs[k][j][i][BB][3][0] = lhs[k][j][i][BB][3][0] - lhs[k][j][i][AA][0][0]*lhs[k][j][i-1][CC][3][0]
+                              - lhs[k][j][i][AA][1][0]*lhs[k][j][i-1][CC][3][1]
+                              - lhs[k][j][i][AA][2][0]*lhs[k][j][i-1][CC][3][2]
+                              - lhs[k][j][i][AA][3][0]*lhs[k][j][i-1][CC][3][3]
+                              - lhs[k][j][i][AA][4][0]*lhs[k][j][i-1][CC][3][4];
+        lhs[k][j][i][BB][3][1] = lhs[k][j][i][BB][3][1] - lhs[k][j][i][AA][0][1]*lhs[k][j][i-1][CC][3][0]
+                              - lhs[k][j][i][AA][1][1]*lhs[k][j][i-1][CC][3][1]
+                              - lhs[k][j][i][AA][2][1]*lhs[k][j][i-1][CC][3][2]
+                              - lhs[k][j][i][AA][3][1]*lhs[k][j][i-1][CC][3][3]
+                              - lhs[k][j][i][AA][4][1]*lhs[k][j][i-1][CC][3][4];
+        lhs[k][j][i][BB][3][2] = lhs[k][j][i][BB][3][2] - lhs[k][j][i][AA][0][2]*lhs[k][j][i-1][CC][3][0]
+                              - lhs[k][j][i][AA][1][2]*lhs[k][j][i-1][CC][3][1]
+                              - lhs[k][j][i][AA][2][2]*lhs[k][j][i-1][CC][3][2]
+                              - lhs[k][j][i][AA][3][2]*lhs[k][j][i-1][CC][3][3]
+                              - lhs[k][j][i][AA][4][2]*lhs[k][j][i-1][CC][3][4];
+        lhs[k][j][i][BB][3][3] = lhs[k][j][i][BB][3][3] - lhs[k][j][i][AA][0][3]*lhs[k][j][i-1][CC][3][0]
+                              - lhs[k][j][i][AA][1][3]*lhs[k][j][i-1][CC][3][1]
+                              - lhs[k][j][i][AA][2][3]*lhs[k][j][i-1][CC][3][2]
+                              - lhs[k][j][i][AA][3][3]*lhs[k][j][i-1][CC][3][3]
+                              - lhs[k][j][i][AA][4][3]*lhs[k][j][i-1][CC][3][4];
+        lhs[k][j][i][BB][3][4] = lhs[k][j][i][BB][3][4] - lhs[k][j][i][AA][0][4]*lhs[k][j][i-1][CC][3][0]
+                              - lhs[k][j][i][AA][1][4]*lhs[k][j][i-1][CC][3][1]
+                              - lhs[k][j][i][AA][2][4]*lhs[k][j][i-1][CC][3][2]
+                              - lhs[k][j][i][AA][3][4]*lhs[k][j][i-1][CC][3][3]
+                              - lhs[k][j][i][AA][4][4]*lhs[k][j][i-1][CC][3][4];
+        lhs[k][j][i][BB][4][0] = lhs[k][j][i][BB][4][0] - lhs[k][j][i][AA][0][0]*lhs[k][j][i-1][CC][4][0]
+                              - lhs[k][j][i][AA][1][0]*lhs[k][j][i-1][CC][4][1]
+                              - lhs[k][j][i][AA][2][0]*lhs[k][j][i-1][CC][4][2]
+                              - lhs[k][j][i][AA][3][0]*lhs[k][j][i-1][CC][4][3]
+                              - lhs[k][j][i][AA][4][0]*lhs[k][j][i-1][CC][4][4];
+        lhs[k][j][i][BB][4][1] = lhs[k][j][i][BB][4][1] - lhs[k][j][i][AA][0][1]*lhs[k][j][i-1][CC][4][0]
+                              - lhs[k][j][i][AA][1][1]*lhs[k][j][i-1][CC][4][1]
+                              - lhs[k][j][i][AA][2][1]*lhs[k][j][i-1][CC][4][2]
+                              - lhs[k][j][i][AA][3][1]*lhs[k][j][i-1][CC][4][3]
+                              - lhs[k][j][i][AA][4][1]*lhs[k][j][i-1][CC][4][4];
+        lhs[k][j][i][BB][4][2] = lhs[k][j][i][BB][4][2] - lhs[k][j][i][AA][0][2]*lhs[k][j][i-1][CC][4][0]
+                              - lhs[k][j][i][AA][1][2]*lhs[k][j][i-1][CC][4][1]
+                              - lhs[k][j][i][AA][2][2]*lhs[k][j][i-1][CC][4][2]
+                              - lhs[k][j][i][AA][3][2]*lhs[k][j][i-1][CC][4][3]
+                              - lhs[k][j][i][AA][4][2]*lhs[k][j][i-1][CC][4][4];
+        lhs[k][j][i][BB][4][3] = lhs[k][j][i][BB][4][3] - lhs[k][j][i][AA][0][3]*lhs[k][j][i-1][CC][4][0]
+                              - lhs[k][j][i][AA][1][3]*lhs[k][j][i-1][CC][4][1]
+                              - lhs[k][j][i][AA][2][3]*lhs[k][j][i-1][CC][4][2]
+                              - lhs[k][j][i][AA][3][3]*lhs[k][j][i-1][CC][4][3]
+                              - lhs[k][j][i][AA][4][3]*lhs[k][j][i-1][CC][4][4];
+        lhs[k][j][i][BB][4][4] = lhs[k][j][i][BB][4][4] - lhs[k][j][i][AA][0][4]*lhs[k][j][i-1][CC][4][0]
+                              - lhs[k][j][i][AA][1][4]*lhs[k][j][i-1][CC][4][1]
+                              - lhs[k][j][i][AA][2][4]*lhs[k][j][i-1][CC][4][2]
+                              - lhs[k][j][i][AA][3][4]*lhs[k][j][i-1][CC][4][3]
+                              - lhs[k][j][i][AA][4][4]*lhs[k][j][i-1][CC][4][4];            
 
 
         //-------------------------------------------------------------------
@@ -417,7 +542,132 @@ void x_solve()
       // B(isize) = B(isize) - C(isize-1)*A(isize)
       //---------------------------------------------------------------------
       //#pragma acc routine (matmul_sub) worker
-      matmul_sub(k, j, isize, AA, k, j, isize-1, CC, k, j, isize, BB, lhs);//x_matmul_sub(lhs[k][j][isize][AA], lhs[k][j][isize-1][CC], lhs[k][j][isize][BB]);
+      //matmul_sub(k, j, isize, AA, k, j, isize-1, CC, k, j, isize, BB, lhs);//x_matmul_sub(lhs[k][j][isize][AA], lhs[k][j][isize-1][CC], lhs[k][j][isize][BB]);
+      lhs[k][j][isize][BB][0][0] = lhs[k][j][isize][BB][0][0] - lhs[k][j][isize][AA][0][0]*lhs[k][j][isize-1][CC][0][0]
+                              - lhs[k][j][isize][AA][1][0]*lhs[k][j][isize-1][CC][0][1]
+                              - lhs[k][j][isize][AA][2][0]*lhs[k][j][isize-1][CC][0][2]
+                              - lhs[k][j][isize][AA][3][0]*lhs[k][j][isize-1][CC][0][3]
+                              - lhs[k][j][isize][AA][4][0]*lhs[k][j][isize-1][CC][0][4];
+      lhs[k][j][isize][BB][0][1] = lhs[k][j][isize][BB][0][1] - lhs[k][j][isize][AA][0][1]*lhs[k][j][isize-1][CC][0][0]
+                              - lhs[k][j][isize][AA][1][1]*lhs[k][j][isize-1][CC][0][1]
+                              - lhs[k][j][isize][AA][2][1]*lhs[k][j][isize-1][CC][0][2]
+                              - lhs[k][j][isize][AA][3][1]*lhs[k][j][isize-1][CC][0][3]
+                              - lhs[k][j][isize][AA][4][1]*lhs[k][j][isize-1][CC][0][4];
+      lhs[k][j][isize][BB][0][2] = lhs[k][j][isize][BB][0][2] - lhs[k][j][isize][AA][0][2]*lhs[k][j][isize-1][CC][0][0]
+                              - lhs[k][j][isize][AA][1][2]*lhs[k][j][isize-1][CC][0][1]
+                              - lhs[k][j][isize][AA][2][2]*lhs[k][j][isize-1][CC][0][2]
+                              - lhs[k][j][isize][AA][3][2]*lhs[k][j][isize-1][CC][0][3]
+                              - lhs[k][j][isize][AA][4][2]*lhs[k][j][isize-1][CC][0][4];
+      lhs[k][j][isize][BB][0][3] = lhs[k][j][isize][BB][0][3] - lhs[k][j][isize][AA][0][3]*lhs[k][j][isize-1][CC][0][0]
+                              - lhs[k][j][isize][AA][1][3]*lhs[k][j][isize-1][CC][0][1]
+                              - lhs[k][j][isize][AA][2][3]*lhs[k][j][isize-1][CC][0][2]
+                              - lhs[k][j][isize][AA][3][3]*lhs[k][j][isize-1][CC][0][3]
+                              - lhs[k][j][isize][AA][4][3]*lhs[k][j][isize-1][CC][0][4];
+      lhs[k][j][isize][BB][0][4] = lhs[k][j][isize][BB][0][4] - lhs[k][j][isize][AA][0][4]*lhs[k][j][isize-1][CC][0][0]
+                              - lhs[k][j][isize][AA][1][4]*lhs[k][j][isize-1][CC][0][1]
+                              - lhs[k][j][isize][AA][2][4]*lhs[k][j][isize-1][CC][0][2]
+                              - lhs[k][j][isize][AA][3][4]*lhs[k][j][isize-1][CC][0][3]
+                              - lhs[k][j][isize][AA][4][4]*lhs[k][j][isize-1][CC][0][4];
+      lhs[k][j][isize][BB][1][0] = lhs[k][j][isize][BB][1][0] - lhs[k][j][isize][AA][0][0]*lhs[k][j][isize-1][CC][1][0]
+                              - lhs[k][j][isize][AA][1][0]*lhs[k][j][isize-1][CC][1][1]
+                              - lhs[k][j][isize][AA][2][0]*lhs[k][j][isize-1][CC][1][2]
+                              - lhs[k][j][isize][AA][3][0]*lhs[k][j][isize-1][CC][1][3]
+                              - lhs[k][j][isize][AA][4][0]*lhs[k][j][isize-1][CC][1][4];
+      lhs[k][j][isize][BB][1][1] = lhs[k][j][isize][BB][1][1] - lhs[k][j][isize][AA][0][1]*lhs[k][j][isize-1][CC][1][0]
+                              - lhs[k][j][isize][AA][1][1]*lhs[k][j][isize-1][CC][1][1]
+                              - lhs[k][j][isize][AA][2][1]*lhs[k][j][isize-1][CC][1][2]
+                              - lhs[k][j][isize][AA][3][1]*lhs[k][j][isize-1][CC][1][3]
+                              - lhs[k][j][isize][AA][4][1]*lhs[k][j][isize-1][CC][1][4];
+      lhs[k][j][isize][BB][1][2] = lhs[k][j][isize][BB][1][2] - lhs[k][j][isize][AA][0][2]*lhs[k][j][isize-1][CC][1][0]
+                              - lhs[k][j][isize][AA][1][2]*lhs[k][j][isize-1][CC][1][1]
+                              - lhs[k][j][isize][AA][2][2]*lhs[k][j][isize-1][CC][1][2]
+                              - lhs[k][j][isize][AA][3][2]*lhs[k][j][isize-1][CC][1][3]
+                              - lhs[k][j][isize][AA][4][2]*lhs[k][j][isize-1][CC][1][4];
+      lhs[k][j][isize][BB][1][3] = lhs[k][j][isize][BB][1][3] - lhs[k][j][isize][AA][0][3]*lhs[k][j][isize-1][CC][1][0]
+                              - lhs[k][j][isize][AA][1][3]*lhs[k][j][isize-1][CC][1][1]
+                              - lhs[k][j][isize][AA][2][3]*lhs[k][j][isize-1][CC][1][2]
+                              - lhs[k][j][isize][AA][3][3]*lhs[k][j][isize-1][CC][1][3]
+                              - lhs[k][j][isize][AA][4][3]*lhs[k][j][isize-1][CC][1][4];
+      lhs[k][j][isize][BB][1][4] = lhs[k][j][isize][BB][1][4] - lhs[k][j][isize][AA][0][4]*lhs[k][j][isize-1][CC][1][0]
+                              - lhs[k][j][isize][AA][1][4]*lhs[k][j][isize-1][CC][1][1]
+                              - lhs[k][j][isize][AA][2][4]*lhs[k][j][isize-1][CC][1][2]
+                              - lhs[k][j][isize][AA][3][4]*lhs[k][j][isize-1][CC][1][3]
+                              - lhs[k][j][isize][AA][4][4]*lhs[k][j][isize-1][CC][1][4];
+      lhs[k][j][isize][BB][2][0] = lhs[k][j][isize][BB][2][0] - lhs[k][j][isize][AA][0][0]*lhs[k][j][isize-1][CC][2][0]
+                              - lhs[k][j][isize][AA][1][0]*lhs[k][j][isize-1][CC][2][1]
+                              - lhs[k][j][isize][AA][2][0]*lhs[k][j][isize-1][CC][2][2]
+                              - lhs[k][j][isize][AA][3][0]*lhs[k][j][isize-1][CC][2][3]
+                              - lhs[k][j][isize][AA][4][0]*lhs[k][j][isize-1][CC][2][4];
+      lhs[k][j][isize][BB][2][1] = lhs[k][j][isize][BB][2][1] - lhs[k][j][isize][AA][0][1]*lhs[k][j][isize-1][CC][2][0]
+                              - lhs[k][j][isize][AA][1][1]*lhs[k][j][isize-1][CC][2][1]
+                              - lhs[k][j][isize][AA][2][1]*lhs[k][j][isize-1][CC][2][2]
+                              - lhs[k][j][isize][AA][3][1]*lhs[k][j][isize-1][CC][2][3]
+                              - lhs[k][j][isize][AA][4][1]*lhs[k][j][isize-1][CC][2][4];
+      lhs[k][j][isize][BB][2][2] = lhs[k][j][isize][BB][2][2] - lhs[k][j][isize][AA][0][2]*lhs[k][j][isize-1][CC][2][0]
+                              - lhs[k][j][isize][AA][1][2]*lhs[k][j][isize-1][CC][2][1]
+                              - lhs[k][j][isize][AA][2][2]*lhs[k][j][isize-1][CC][2][2]
+                              - lhs[k][j][isize][AA][3][2]*lhs[k][j][isize-1][CC][2][3]
+                              - lhs[k][j][isize][AA][4][2]*lhs[k][j][isize-1][CC][2][4];
+      lhs[k][j][isize][BB][2][3] = lhs[k][j][isize][BB][2][3] - lhs[k][j][isize][AA][0][3]*lhs[k][j][isize-1][CC][2][0]
+                              - lhs[k][j][isize][AA][1][3]*lhs[k][j][isize-1][CC][2][1]
+                              - lhs[k][j][isize][AA][2][3]*lhs[k][j][isize-1][CC][2][2]
+                              - lhs[k][j][isize][AA][3][3]*lhs[k][j][isize-1][CC][2][3]
+                              - lhs[k][j][isize][AA][4][3]*lhs[k][j][isize-1][CC][2][4];
+      lhs[k][j][isize][BB][2][4] = lhs[k][j][isize][BB][2][4] - lhs[k][j][isize][AA][0][4]*lhs[k][j][isize-1][CC][2][0]
+                              - lhs[k][j][isize][AA][1][4]*lhs[k][j][isize-1][CC][2][1]
+                              - lhs[k][j][isize][AA][2][4]*lhs[k][j][isize-1][CC][2][2]
+                              - lhs[k][j][isize][AA][3][4]*lhs[k][j][isize-1][CC][2][3]
+                              - lhs[k][j][isize][AA][4][4]*lhs[k][j][isize-1][CC][2][4];
+      lhs[k][j][isize][BB][3][0] = lhs[k][j][isize][BB][3][0] - lhs[k][j][isize][AA][0][0]*lhs[k][j][isize-1][CC][3][0]
+                              - lhs[k][j][isize][AA][1][0]*lhs[k][j][isize-1][CC][3][1]
+                              - lhs[k][j][isize][AA][2][0]*lhs[k][j][isize-1][CC][3][2]
+                              - lhs[k][j][isize][AA][3][0]*lhs[k][j][isize-1][CC][3][3]
+                              - lhs[k][j][isize][AA][4][0]*lhs[k][j][isize-1][CC][3][4];
+      lhs[k][j][isize][BB][3][1] = lhs[k][j][isize][BB][3][1] - lhs[k][j][isize][AA][0][1]*lhs[k][j][isize-1][CC][3][0]
+                              - lhs[k][j][isize][AA][1][1]*lhs[k][j][isize-1][CC][3][1]
+                              - lhs[k][j][isize][AA][2][1]*lhs[k][j][isize-1][CC][3][2]
+                              - lhs[k][j][isize][AA][3][1]*lhs[k][j][isize-1][CC][3][3]
+                              - lhs[k][j][isize][AA][4][1]*lhs[k][j][isize-1][CC][3][4];
+      lhs[k][j][isize][BB][3][2] = lhs[k][j][isize][BB][3][2] - lhs[k][j][isize][AA][0][2]*lhs[k][j][isize-1][CC][3][0]
+                              - lhs[k][j][isize][AA][1][2]*lhs[k][j][isize-1][CC][3][1]
+                              - lhs[k][j][isize][AA][2][2]*lhs[k][j][isize-1][CC][3][2]
+                              - lhs[k][j][isize][AA][3][2]*lhs[k][j][isize-1][CC][3][3]
+                              - lhs[k][j][isize][AA][4][2]*lhs[k][j][isize-1][CC][3][4];
+      lhs[k][j][isize][BB][3][3] = lhs[k][j][isize][BB][3][3] - lhs[k][j][isize][AA][0][3]*lhs[k][j][isize-1][CC][3][0]
+                              - lhs[k][j][isize][AA][1][3]*lhs[k][j][isize-1][CC][3][1]
+                              - lhs[k][j][isize][AA][2][3]*lhs[k][j][isize-1][CC][3][2]
+                              - lhs[k][j][isize][AA][3][3]*lhs[k][j][isize-1][CC][3][3]
+                              - lhs[k][j][isize][AA][4][3]*lhs[k][j][isize-1][CC][3][4];
+      lhs[k][j][isize][BB][3][4] = lhs[k][j][isize][BB][3][4] - lhs[k][j][isize][AA][0][4]*lhs[k][j][isize-1][CC][3][0]
+                              - lhs[k][j][isize][AA][1][4]*lhs[k][j][isize-1][CC][3][1]
+                              - lhs[k][j][isize][AA][2][4]*lhs[k][j][isize-1][CC][3][2]
+                              - lhs[k][j][isize][AA][3][4]*lhs[k][j][isize-1][CC][3][3]
+                              - lhs[k][j][isize][AA][4][4]*lhs[k][j][isize-1][CC][3][4];
+      lhs[k][j][isize][BB][4][0] = lhs[k][j][isize][BB][4][0] - lhs[k][j][isize][AA][0][0]*lhs[k][j][isize-1][CC][4][0]
+                              - lhs[k][j][isize][AA][1][0]*lhs[k][j][isize-1][CC][4][1]
+                              - lhs[k][j][isize][AA][2][0]*lhs[k][j][isize-1][CC][4][2]
+                              - lhs[k][j][isize][AA][3][0]*lhs[k][j][isize-1][CC][4][3]
+                              - lhs[k][j][isize][AA][4][0]*lhs[k][j][isize-1][CC][4][4];
+      lhs[k][j][isize][BB][4][1] = lhs[k][j][isize][BB][4][1] - lhs[k][j][isize][AA][0][1]*lhs[k][j][isize-1][CC][4][0]
+                              - lhs[k][j][isize][AA][1][1]*lhs[k][j][isize-1][CC][4][1]
+                              - lhs[k][j][isize][AA][2][1]*lhs[k][j][isize-1][CC][4][2]
+                              - lhs[k][j][isize][AA][3][1]*lhs[k][j][isize-1][CC][4][3]
+                              - lhs[k][j][isize][AA][4][1]*lhs[k][j][isize-1][CC][4][4];
+      lhs[k][j][isize][BB][4][2] = lhs[k][j][isize][BB][4][2] - lhs[k][j][isize][AA][0][2]*lhs[k][j][isize-1][CC][4][0]
+                              - lhs[k][j][isize][AA][1][2]*lhs[k][j][isize-1][CC][4][1]
+                              - lhs[k][j][isize][AA][2][2]*lhs[k][j][isize-1][CC][4][2]
+                              - lhs[k][j][isize][AA][3][2]*lhs[k][j][isize-1][CC][4][3]
+                              - lhs[k][j][isize][AA][4][2]*lhs[k][j][isize-1][CC][4][4];
+      lhs[k][j][isize][BB][4][3] = lhs[k][j][isize][BB][4][3] - lhs[k][j][isize][AA][0][3]*lhs[k][j][isize-1][CC][4][0]
+                              - lhs[k][j][isize][AA][1][3]*lhs[k][j][isize-1][CC][4][1]
+                              - lhs[k][j][isize][AA][2][3]*lhs[k][j][isize-1][CC][4][2]
+                              - lhs[k][j][isize][AA][3][3]*lhs[k][j][isize-1][CC][4][3]
+                              - lhs[k][j][isize][AA][4][3]*lhs[k][j][isize-1][CC][4][4];
+      lhs[k][j][isize][BB][4][4] = lhs[k][j][isize][BB][4][4] - lhs[k][j][isize][AA][0][4]*lhs[k][j][isize-1][CC][4][0]
+                              - lhs[k][j][isize][AA][1][4]*lhs[k][j][isize-1][CC][4][1]
+                              - lhs[k][j][isize][AA][2][4]*lhs[k][j][isize-1][CC][4][2]
+                              - lhs[k][j][isize][AA][3][4]*lhs[k][j][isize-1][CC][4][3]
+                              - lhs[k][j][isize][AA][4][4]*lhs[k][j][isize-1][CC][4][4];              
 
       //---------------------------------------------------------------------
       // multiply rhs() by b_inverse() and copy to rhs
