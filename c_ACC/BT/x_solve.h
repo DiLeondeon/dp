@@ -30,16 +30,16 @@ void x_solve()
   //---------------------------------------------------------------------
   // This function computes the left hand side in the xi-direction
   //---------------------------------------------------------------------
-
+  ksize = grid_points[2]-2;
   isize = grid_points[0]-1;
-
+  jsize = grid_points[1]-2;
   //---------------------------------------------------------------------
   // determine a (labeled f) and n jacobians
   //---------------------------------------------------------------------
   #pragma acc parallel loop collapse(2) private(i,j,k,m,n,tmp1,tmp2,tmp3)
-  for (k = 1; k <= grid_points[2]-2; k++) {
+  for (k = 1; k <= ksize; k++) {
     //#pragma acc loop 
-    for (j = 1; j <= grid_points[1]-2; j++) {
+    for (j = 1; j <= jsize; j++) {
       //#pragma acc loop
       for (i = 0; i <= isize; i++) {
         tmp1 = rho_i[k][j][i];

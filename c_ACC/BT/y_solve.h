@@ -29,15 +29,16 @@ void y_solve()
   //---------------------------------------------------------------------
 
   jsize = grid_points[1]-1;
-
+  ksize = grid_points[2]-2;
+  isize = grid_points[0]-2;
   //---------------------------------------------------------------------
   // Compute the indices for storing the tri-diagonal matrix;
   // determine a (labeled f) and n jacobians for cell c
   //---------------------------------------------------------------------
   #pragma acc parallel loop collapse(2) private(i,j,k,m,n,tmp1,tmp2,tmp3)
-  for (k = 1; k <= grid_points[2]-2; k++) {
+  for (k = 1; k <= ksize; k++) {
     //#pragma acc loop
-    for (i = 1; i <= grid_points[0]-2; i++) {
+    for (i = 1; i <= isize; i++) {
       //#pragma acc loop
       for (j = 0; j <= jsize; j++) {
         tmp1 = rho_i[k][j][i];
