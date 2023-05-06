@@ -43,7 +43,7 @@ void exact_rhs()
   //---------------------------------------------------------------------
   // xi-direction flux differences                      
   //---------------------------------------------------------------------
-  #pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,im1,ip1,dtemp) seq
+  //#pragma acc parallel loop private(i,j,k,m,zeta,eta,xi,dtpp,im1,ip1,dtemp)
   for (k = 1; k <= grid_points[2]-2; k++) {
     //#pragma acc loop
     for (j = 1; j <= grid_points[1]-2; j++) {
