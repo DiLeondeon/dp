@@ -1,8 +1,8 @@
 #include "header.h"
-#include "solve_subs.h"
-#include "x_solve.h"
-#include "y_solve.h"
-#include "z_solve.h"
+//#include "solve_subs.h"
+//#include "x_solve.h"
+//#include "y_solve.h"
+//#include "z_solve.h"
 
 void adi()
 {

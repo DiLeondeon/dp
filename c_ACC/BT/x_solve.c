@@ -1180,7 +1180,135 @@ void x_solve()
       // multiply rhs() by b_inverse() and copy to rhs
       //---------------------------------------------------------------------
       //#pragma acc routine (binvrhs) worker
-      binvrhs( k, j, isize, BB, k, j, isize, lhs, rhs );//x_binvrhs( lhs[k][j][isize][BB], rhs[k][j][isize] );
+      //binvrhs( k, j, isize, BB, k, j, isize, lhs, rhs );//x_binvrhs( lhs[k][j][isize][BB], rhs[k][j][isize] );
+      pivot = 1.00/lhs[k][j][isize][BB][0][0];
+  lhs[k][j][isize][BB][1][0] = lhs[k][j][isize][BB][1][0]*pivot;
+  lhs[k][j][isize][BB][2][0] = lhs[k][j][isize][BB][2][0]*pivot;
+  lhs[k][j][isize][BB][3][0] = lhs[k][j][isize][BB][3][0]*pivot;
+  lhs[k][j][isize][BB][4][0] = lhs[k][j][isize][BB][4][0]*pivot;
+  rhs[k][j][isize][0]   = rhs[k][j][isize][0]  *pivot;
+
+  coeff = lhs[k][j][isize][BB][0][1];
+  lhs[k][j][isize][BB][1][1]= lhs[k][j][isize][BB][1][1] - coeff*lhs[k][j][isize][BB][1][0];
+  lhs[k][j][isize][BB][2][1]= lhs[k][j][isize][BB][2][1] - coeff*lhs[k][j][isize][BB][2][0];
+  lhs[k][j][isize][BB][3][1]= lhs[k][j][isize][BB][3][1] - coeff*lhs[k][j][isize][BB][3][0];
+  lhs[k][j][isize][BB][4][1]= lhs[k][j][isize][BB][4][1] - coeff*lhs[k][j][isize][BB][4][0];
+  rhs[k][j][isize][1]   = rhs[k][j][isize][1]   - coeff*rhs[k][j][isize][0];
+
+  coeff = lhs[k][j][isize][BB][0][2];
+  lhs[k][j][isize][BB][1][2]= lhs[k][j][isize][BB][1][2] - coeff*lhs[k][j][isize][BB][1][0];
+  lhs[k][j][isize][BB][2][2]= lhs[k][j][isize][BB][2][2] - coeff*lhs[k][j][isize][BB][2][0];
+  lhs[k][j][isize][BB][3][2]= lhs[k][j][isize][BB][3][2] - coeff*lhs[k][j][isize][BB][3][0];
+  lhs[k][j][isize][BB][4][2]= lhs[k][j][isize][BB][4][2] - coeff*lhs[k][j][isize][BB][4][0];
+  rhs[k][j][isize][2]   = rhs[k][j][isize][2]   - coeff*rhs[k][j][isize][0];
+
+  coeff = lhs[k][j][isize][BB][0][3];
+  lhs[k][j][isize][BB][1][3]= lhs[k][j][isize][BB][1][3] - coeff*lhs[k][j][isize][BB][1][0];
+  lhs[k][j][isize][BB][2][3]= lhs[k][j][isize][BB][2][3] - coeff*lhs[k][j][isize][BB][2][0];
+  lhs[k][j][isize][BB][3][3]= lhs[k][j][isize][BB][3][3] - coeff*lhs[k][j][isize][BB][3][0];
+  lhs[k][j][isize][BB][4][3]= lhs[k][j][isize][BB][4][3] - coeff*lhs[k][j][isize][BB][4][0];
+  rhs[k][j][isize][3]   = rhs[k][j][isize][3]   - coeff*rhs[k][j][isize][0];
+
+  coeff = lhs[k][j][isize][BB][0][4];
+  lhs[k][j][isize][BB][1][4]= lhs[k][j][isize][BB][1][4] - coeff*lhs[k][j][isize][BB][1][0];
+  lhs[k][j][isize][BB][2][4]= lhs[k][j][isize][BB][2][4] - coeff*lhs[k][j][isize][BB][2][0];
+  lhs[k][j][isize][BB][3][4]= lhs[k][j][isize][BB][3][4] - coeff*lhs[k][j][isize][BB][3][0];
+  lhs[k][j][isize][BB][4][4]= lhs[k][j][isize][BB][4][4] - coeff*lhs[k][j][isize][BB][4][0];
+  rhs[k][j][isize][4]   = rhs[k][j][isize][4]   - coeff*rhs[k][j][isize][0];
+
+
+  pivot = 1.00/lhs[k][j][isize][BB][1][1];
+  lhs[k][j][isize][BB][2][1] = lhs[k][j][isize][BB][2][1]*pivot;
+  lhs[k][j][isize][BB][3][1] = lhs[k][j][isize][BB][3][1]*pivot;
+  lhs[k][j][isize][BB][4][1] = lhs[k][j][isize][BB][4][1]*pivot;
+  rhs[k][j][isize][1]   = rhs[k][j][isize][1]  *pivot;
+
+  coeff = lhs[k][j][isize][BB][1][0];
+  lhs[k][j][isize][BB][2][0]= lhs[k][j][isize][BB][2][0] - coeff*lhs[k][j][isize][BB][2][1];
+  lhs[k][j][isize][BB][3][0]= lhs[k][j][isize][BB][3][0] - coeff*lhs[k][j][isize][BB][3][1];
+  lhs[k][j][isize][BB][4][0]= lhs[k][j][isize][BB][4][0] - coeff*lhs[k][j][isize][BB][4][1];
+  rhs[k][j][isize][0]   = rhs[k][j][isize][0]   - coeff*rhs[k][j][isize][1];
+
+  coeff = lhs[k][j][isize][BB][1][2];
+  lhs[k][j][isize][BB][2][2]= lhs[k][j][isize][BB][2][2] - coeff*lhs[k][j][isize][BB][2][1];
+  lhs[k][j][isize][BB][3][2]= lhs[k][j][isize][BB][3][2] - coeff*lhs[k][j][isize][BB][3][1];
+  lhs[k][j][isize][BB][4][2]= lhs[k][j][isize][BB][4][2] - coeff*lhs[k][j][isize][BB][4][1];
+  rhs[k][j][isize][2]   = rhs[k][j][isize][2]   - coeff*rhs[k][j][isize][1];
+
+  coeff = lhs[k][j][isize][BB][1][3];
+  lhs[k][j][isize][BB][2][3]= lhs[k][j][isize][BB][2][3] - coeff*lhs[k][j][isize][BB][2][1];
+  lhs[k][j][isize][BB][3][3]= lhs[k][j][isize][BB][3][3] - coeff*lhs[k][j][isize][BB][3][1];
+  lhs[k][j][isize][BB][4][3]= lhs[k][j][isize][BB][4][3] - coeff*lhs[k][j][isize][BB][4][1];
+  rhs[k][j][isize][3]   = rhs[k][j][isize][3]   - coeff*rhs[k][j][isize][1];
+
+  coeff = lhs[k][j][isize][BB][1][4];
+  lhs[k][j][isize][BB][2][4]= lhs[k][j][isize][BB][2][4] - coeff*lhs[k][j][isize][BB][2][1];
+  lhs[k][j][isize][BB][3][4]= lhs[k][j][isize][BB][3][4] - coeff*lhs[k][j][isize][BB][3][1];
+  lhs[k][j][isize][BB][4][4]= lhs[k][j][isize][BB][4][4] - coeff*lhs[k][j][isize][BB][4][1];
+  rhs[k][j][isize][4]   = rhs[k][j][isize][4]   - coeff*rhs[k][j][isize][1];
+
+
+  pivot = 1.00/lhs[k][j][isize][BB][2][2];
+  lhs[k][j][isize][BB][3][2] = lhs[k][j][isize][BB][3][2]*pivot;
+  lhs[k][j][isize][BB][4][2] = lhs[k][j][isize][BB][4][2]*pivot;
+  rhs[k][j][isize][2]   = rhs[k][j][isize][2]  *pivot;
+
+  coeff = lhs[k][j][isize][BB][2][0];
+  lhs[k][j][isize][BB][3][0]= lhs[k][j][isize][BB][3][0] - coeff*lhs[k][j][isize][BB][3][2];
+  lhs[k][j][isize][BB][4][0]= lhs[k][j][isize][BB][4][0] - coeff*lhs[k][j][isize][BB][4][2];
+  rhs[k][j][isize][0]   = rhs[k][j][isize][0]   - coeff*rhs[k][j][isize][2];
+
+  coeff = lhs[k][j][isize][BB][2][1];
+  lhs[k][j][isize][BB][3][1]= lhs[k][j][isize][BB][3][1] - coeff*lhs[k][j][isize][BB][3][2];
+  lhs[k][j][isize][BB][4][1]= lhs[k][j][isize][BB][4][1] - coeff*lhs[k][j][isize][BB][4][2];
+  rhs[k][j][isize][1]   = rhs[k][j][isize][1]   - coeff*rhs[k][j][isize][2];
+
+  coeff = lhs[k][j][isize][BB][2][3];
+  lhs[k][j][isize][BB][3][3]= lhs[k][j][isize][BB][3][3] - coeff*lhs[k][j][isize][BB][3][2];
+  lhs[k][j][isize][BB][4][3]= lhs[k][j][isize][BB][4][3] - coeff*lhs[k][j][isize][BB][4][2];
+  rhs[k][j][isize][3]   = rhs[k][j][isize][3]   - coeff*rhs[k][j][isize][2];
+
+  coeff = lhs[k][j][isize][BB][2][4];
+  lhs[k][j][isize][BB][3][4]= lhs[k][j][isize][BB][3][4] - coeff*lhs[k][j][isize][BB][3][2];
+  lhs[k][j][isize][BB][4][4]= lhs[k][j][isize][BB][4][4] - coeff*lhs[k][j][isize][BB][4][2];
+  rhs[k][j][isize][4]   = rhs[k][j][isize][4]   - coeff*rhs[k][j][isize][2];
+
+
+  pivot = 1.00/lhs[k][j][isize][BB][3][3];
+  lhs[k][j][isize][BB][4][3] = lhs[k][j][isize][BB][4][3]*pivot;
+  rhs[k][j][isize][3]   = rhs[k][j][isize][3]  *pivot;
+
+  coeff = lhs[k][j][isize][BB][3][0];
+  lhs[k][j][isize][BB][4][0]= lhs[k][j][isize][BB][4][0] - coeff*lhs[k][j][isize][BB][4][3];
+  rhs[k][j][isize][0]   = rhs[k][j][isize][0]   - coeff*rhs[k][j][isize][3];
+
+  coeff = lhs[k][j][isize][BB][3][1];
+  lhs[k][j][isize][BB][4][1]= lhs[k][j][isize][BB][4][1] - coeff*lhs[k][j][isize][BB][4][3];
+  rhs[k][j][isize][1]   = rhs[k][j][isize][1]   - coeff*rhs[k][j][isize][3];
+
+  coeff = lhs[k][j][isize][BB][3][2];
+  lhs[k][j][isize][BB][4][2]= lhs[k][j][isize][BB][4][2] - coeff*lhs[k][j][isize][BB][4][3];
+  rhs[k][j][isize][2]   = rhs[k][j][isize][2]   - coeff*rhs[k][j][isize][3];
+
+  coeff = lhs[k][j][isize][BB][3][4];
+  lhs[k][j][isize][BB][4][4]= lhs[k][j][isize][BB][4][4] - coeff*lhs[k][j][isize][BB][4][3];
+  rhs[k][j][isize][4]   = rhs[k][j][isize][4]   - coeff*rhs[k][j][isize][3];
+
+
+  pivot = 1.00/lhs[k][j][isize][BB][4][4];
+  rhs[k][j][isize][4]   = rhs[k][j][isize][4]  *pivot;
+
+  coeff = lhs[k][j][isize][BB][4][0];
+  rhs[k][j][isize][0]   = rhs[k][j][isize][0]   - coeff*rhs[k][j][isize][4];
+
+  coeff = lhs[k][j][isize][BB][4][1];
+  rhs[k][j][isize][1]   = rhs[k][j][isize][1]   - coeff*rhs[k][j][isize][4];
+
+  coeff = lhs[k][j][isize][BB][4][2];
+  rhs[k][j][isize][2]   = rhs[k][j][isize][2]   - coeff*rhs[k][j][isize][4];
+
+  coeff = lhs[k][j][isize][BB][4][3];
+  rhs[k][j][isize][3]   = rhs[k][j][isize][3]   - coeff*rhs[k][j][isize][4];                        
 
       //---------------------------------------------------------------------
       // back solve: if last cell, then generate U(isize)=rhs(isize)
