@@ -316,29 +316,260 @@ void y_solve()
       // multiply rhs(0) by b_inverse(0) and copy to rhs
       //---------------------------------------------------------------------
       //#pragma acc routine (binvcrhs) worker
-      //binvcrhs( k, i, 0, BB, k, i, 0, CC, k, 0, i, lhs, rhs );//y_binvcrhs( lhs[k][i][0][BB], lhs[k][i][0][CC], rhs[k][0][i] );
-      for (m=0;m<5;m++){
-        pivot = 1.00/lhs[k][i][0][BB][m][m];
-        for (n=m+1;n<5;n++){
-          lhs[k][i][0][BB][n][m] = lhs[k][i][0][BB][n][m]*pivot;
-        }
-        for (n=0;n<5;n++){
-          lhs[k][i][0][CC][n][m] = lhs[k][i][0][CC][n][m]*pivot;
-        }
-        rhs[k][0][i][m]   = rhs[k][0][i][m]  *pivot;
-          for (m1=0;m1<5;m1++){
-            if (m1 != m){
-              coeff = lhs[k][i][0][BB][m][m1];
-              for (n=m+1;n<5;n++){
-                lhs[k][i][0][BB][n][m1]= lhs[k][i][0][BB][n][m1] - coeff*lhs[k][i][0][BB][n][m];
-              }
-              for (n=0;n<5;n++){
-                lhs[k][i][0][CC][n][m1] = lhs[k][i][0][CC][n][m1] - coeff*lhs[k][i][0][CC][n][m];
-              }
-              rhs[k][0][i][m1]   = rhs[k][0][i][m1]   - coeff*rhs[k][0][i][m];
-            }
-          }
-      }
+      //binvcrhs( k, i, 0, [BB], k, i, 0, CC, k, 0, i, lhs, rhs );//y_binvcrhs( lhs[k][i][0][BB], lhs[k][i][0][CC], rhs[k][0][i] );
+      pivot = 1.00/lhs[k][i][0][BB][0][0];
+  lhs[k][i][0][BB][1][0] = lhs[k][i][0][BB][1][0]*pivot;
+  lhs[k][i][0][BB][2][0] = lhs[k][i][0][BB][2][0]*pivot;
+  lhs[k][i][0][BB][3][0] = lhs[k][i][0][BB][3][0]*pivot;
+  lhs[k][i][0][BB][4][0] = lhs[k][i][0][BB][4][0]*pivot;
+  lhs[k][i][0][CC][0][0] = lhs[k][i][0][CC][0][0]*pivot;
+  lhs[k][i][0][CC][1][0] = lhs[k][i][0][CC][1][0]*pivot;
+  lhs[k][i][0][CC][2][0] = lhs[k][i][0][CC][2][0]*pivot;
+  lhs[k][i][0][CC][3][0] = lhs[k][i][0][CC][3][0]*pivot;
+  lhs[k][i][0][CC][4][0] = lhs[k][i][0][CC][4][0]*pivot;
+  rhs[k][0][i][0]   = rhs[k][0][i][0]  *pivot;
+
+  coeff = lhs[k][i][0][BB][0][1];
+  lhs[k][i][0][BB][1][1]= lhs[k][i][0][BB][1][1] - coeff*lhs[k][i][0][BB][1][0];
+  lhs[k][i][0][BB][2][1]= lhs[k][i][0][BB][2][1] - coeff*lhs[k][i][0][BB][2][0];
+  lhs[k][i][0][BB][3][1]= lhs[k][i][0][BB][3][1] - coeff*lhs[k][i][0][BB][3][0];
+  lhs[k][i][0][BB][4][1]= lhs[k][i][0][BB][4][1] - coeff*lhs[k][i][0][BB][4][0];
+  lhs[k][i][0][CC][0][1] = lhs[k][i][0][CC][0][1] - coeff*lhs[k][i][0][CC][0][0];
+  lhs[k][i][0][CC][1][1] = lhs[k][i][0][CC][1][1] - coeff*lhs[k][i][0][CC][1][0];
+  lhs[k][i][0][CC][2][1] = lhs[k][i][0][CC][2][1] - coeff*lhs[k][i][0][CC][2][0];
+  lhs[k][i][0][CC][3][1] = lhs[k][i][0][CC][3][1] - coeff*lhs[k][i][0][CC][3][0];
+  lhs[k][i][0][CC][4][1] = lhs[k][i][0][CC][4][1] - coeff*lhs[k][i][0][CC][4][0];
+  rhs[k][0][i][1]   = rhs[k][0][i][1]   - coeff*rhs[k][0][i][0];
+
+  coeff = lhs[k][i][0][BB][0][2];
+  lhs[k][i][0][BB][1][2]= lhs[k][i][0][BB][1][2] - coeff*lhs[k][i][0][BB][1][0];
+  lhs[k][i][0][BB][2][2]= lhs[k][i][0][BB][2][2] - coeff*lhs[k][i][0][BB][2][0];
+  lhs[k][i][0][BB][3][2]= lhs[k][i][0][BB][3][2] - coeff*lhs[k][i][0][BB][3][0];
+  lhs[k][i][0][BB][4][2]= lhs[k][i][0][BB][4][2] - coeff*lhs[k][i][0][BB][4][0];
+  lhs[k][i][0][CC][0][2] = lhs[k][i][0][CC][0][2] - coeff*lhs[k][i][0][CC][0][0];
+  lhs[k][i][0][CC][1][2] = lhs[k][i][0][CC][1][2] - coeff*lhs[k][i][0][CC][1][0];
+  lhs[k][i][0][CC][2][2] = lhs[k][i][0][CC][2][2] - coeff*lhs[k][i][0][CC][2][0];
+  lhs[k][i][0][CC][3][2] = lhs[k][i][0][CC][3][2] - coeff*lhs[k][i][0][CC][3][0];
+  lhs[k][i][0][CC][4][2] = lhs[k][i][0][CC][4][2] - coeff*lhs[k][i][0][CC][4][0];
+  rhs[k][0][i][2]   = rhs[k][0][i][2]   - coeff*rhs[k][0][i][0];
+
+  coeff = lhs[k][i][0][BB][0][3];
+  lhs[k][i][0][BB][1][3]= lhs[k][i][0][BB][1][3] - coeff*lhs[k][i][0][BB][1][0];
+  lhs[k][i][0][BB][2][3]= lhs[k][i][0][BB][2][3] - coeff*lhs[k][i][0][BB][2][0];
+  lhs[k][i][0][BB][3][3]= lhs[k][i][0][BB][3][3] - coeff*lhs[k][i][0][BB][3][0];
+  lhs[k][i][0][BB][4][3]= lhs[k][i][0][BB][4][3] - coeff*lhs[k][i][0][BB][4][0];
+  lhs[k][i][0][CC][0][3] = lhs[k][i][0][CC][0][3] - coeff*lhs[k][i][0][CC][0][0];
+  lhs[k][i][0][CC][1][3] = lhs[k][i][0][CC][1][3] - coeff*lhs[k][i][0][CC][1][0];
+  lhs[k][i][0][CC][2][3] = lhs[k][i][0][CC][2][3] - coeff*lhs[k][i][0][CC][2][0];
+  lhs[k][i][0][CC][3][3] = lhs[k][i][0][CC][3][3] - coeff*lhs[k][i][0][CC][3][0];
+  lhs[k][i][0][CC][4][3] = lhs[k][i][0][CC][4][3] - coeff*lhs[k][i][0][CC][4][0];
+  rhs[k][0][i][3]   = rhs[k][0][i][3]   - coeff*rhs[k][0][i][0];
+
+  coeff = lhs[k][i][0][BB][0][4];
+  lhs[k][i][0][BB][1][4]= lhs[k][i][0][BB][1][4] - coeff*lhs[k][i][0][BB][1][0];
+  lhs[k][i][0][BB][2][4]= lhs[k][i][0][BB][2][4] - coeff*lhs[k][i][0][BB][2][0];
+  lhs[k][i][0][BB][3][4]= lhs[k][i][0][BB][3][4] - coeff*lhs[k][i][0][BB][3][0];
+  lhs[k][i][0][BB][4][4]= lhs[k][i][0][BB][4][4] - coeff*lhs[k][i][0][BB][4][0];
+  lhs[k][i][0][CC][0][4] = lhs[k][i][0][CC][0][4] - coeff*lhs[k][i][0][CC][0][0];
+  lhs[k][i][0][CC][1][4] = lhs[k][i][0][CC][1][4] - coeff*lhs[k][i][0][CC][1][0];
+  lhs[k][i][0][CC][2][4] = lhs[k][i][0][CC][2][4] - coeff*lhs[k][i][0][CC][2][0];
+  lhs[k][i][0][CC][3][4] = lhs[k][i][0][CC][3][4] - coeff*lhs[k][i][0][CC][3][0];
+  lhs[k][i][0][CC][4][4] = lhs[k][i][0][CC][4][4] - coeff*lhs[k][i][0][CC][4][0];
+  rhs[k][0][i][4]   = rhs[k][0][i][4]   - coeff*rhs[k][0][i][0];
+
+
+  pivot = 1.00/lhs[k][i][0][BB][1][1];
+  lhs[k][i][0][BB][2][1] = lhs[k][i][0][BB][2][1]*pivot;
+  lhs[k][i][0][BB][3][1] = lhs[k][i][0][BB][3][1]*pivot;
+  lhs[k][i][0][BB][4][1] = lhs[k][i][0][BB][4][1]*pivot;
+  lhs[k][i][0][CC][0][1] = lhs[k][i][0][CC][0][1]*pivot;
+  lhs[k][i][0][CC][1][1] = lhs[k][i][0][CC][1][1]*pivot;
+  lhs[k][i][0][CC][2][1] = lhs[k][i][0][CC][2][1]*pivot;
+  lhs[k][i][0][CC][3][1] = lhs[k][i][0][CC][3][1]*pivot;
+  lhs[k][i][0][CC][4][1] = lhs[k][i][0][CC][4][1]*pivot;
+  rhs[k][0][i][1]   = rhs[k][0][i][1]  *pivot;
+
+  coeff = lhs[k][i][0][BB][1][0];
+  lhs[k][i][0][BB][2][0]= lhs[k][i][0][BB][2][0] - coeff*lhs[k][i][0][BB][2][1];
+  lhs[k][i][0][BB][3][0]= lhs[k][i][0][BB][3][0] - coeff*lhs[k][i][0][BB][3][1];
+  lhs[k][i][0][BB][4][0]= lhs[k][i][0][BB][4][0] - coeff*lhs[k][i][0][BB][4][1];
+  lhs[k][i][0][CC][0][0] = lhs[k][i][0][CC][0][0] - coeff*lhs[k][i][0][CC][0][1];
+  lhs[k][i][0][CC][1][0] = lhs[k][i][0][CC][1][0] - coeff*lhs[k][i][0][CC][1][1];
+  lhs[k][i][0][CC][2][0] = lhs[k][i][0][CC][2][0] - coeff*lhs[k][i][0][CC][2][1];
+  lhs[k][i][0][CC][3][0] = lhs[k][i][0][CC][3][0] - coeff*lhs[k][i][0][CC][3][1];
+  lhs[k][i][0][CC][4][0] = lhs[k][i][0][CC][4][0] - coeff*lhs[k][i][0][CC][4][1];
+  rhs[k][0][i][0]   = rhs[k][0][i][0]   - coeff*rhs[k][0][i][1];
+
+  coeff = lhs[k][i][0][BB][1][2];
+  lhs[k][i][0][BB][2][2]= lhs[k][i][0][BB][2][2] - coeff*lhs[k][i][0][BB][2][1];
+  lhs[k][i][0][BB][3][2]= lhs[k][i][0][BB][3][2] - coeff*lhs[k][i][0][BB][3][1];
+  lhs[k][i][0][BB][4][2]= lhs[k][i][0][BB][4][2] - coeff*lhs[k][i][0][BB][4][1];
+  lhs[k][i][0][CC][0][2] = lhs[k][i][0][CC][0][2] - coeff*lhs[k][i][0][CC][0][1];
+  lhs[k][i][0][CC][1][2] = lhs[k][i][0][CC][1][2] - coeff*lhs[k][i][0][CC][1][1];
+  lhs[k][i][0][CC][2][2] = lhs[k][i][0][CC][2][2] - coeff*lhs[k][i][0][CC][2][1];
+  lhs[k][i][0][CC][3][2] = lhs[k][i][0][CC][3][2] - coeff*lhs[k][i][0][CC][3][1];
+  lhs[k][i][0][CC][4][2] = lhs[k][i][0][CC][4][2] - coeff*lhs[k][i][0][CC][4][1];
+  rhs[k][0][i][2]   = rhs[k][0][i][2]   - coeff*rhs[k][0][i][1];
+
+  coeff = lhs[k][i][0][BB][1][3];
+  lhs[k][i][0][BB][2][3]= lhs[k][i][0][BB][2][3] - coeff*lhs[k][i][0][BB][2][1];
+  lhs[k][i][0][BB][3][3]= lhs[k][i][0][BB][3][3] - coeff*lhs[k][i][0][BB][3][1];
+  lhs[k][i][0][BB][4][3]= lhs[k][i][0][BB][4][3] - coeff*lhs[k][i][0][BB][4][1];
+  lhs[k][i][0][CC][0][3] = lhs[k][i][0][CC][0][3] - coeff*lhs[k][i][0][CC][0][1];
+  lhs[k][i][0][CC][1][3] = lhs[k][i][0][CC][1][3] - coeff*lhs[k][i][0][CC][1][1];
+  lhs[k][i][0][CC][2][3] = lhs[k][i][0][CC][2][3] - coeff*lhs[k][i][0][CC][2][1];
+  lhs[k][i][0][CC][3][3] = lhs[k][i][0][CC][3][3] - coeff*lhs[k][i][0][CC][3][1];
+  lhs[k][i][0][CC][4][3] = lhs[k][i][0][CC][4][3] - coeff*lhs[k][i][0][CC][4][1];
+  rhs[k][0][i][3]   = rhs[k][0][i][3]   - coeff*rhs[k][0][i][1];
+
+  coeff = lhs[k][i][0][BB][1][4];
+  lhs[k][i][0][BB][2][4]= lhs[k][i][0][BB][2][4] - coeff*lhs[k][i][0][BB][2][1];
+  lhs[k][i][0][BB][3][4]= lhs[k][i][0][BB][3][4] - coeff*lhs[k][i][0][BB][3][1];
+  lhs[k][i][0][BB][4][4]= lhs[k][i][0][BB][4][4] - coeff*lhs[k][i][0][BB][4][1];
+  lhs[k][i][0][CC][0][4] = lhs[k][i][0][CC][0][4] - coeff*lhs[k][i][0][CC][0][1];
+  lhs[k][i][0][CC][1][4] = lhs[k][i][0][CC][1][4] - coeff*lhs[k][i][0][CC][1][1];
+  lhs[k][i][0][CC][2][4] = lhs[k][i][0][CC][2][4] - coeff*lhs[k][i][0][CC][2][1];
+  lhs[k][i][0][CC][3][4] = lhs[k][i][0][CC][3][4] - coeff*lhs[k][i][0][CC][3][1];
+  lhs[k][i][0][CC][4][4] = lhs[k][i][0][CC][4][4] - coeff*lhs[k][i][0][CC][4][1];
+  rhs[k][0][i][4]   = rhs[k][0][i][4]   - coeff*rhs[k][0][i][1];
+
+
+  pivot = 1.00/lhs[k][i][0][BB][2][2];
+  lhs[k][i][0][BB][3][2] = lhs[k][i][0][BB][3][2]*pivot;
+  lhs[k][i][0][BB][4][2] = lhs[k][i][0][BB][4][2]*pivot;
+  lhs[k][i][0][CC][0][2] = lhs[k][i][0][CC][0][2]*pivot;
+  lhs[k][i][0][CC][1][2] = lhs[k][i][0][CC][1][2]*pivot;
+  lhs[k][i][0][CC][2][2] = lhs[k][i][0][CC][2][2]*pivot;
+  lhs[k][i][0][CC][3][2] = lhs[k][i][0][CC][3][2]*pivot;
+  lhs[k][i][0][CC][4][2] = lhs[k][i][0][CC][4][2]*pivot;
+  rhs[k][0][i][2]   = rhs[k][0][i][2]  *pivot;
+
+  coeff = lhs[k][i][0][BB][2][0];
+  lhs[k][i][0][BB][3][0]= lhs[k][i][0][BB][3][0] - coeff*lhs[k][i][0][BB][3][2];
+  lhs[k][i][0][BB][4][0]= lhs[k][i][0][BB][4][0] - coeff*lhs[k][i][0][BB][4][2];
+  lhs[k][i][0][CC][0][0] = lhs[k][i][0][CC][0][0] - coeff*lhs[k][i][0][CC][0][2];
+  lhs[k][i][0][CC][1][0] = lhs[k][i][0][CC][1][0] - coeff*lhs[k][i][0][CC][1][2];
+  lhs[k][i][0][CC][2][0] = lhs[k][i][0][CC][2][0] - coeff*lhs[k][i][0][CC][2][2];
+  lhs[k][i][0][CC][3][0] = lhs[k][i][0][CC][3][0] - coeff*lhs[k][i][0][CC][3][2];
+  lhs[k][i][0][CC][4][0] = lhs[k][i][0][CC][4][0] - coeff*lhs[k][i][0][CC][4][2];
+  rhs[k][0][i][0]   = rhs[k][0][i][0]   - coeff*rhs[k][0][i][2];
+
+  coeff = lhs[k][i][0][BB][2][1];
+  lhs[k][i][0][BB][3][1]= lhs[k][i][0][BB][3][1] - coeff*lhs[k][i][0][BB][3][2];
+  lhs[k][i][0][BB][4][1]= lhs[k][i][0][BB][4][1] - coeff*lhs[k][i][0][BB][4][2];
+  lhs[k][i][0][CC][0][1] = lhs[k][i][0][CC][0][1] - coeff*lhs[k][i][0][CC][0][2];
+  lhs[k][i][0][CC][1][1] = lhs[k][i][0][CC][1][1] - coeff*lhs[k][i][0][CC][1][2];
+  lhs[k][i][0][CC][2][1] = lhs[k][i][0][CC][2][1] - coeff*lhs[k][i][0][CC][2][2];
+  lhs[k][i][0][CC][3][1] = lhs[k][i][0][CC][3][1] - coeff*lhs[k][i][0][CC][3][2];
+  lhs[k][i][0][CC][4][1] = lhs[k][i][0][CC][4][1] - coeff*lhs[k][i][0][CC][4][2];
+  rhs[k][0][i][1]   = rhs[k][0][i][1]   - coeff*rhs[k][0][i][2];
+
+  coeff = lhs[k][i][0][BB][2][3];
+  lhs[k][i][0][BB][3][3]= lhs[k][i][0][BB][3][3] - coeff*lhs[k][i][0][BB][3][2];
+  lhs[k][i][0][BB][4][3]= lhs[k][i][0][BB][4][3] - coeff*lhs[k][i][0][BB][4][2];
+  lhs[k][i][0][CC][0][3] = lhs[k][i][0][CC][0][3] - coeff*lhs[k][i][0][CC][0][2];
+  lhs[k][i][0][CC][1][3] = lhs[k][i][0][CC][1][3] - coeff*lhs[k][i][0][CC][1][2];
+  lhs[k][i][0][CC][2][3] = lhs[k][i][0][CC][2][3] - coeff*lhs[k][i][0][CC][2][2];
+  lhs[k][i][0][CC][3][3] = lhs[k][i][0][CC][3][3] - coeff*lhs[k][i][0][CC][3][2];
+  lhs[k][i][0][CC][4][3] = lhs[k][i][0][CC][4][3] - coeff*lhs[k][i][0][CC][4][2];
+  rhs[k][0][i][3]   = rhs[k][0][i][3]   - coeff*rhs[k][0][i][2];
+
+  coeff = lhs[k][i][0][BB][2][4];
+  lhs[k][i][0][BB][3][4]= lhs[k][i][0][BB][3][4] - coeff*lhs[k][i][0][BB][3][2];
+  lhs[k][i][0][BB][4][4]= lhs[k][i][0][BB][4][4] - coeff*lhs[k][i][0][BB][4][2];
+  lhs[k][i][0][CC][0][4] = lhs[k][i][0][CC][0][4] - coeff*lhs[k][i][0][CC][0][2];
+  lhs[k][i][0][CC][1][4] = lhs[k][i][0][CC][1][4] - coeff*lhs[k][i][0][CC][1][2];
+  lhs[k][i][0][CC][2][4] = lhs[k][i][0][CC][2][4] - coeff*lhs[k][i][0][CC][2][2];
+  lhs[k][i][0][CC][3][4] = lhs[k][i][0][CC][3][4] - coeff*lhs[k][i][0][CC][3][2];
+  lhs[k][i][0][CC][4][4] = lhs[k][i][0][CC][4][4] - coeff*lhs[k][i][0][CC][4][2];
+  rhs[k][0][i][4]   = rhs[k][0][i][4]   - coeff*rhs[k][0][i][2];
+
+
+  pivot = 1.00/lhs[k][i][0][BB][3][3];
+  lhs[k][i][0][BB][4][3] = lhs[k][i][0][BB][4][3]*pivot;
+  lhs[k][i][0][CC][0][3] = lhs[k][i][0][CC][0][3]*pivot;
+  lhs[k][i][0][CC][1][3] = lhs[k][i][0][CC][1][3]*pivot;
+  lhs[k][i][0][CC][2][3] = lhs[k][i][0][CC][2][3]*pivot;
+  lhs[k][i][0][CC][3][3] = lhs[k][i][0][CC][3][3]*pivot;
+  lhs[k][i][0][CC][4][3] = lhs[k][i][0][CC][4][3]*pivot;
+  rhs[k][0][i][3]   = rhs[k][0][i][3]  *pivot;
+
+  coeff = lhs[k][i][0][BB][3][0];
+  lhs[k][i][0][BB][4][0]= lhs[k][i][0][BB][4][0] - coeff*lhs[k][i][0][BB][4][3];
+  lhs[k][i][0][CC][0][0] = lhs[k][i][0][CC][0][0] - coeff*lhs[k][i][0][CC][0][3];
+  lhs[k][i][0][CC][1][0] = lhs[k][i][0][CC][1][0] - coeff*lhs[k][i][0][CC][1][3];
+  lhs[k][i][0][CC][2][0] = lhs[k][i][0][CC][2][0] - coeff*lhs[k][i][0][CC][2][3];
+  lhs[k][i][0][CC][3][0] = lhs[k][i][0][CC][3][0] - coeff*lhs[k][i][0][CC][3][3];
+  lhs[k][i][0][CC][4][0] = lhs[k][i][0][CC][4][0] - coeff*lhs[k][i][0][CC][4][3];
+  rhs[k][0][i][0]   = rhs[k][0][i][0]   - coeff*rhs[k][0][i][3];
+
+  coeff = lhs[k][i][0][BB][3][1];
+  lhs[k][i][0][BB][4][1]= lhs[k][i][0][BB][4][1] - coeff*lhs[k][i][0][BB][4][3];
+  lhs[k][i][0][CC][0][1] = lhs[k][i][0][CC][0][1] - coeff*lhs[k][i][0][CC][0][3];
+  lhs[k][i][0][CC][1][1] = lhs[k][i][0][CC][1][1] - coeff*lhs[k][i][0][CC][1][3];
+  lhs[k][i][0][CC][2][1] = lhs[k][i][0][CC][2][1] - coeff*lhs[k][i][0][CC][2][3];
+  lhs[k][i][0][CC][3][1] = lhs[k][i][0][CC][3][1] - coeff*lhs[k][i][0][CC][3][3];
+  lhs[k][i][0][CC][4][1] = lhs[k][i][0][CC][4][1] - coeff*lhs[k][i][0][CC][4][3];
+  rhs[k][0][i][1]   = rhs[k][0][i][1]   - coeff*rhs[k][0][i][3];
+
+  coeff = lhs[k][i][0][BB][3][2];
+  lhs[k][i][0][BB][4][2]= lhs[k][i][0][BB][4][2] - coeff*lhs[k][i][0][BB][4][3];
+  lhs[k][i][0][CC][0][2] = lhs[k][i][0][CC][0][2] - coeff*lhs[k][i][0][CC][0][3];
+  lhs[k][i][0][CC][1][2] = lhs[k][i][0][CC][1][2] - coeff*lhs[k][i][0][CC][1][3];
+  lhs[k][i][0][CC][2][2] = lhs[k][i][0][CC][2][2] - coeff*lhs[k][i][0][CC][2][3];
+  lhs[k][i][0][CC][3][2] = lhs[k][i][0][CC][3][2] - coeff*lhs[k][i][0][CC][3][3];
+  lhs[k][i][0][CC][4][2] = lhs[k][i][0][CC][4][2] - coeff*lhs[k][i][0][CC][4][3];
+  rhs[k][0][i][2]   = rhs[k][0][i][2]   - coeff*rhs[k][0][i][3];
+
+  coeff = lhs[k][i][0][BB][3][4];
+  lhs[k][i][0][BB][4][4]= lhs[k][i][0][BB][4][4] - coeff*lhs[k][i][0][BB][4][3];
+  lhs[k][i][0][CC][0][4] = lhs[k][i][0][CC][0][4] - coeff*lhs[k][i][0][CC][0][3];
+  lhs[k][i][0][CC][1][4] = lhs[k][i][0][CC][1][4] - coeff*lhs[k][i][0][CC][1][3];
+  lhs[k][i][0][CC][2][4] = lhs[k][i][0][CC][2][4] - coeff*lhs[k][i][0][CC][2][3];
+  lhs[k][i][0][CC][3][4] = lhs[k][i][0][CC][3][4] - coeff*lhs[k][i][0][CC][3][3];
+  lhs[k][i][0][CC][4][4] = lhs[k][i][0][CC][4][4] - coeff*lhs[k][i][0][CC][4][3];
+  rhs[k][0][i][4]   = rhs[k][0][i][4]   - coeff*rhs[k][0][i][3];
+
+
+  pivot = 1.00/lhs[k][i][0][BB][4][4];
+  lhs[k][i][0][CC][0][4] = lhs[k][i][0][CC][0][4]*pivot;
+  lhs[k][i][0][CC][1][4] = lhs[k][i][0][CC][1][4]*pivot;
+  lhs[k][i][0][CC][2][4] = lhs[k][i][0][CC][2][4]*pivot;
+  lhs[k][i][0][CC][3][4] = lhs[k][i][0][CC][3][4]*pivot;
+  lhs[k][i][0][CC][4][4] = lhs[k][i][0][CC][4][4]*pivot;
+  rhs[k][0][i][4]   = rhs[k][0][i][4]  *pivot;
+
+  coeff = lhs[k][i][0][BB][4][0];
+  lhs[k][i][0][CC][0][0] = lhs[k][i][0][CC][0][0] - coeff*lhs[k][i][0][CC][0][4];
+  lhs[k][i][0][CC][1][0] = lhs[k][i][0][CC][1][0] - coeff*lhs[k][i][0][CC][1][4];
+  lhs[k][i][0][CC][2][0] = lhs[k][i][0][CC][2][0] - coeff*lhs[k][i][0][CC][2][4];
+  lhs[k][i][0][CC][3][0] = lhs[k][i][0][CC][3][0] - coeff*lhs[k][i][0][CC][3][4];
+  lhs[k][i][0][CC][4][0] = lhs[k][i][0][CC][4][0] - coeff*lhs[k][i][0][CC][4][4];
+  rhs[k][0][i][0]   = rhs[k][0][i][0]   - coeff*rhs[k][0][i][4];
+
+  coeff = lhs[k][i][0][BB][4][1];
+  lhs[k][i][0][CC][0][1] = lhs[k][i][0][CC][0][1] - coeff*lhs[k][i][0][CC][0][4];
+  lhs[k][i][0][CC][1][1] = lhs[k][i][0][CC][1][1] - coeff*lhs[k][i][0][CC][1][4];
+  lhs[k][i][0][CC][2][1] = lhs[k][i][0][CC][2][1] - coeff*lhs[k][i][0][CC][2][4];
+  lhs[k][i][0][CC][3][1] = lhs[k][i][0][CC][3][1] - coeff*lhs[k][i][0][CC][3][4];
+  lhs[k][i][0][CC][4][1] = lhs[k][i][0][CC][4][1] - coeff*lhs[k][i][0][CC][4][4];
+  rhs[k][0][i][1]   = rhs[k][0][i][1]   - coeff*rhs[k][0][i][4];
+
+  coeff = lhs[k][i][0][BB][4][2];
+  lhs[k][i][0][CC][0][2] = lhs[k][i][0][CC][0][2] - coeff*lhs[k][i][0][CC][0][4];
+  lhs[k][i][0][CC][1][2] = lhs[k][i][0][CC][1][2] - coeff*lhs[k][i][0][CC][1][4];
+  lhs[k][i][0][CC][2][2] = lhs[k][i][0][CC][2][2] - coeff*lhs[k][i][0][CC][2][4];
+  lhs[k][i][0][CC][3][2] = lhs[k][i][0][CC][3][2] - coeff*lhs[k][i][0][CC][3][4];
+  lhs[k][i][0][CC][4][2] = lhs[k][i][0][CC][4][2] - coeff*lhs[k][i][0][CC][4][4];
+  rhs[k][0][i][2]   = rhs[k][0][i][2]   - coeff*rhs[k][0][i][4];
+
+  coeff = lhs[k][i][0][BB][4][3];
+  lhs[k][i][0][CC][0][3] = lhs[k][i][0][CC][0][3] - coeff*lhs[k][i][0][CC][0][4];
+  lhs[k][i][0][CC][1][3] = lhs[k][i][0][CC][1][3] - coeff*lhs[k][i][0][CC][1][4];
+  lhs[k][i][0][CC][2][3] = lhs[k][i][0][CC][2][3] - coeff*lhs[k][i][0][CC][2][4];
+  lhs[k][i][0][CC][3][3] = lhs[k][i][0][CC][3][3] - coeff*lhs[k][i][0][CC][3][4];
+  lhs[k][i][0][CC][4][3] = lhs[k][i][0][CC][4][3] - coeff*lhs[k][i][0][CC][4][4];
+  rhs[k][0][i][3]   = rhs[k][0][i][3]   - coeff*rhs[k][0][i][4];
 
       //---------------------------------------------------------------------
       // begin inner most do loop
@@ -516,28 +747,259 @@ void y_solve()
         //-------------------------------------------------------------------
         //#pragma acc routine (binvcrhs) worker
         //binvcrhs( k, i, j, BB, k, i, j, CC, k, j, i, lhs, rhs );//y_binvcrhs( lhs[k][i][j][BB], lhs[k][i][j][CC], rhs[k][j][i] );
-        for (m=0;m<5;m++){
-          pivot = 1.00/lhs[k][i][j][BB][m][m];
-          for (n=m+1;n<5;n++){
-            lhs[k][i][j][BB][n][m] = lhs[k][i][j][BB][n][m]*pivot;
-          }
-          for (n=0;n<5;n++){
-            lhs[k][i][j][CC][n][m] = lhs[k][i][j][CC][n][m]*pivot;
-          }
-          rhs[k][j][i][m]   = rhs[k][j][i][m]  *pivot;
-            for (m1=0;m1<5;m1++){
-              if (m1 != m){
-                coeff = lhs[k][i][j][BB][m][m1];
-                for (n=m+1;n<5;n++){
-                  lhs[k][i][j][BB][n][m1]= lhs[k][i][j][BB][n][m1] - coeff*lhs[k][i][j][BB][n][m];
-                }
-                for (n=0;n<5;n++){
-                  lhs[k][i][j][CC][n][m1] = lhs[k][i][j][CC][n][m1] - coeff*lhs[k][i][j][CC][n][m];
-                }
-                rhs[k][j][i][m1]   = rhs[k][j][i][m1]   - coeff*rhs[k][j][i][m];
-              }
-            }
-        }
+        pivot = 1.00/lhs[k][i][j][BB][0][0];
+  lhs[k][i][j][BB][1][0] = lhs[k][i][j][BB][1][0]*pivot;
+  lhs[k][i][j][BB][2][0] = lhs[k][i][j][BB][2][0]*pivot;
+  lhs[k][i][j][BB][3][0] = lhs[k][i][j][BB][3][0]*pivot;
+  lhs[k][i][j][BB][4][0] = lhs[k][i][j][BB][4][0]*pivot;
+  lhs[k][i][j][CC][0][0] = lhs[k][i][j][CC][0][0]*pivot;
+  lhs[k][i][j][CC][1][0] = lhs[k][i][j][CC][1][0]*pivot;
+  lhs[k][i][j][CC][2][0] = lhs[k][i][j][CC][2][0]*pivot;
+  lhs[k][i][j][CC][3][0] = lhs[k][i][j][CC][3][0]*pivot;
+  lhs[k][i][j][CC][4][0] = lhs[k][i][j][CC][4][0]*pivot;
+  rhs[k][j][i][0]   = rhs[k][j][i][0]  *pivot;
+
+  coeff = lhs[k][i][j][BB][0][1];
+  lhs[k][i][j][BB][1][1]= lhs[k][i][j][BB][1][1] - coeff*lhs[k][i][j][BB][1][0];
+  lhs[k][i][j][BB][2][1]= lhs[k][i][j][BB][2][1] - coeff*lhs[k][i][j][BB][2][0];
+  lhs[k][i][j][BB][3][1]= lhs[k][i][j][BB][3][1] - coeff*lhs[k][i][j][BB][3][0];
+  lhs[k][i][j][BB][4][1]= lhs[k][i][j][BB][4][1] - coeff*lhs[k][i][j][BB][4][0];
+  lhs[k][i][j][CC][0][1] = lhs[k][i][j][CC][0][1] - coeff*lhs[k][i][j][CC][0][0];
+  lhs[k][i][j][CC][1][1] = lhs[k][i][j][CC][1][1] - coeff*lhs[k][i][j][CC][1][0];
+  lhs[k][i][j][CC][2][1] = lhs[k][i][j][CC][2][1] - coeff*lhs[k][i][j][CC][2][0];
+  lhs[k][i][j][CC][3][1] = lhs[k][i][j][CC][3][1] - coeff*lhs[k][i][j][CC][3][0];
+  lhs[k][i][j][CC][4][1] = lhs[k][i][j][CC][4][1] - coeff*lhs[k][i][j][CC][4][0];
+  rhs[k][j][i][1]   = rhs[k][j][i][1]   - coeff*rhs[k][j][i][0];
+
+  coeff = lhs[k][i][j][BB][0][2];
+  lhs[k][i][j][BB][1][2]= lhs[k][i][j][BB][1][2] - coeff*lhs[k][i][j][BB][1][0];
+  lhs[k][i][j][BB][2][2]= lhs[k][i][j][BB][2][2] - coeff*lhs[k][i][j][BB][2][0];
+  lhs[k][i][j][BB][3][2]= lhs[k][i][j][BB][3][2] - coeff*lhs[k][i][j][BB][3][0];
+  lhs[k][i][j][BB][4][2]= lhs[k][i][j][BB][4][2] - coeff*lhs[k][i][j][BB][4][0];
+  lhs[k][i][j][CC][0][2] = lhs[k][i][j][CC][0][2] - coeff*lhs[k][i][j][CC][0][0];
+  lhs[k][i][j][CC][1][2] = lhs[k][i][j][CC][1][2] - coeff*lhs[k][i][j][CC][1][0];
+  lhs[k][i][j][CC][2][2] = lhs[k][i][j][CC][2][2] - coeff*lhs[k][i][j][CC][2][0];
+  lhs[k][i][j][CC][3][2] = lhs[k][i][j][CC][3][2] - coeff*lhs[k][i][j][CC][3][0];
+  lhs[k][i][j][CC][4][2] = lhs[k][i][j][CC][4][2] - coeff*lhs[k][i][j][CC][4][0];
+  rhs[k][j][i][2]   = rhs[k][j][i][2]   - coeff*rhs[k][j][i][0];
+
+  coeff = lhs[k][i][j][BB][0][3];
+  lhs[k][i][j][BB][1][3]= lhs[k][i][j][BB][1][3] - coeff*lhs[k][i][j][BB][1][0];
+  lhs[k][i][j][BB][2][3]= lhs[k][i][j][BB][2][3] - coeff*lhs[k][i][j][BB][2][0];
+  lhs[k][i][j][BB][3][3]= lhs[k][i][j][BB][3][3] - coeff*lhs[k][i][j][BB][3][0];
+  lhs[k][i][j][BB][4][3]= lhs[k][i][j][BB][4][3] - coeff*lhs[k][i][j][BB][4][0];
+  lhs[k][i][j][CC][0][3] = lhs[k][i][j][CC][0][3] - coeff*lhs[k][i][j][CC][0][0];
+  lhs[k][i][j][CC][1][3] = lhs[k][i][j][CC][1][3] - coeff*lhs[k][i][j][CC][1][0];
+  lhs[k][i][j][CC][2][3] = lhs[k][i][j][CC][2][3] - coeff*lhs[k][i][j][CC][2][0];
+  lhs[k][i][j][CC][3][3] = lhs[k][i][j][CC][3][3] - coeff*lhs[k][i][j][CC][3][0];
+  lhs[k][i][j][CC][4][3] = lhs[k][i][j][CC][4][3] - coeff*lhs[k][i][j][CC][4][0];
+  rhs[k][j][i][3]   = rhs[k][j][i][3]   - coeff*rhs[k][j][i][0];
+
+  coeff = lhs[k][i][j][BB][0][4];
+  lhs[k][i][j][BB][1][4]= lhs[k][i][j][BB][1][4] - coeff*lhs[k][i][j][BB][1][0];
+  lhs[k][i][j][BB][2][4]= lhs[k][i][j][BB][2][4] - coeff*lhs[k][i][j][BB][2][0];
+  lhs[k][i][j][BB][3][4]= lhs[k][i][j][BB][3][4] - coeff*lhs[k][i][j][BB][3][0];
+  lhs[k][i][j][BB][4][4]= lhs[k][i][j][BB][4][4] - coeff*lhs[k][i][j][BB][4][0];
+  lhs[k][i][j][CC][0][4] = lhs[k][i][j][CC][0][4] - coeff*lhs[k][i][j][CC][0][0];
+  lhs[k][i][j][CC][1][4] = lhs[k][i][j][CC][1][4] - coeff*lhs[k][i][j][CC][1][0];
+  lhs[k][i][j][CC][2][4] = lhs[k][i][j][CC][2][4] - coeff*lhs[k][i][j][CC][2][0];
+  lhs[k][i][j][CC][3][4] = lhs[k][i][j][CC][3][4] - coeff*lhs[k][i][j][CC][3][0];
+  lhs[k][i][j][CC][4][4] = lhs[k][i][j][CC][4][4] - coeff*lhs[k][i][j][CC][4][0];
+  rhs[k][j][i][4]   = rhs[k][j][i][4]   - coeff*rhs[k][j][i][0];
+
+
+  pivot = 1.00/lhs[k][i][j][BB][1][1];
+  lhs[k][i][j][BB][2][1] = lhs[k][i][j][BB][2][1]*pivot;
+  lhs[k][i][j][BB][3][1] = lhs[k][i][j][BB][3][1]*pivot;
+  lhs[k][i][j][BB][4][1] = lhs[k][i][j][BB][4][1]*pivot;
+  lhs[k][i][j][CC][0][1] = lhs[k][i][j][CC][0][1]*pivot;
+  lhs[k][i][j][CC][1][1] = lhs[k][i][j][CC][1][1]*pivot;
+  lhs[k][i][j][CC][2][1] = lhs[k][i][j][CC][2][1]*pivot;
+  lhs[k][i][j][CC][3][1] = lhs[k][i][j][CC][3][1]*pivot;
+  lhs[k][i][j][CC][4][1] = lhs[k][i][j][CC][4][1]*pivot;
+  rhs[k][j][i][1]   = rhs[k][j][i][1]  *pivot;
+
+  coeff = lhs[k][i][j][BB][1][0];
+  lhs[k][i][j][BB][2][0]= lhs[k][i][j][BB][2][0] - coeff*lhs[k][i][j][BB][2][1];
+  lhs[k][i][j][BB][3][0]= lhs[k][i][j][BB][3][0] - coeff*lhs[k][i][j][BB][3][1];
+  lhs[k][i][j][BB][4][0]= lhs[k][i][j][BB][4][0] - coeff*lhs[k][i][j][BB][4][1];
+  lhs[k][i][j][CC][0][0] = lhs[k][i][j][CC][0][0] - coeff*lhs[k][i][j][CC][0][1];
+  lhs[k][i][j][CC][1][0] = lhs[k][i][j][CC][1][0] - coeff*lhs[k][i][j][CC][1][1];
+  lhs[k][i][j][CC][2][0] = lhs[k][i][j][CC][2][0] - coeff*lhs[k][i][j][CC][2][1];
+  lhs[k][i][j][CC][3][0] = lhs[k][i][j][CC][3][0] - coeff*lhs[k][i][j][CC][3][1];
+  lhs[k][i][j][CC][4][0] = lhs[k][i][j][CC][4][0] - coeff*lhs[k][i][j][CC][4][1];
+  rhs[k][j][i][0]   = rhs[k][j][i][0]   - coeff*rhs[k][j][i][1];
+
+  coeff = lhs[k][i][j][BB][1][2];
+  lhs[k][i][j][BB][2][2]= lhs[k][i][j][BB][2][2] - coeff*lhs[k][i][j][BB][2][1];
+  lhs[k][i][j][BB][3][2]= lhs[k][i][j][BB][3][2] - coeff*lhs[k][i][j][BB][3][1];
+  lhs[k][i][j][BB][4][2]= lhs[k][i][j][BB][4][2] - coeff*lhs[k][i][j][BB][4][1];
+  lhs[k][i][j][CC][0][2] = lhs[k][i][j][CC][0][2] - coeff*lhs[k][i][j][CC][0][1];
+  lhs[k][i][j][CC][1][2] = lhs[k][i][j][CC][1][2] - coeff*lhs[k][i][j][CC][1][1];
+  lhs[k][i][j][CC][2][2] = lhs[k][i][j][CC][2][2] - coeff*lhs[k][i][j][CC][2][1];
+  lhs[k][i][j][CC][3][2] = lhs[k][i][j][CC][3][2] - coeff*lhs[k][i][j][CC][3][1];
+  lhs[k][i][j][CC][4][2] = lhs[k][i][j][CC][4][2] - coeff*lhs[k][i][j][CC][4][1];
+  rhs[k][j][i][2]   = rhs[k][j][i][2]   - coeff*rhs[k][j][i][1];
+
+  coeff = lhs[k][i][j][BB][1][3];
+  lhs[k][i][j][BB][2][3]= lhs[k][i][j][BB][2][3] - coeff*lhs[k][i][j][BB][2][1];
+  lhs[k][i][j][BB][3][3]= lhs[k][i][j][BB][3][3] - coeff*lhs[k][i][j][BB][3][1];
+  lhs[k][i][j][BB][4][3]= lhs[k][i][j][BB][4][3] - coeff*lhs[k][i][j][BB][4][1];
+  lhs[k][i][j][CC][0][3] = lhs[k][i][j][CC][0][3] - coeff*lhs[k][i][j][CC][0][1];
+  lhs[k][i][j][CC][1][3] = lhs[k][i][j][CC][1][3] - coeff*lhs[k][i][j][CC][1][1];
+  lhs[k][i][j][CC][2][3] = lhs[k][i][j][CC][2][3] - coeff*lhs[k][i][j][CC][2][1];
+  lhs[k][i][j][CC][3][3] = lhs[k][i][j][CC][3][3] - coeff*lhs[k][i][j][CC][3][1];
+  lhs[k][i][j][CC][4][3] = lhs[k][i][j][CC][4][3] - coeff*lhs[k][i][j][CC][4][1];
+  rhs[k][j][i][3]   = rhs[k][j][i][3]   - coeff*rhs[k][j][i][1];
+
+  coeff = lhs[k][i][j][BB][1][4];
+  lhs[k][i][j][BB][2][4]= lhs[k][i][j][BB][2][4] - coeff*lhs[k][i][j][BB][2][1];
+  lhs[k][i][j][BB][3][4]= lhs[k][i][j][BB][3][4] - coeff*lhs[k][i][j][BB][3][1];
+  lhs[k][i][j][BB][4][4]= lhs[k][i][j][BB][4][4] - coeff*lhs[k][i][j][BB][4][1];
+  lhs[k][i][j][CC][0][4] = lhs[k][i][j][CC][0][4] - coeff*lhs[k][i][j][CC][0][1];
+  lhs[k][i][j][CC][1][4] = lhs[k][i][j][CC][1][4] - coeff*lhs[k][i][j][CC][1][1];
+  lhs[k][i][j][CC][2][4] = lhs[k][i][j][CC][2][4] - coeff*lhs[k][i][j][CC][2][1];
+  lhs[k][i][j][CC][3][4] = lhs[k][i][j][CC][3][4] - coeff*lhs[k][i][j][CC][3][1];
+  lhs[k][i][j][CC][4][4] = lhs[k][i][j][CC][4][4] - coeff*lhs[k][i][j][CC][4][1];
+  rhs[k][j][i][4]   = rhs[k][j][i][4]   - coeff*rhs[k][j][i][1];
+
+
+  pivot = 1.00/lhs[k][i][j][BB][2][2];
+  lhs[k][i][j][BB][3][2] = lhs[k][i][j][BB][3][2]*pivot;
+  lhs[k][i][j][BB][4][2] = lhs[k][i][j][BB][4][2]*pivot;
+  lhs[k][i][j][CC][0][2] = lhs[k][i][j][CC][0][2]*pivot;
+  lhs[k][i][j][CC][1][2] = lhs[k][i][j][CC][1][2]*pivot;
+  lhs[k][i][j][CC][2][2] = lhs[k][i][j][CC][2][2]*pivot;
+  lhs[k][i][j][CC][3][2] = lhs[k][i][j][CC][3][2]*pivot;
+  lhs[k][i][j][CC][4][2] = lhs[k][i][j][CC][4][2]*pivot;
+  rhs[k][j][i][2]   = rhs[k][j][i][2]  *pivot;
+
+  coeff = lhs[k][i][j][BB][2][0];
+  lhs[k][i][j][BB][3][0]= lhs[k][i][j][BB][3][0] - coeff*lhs[k][i][j][BB][3][2];
+  lhs[k][i][j][BB][4][0]= lhs[k][i][j][BB][4][0] - coeff*lhs[k][i][j][BB][4][2];
+  lhs[k][i][j][CC][0][0] = lhs[k][i][j][CC][0][0] - coeff*lhs[k][i][j][CC][0][2];
+  lhs[k][i][j][CC][1][0] = lhs[k][i][j][CC][1][0] - coeff*lhs[k][i][j][CC][1][2];
+  lhs[k][i][j][CC][2][0] = lhs[k][i][j][CC][2][0] - coeff*lhs[k][i][j][CC][2][2];
+  lhs[k][i][j][CC][3][0] = lhs[k][i][j][CC][3][0] - coeff*lhs[k][i][j][CC][3][2];
+  lhs[k][i][j][CC][4][0] = lhs[k][i][j][CC][4][0] - coeff*lhs[k][i][j][CC][4][2];
+  rhs[k][j][i][0]   = rhs[k][j][i][0]   - coeff*rhs[k][j][i][2];
+
+  coeff = lhs[k][i][j][BB][2][1];
+  lhs[k][i][j][BB][3][1]= lhs[k][i][j][BB][3][1] - coeff*lhs[k][i][j][BB][3][2];
+  lhs[k][i][j][BB][4][1]= lhs[k][i][j][BB][4][1] - coeff*lhs[k][i][j][BB][4][2];
+  lhs[k][i][j][CC][0][1] = lhs[k][i][j][CC][0][1] - coeff*lhs[k][i][j][CC][0][2];
+  lhs[k][i][j][CC][1][1] = lhs[k][i][j][CC][1][1] - coeff*lhs[k][i][j][CC][1][2];
+  lhs[k][i][j][CC][2][1] = lhs[k][i][j][CC][2][1] - coeff*lhs[k][i][j][CC][2][2];
+  lhs[k][i][j][CC][3][1] = lhs[k][i][j][CC][3][1] - coeff*lhs[k][i][j][CC][3][2];
+  lhs[k][i][j][CC][4][1] = lhs[k][i][j][CC][4][1] - coeff*lhs[k][i][j][CC][4][2];
+  rhs[k][j][i][1]   = rhs[k][j][i][1]   - coeff*rhs[k][j][i][2];
+
+  coeff = lhs[k][i][j][BB][2][3];
+  lhs[k][i][j][BB][3][3]= lhs[k][i][j][BB][3][3] - coeff*lhs[k][i][j][BB][3][2];
+  lhs[k][i][j][BB][4][3]= lhs[k][i][j][BB][4][3] - coeff*lhs[k][i][j][BB][4][2];
+  lhs[k][i][j][CC][0][3] = lhs[k][i][j][CC][0][3] - coeff*lhs[k][i][j][CC][0][2];
+  lhs[k][i][j][CC][1][3] = lhs[k][i][j][CC][1][3] - coeff*lhs[k][i][j][CC][1][2];
+  lhs[k][i][j][CC][2][3] = lhs[k][i][j][CC][2][3] - coeff*lhs[k][i][j][CC][2][2];
+  lhs[k][i][j][CC][3][3] = lhs[k][i][j][CC][3][3] - coeff*lhs[k][i][j][CC][3][2];
+  lhs[k][i][j][CC][4][3] = lhs[k][i][j][CC][4][3] - coeff*lhs[k][i][j][CC][4][2];
+  rhs[k][j][i][3]   = rhs[k][j][i][3]   - coeff*rhs[k][j][i][2];
+
+  coeff = lhs[k][i][j][BB][2][4];
+  lhs[k][i][j][BB][3][4]= lhs[k][i][j][BB][3][4] - coeff*lhs[k][i][j][BB][3][2];
+  lhs[k][i][j][BB][4][4]= lhs[k][i][j][BB][4][4] - coeff*lhs[k][i][j][BB][4][2];
+  lhs[k][i][j][CC][0][4] = lhs[k][i][j][CC][0][4] - coeff*lhs[k][i][j][CC][0][2];
+  lhs[k][i][j][CC][1][4] = lhs[k][i][j][CC][1][4] - coeff*lhs[k][i][j][CC][1][2];
+  lhs[k][i][j][CC][2][4] = lhs[k][i][j][CC][2][4] - coeff*lhs[k][i][j][CC][2][2];
+  lhs[k][i][j][CC][3][4] = lhs[k][i][j][CC][3][4] - coeff*lhs[k][i][j][CC][3][2];
+  lhs[k][i][j][CC][4][4] = lhs[k][i][j][CC][4][4] - coeff*lhs[k][i][j][CC][4][2];
+  rhs[k][j][i][4]   = rhs[k][j][i][4]   - coeff*rhs[k][j][i][2];
+
+
+  pivot = 1.00/lhs[k][i][j][BB][3][3];
+  lhs[k][i][j][BB][4][3] = lhs[k][i][j][BB][4][3]*pivot;
+  lhs[k][i][j][CC][0][3] = lhs[k][i][j][CC][0][3]*pivot;
+  lhs[k][i][j][CC][1][3] = lhs[k][i][j][CC][1][3]*pivot;
+  lhs[k][i][j][CC][2][3] = lhs[k][i][j][CC][2][3]*pivot;
+  lhs[k][i][j][CC][3][3] = lhs[k][i][j][CC][3][3]*pivot;
+  lhs[k][i][j][CC][4][3] = lhs[k][i][j][CC][4][3]*pivot;
+  rhs[k][j][i][3]   = rhs[k][j][i][3]  *pivot;
+
+  coeff = lhs[k][i][j][BB][3][0];
+  lhs[k][i][j][BB][4][0]= lhs[k][i][j][BB][4][0] - coeff*lhs[k][i][j][BB][4][3];
+  lhs[k][i][j][CC][0][0] = lhs[k][i][j][CC][0][0] - coeff*lhs[k][i][j][CC][0][3];
+  lhs[k][i][j][CC][1][0] = lhs[k][i][j][CC][1][0] - coeff*lhs[k][i][j][CC][1][3];
+  lhs[k][i][j][CC][2][0] = lhs[k][i][j][CC][2][0] - coeff*lhs[k][i][j][CC][2][3];
+  lhs[k][i][j][CC][3][0] = lhs[k][i][j][CC][3][0] - coeff*lhs[k][i][j][CC][3][3];
+  lhs[k][i][j][CC][4][0] = lhs[k][i][j][CC][4][0] - coeff*lhs[k][i][j][CC][4][3];
+  rhs[k][j][i][0]   = rhs[k][j][i][0]   - coeff*rhs[k][j][i][3];
+
+  coeff = lhs[k][i][j][BB][3][1];
+  lhs[k][i][j][BB][4][1]= lhs[k][i][j][BB][4][1] - coeff*lhs[k][i][j][BB][4][3];
+  lhs[k][i][j][CC][0][1] = lhs[k][i][j][CC][0][1] - coeff*lhs[k][i][j][CC][0][3];
+  lhs[k][i][j][CC][1][1] = lhs[k][i][j][CC][1][1] - coeff*lhs[k][i][j][CC][1][3];
+  lhs[k][i][j][CC][2][1] = lhs[k][i][j][CC][2][1] - coeff*lhs[k][i][j][CC][2][3];
+  lhs[k][i][j][CC][3][1] = lhs[k][i][j][CC][3][1] - coeff*lhs[k][i][j][CC][3][3];
+  lhs[k][i][j][CC][4][1] = lhs[k][i][j][CC][4][1] - coeff*lhs[k][i][j][CC][4][3];
+  rhs[k][j][i][1]   = rhs[k][j][i][1]   - coeff*rhs[k][j][i][3];
+
+  coeff = lhs[k][i][j][BB][3][2];
+  lhs[k][i][j][BB][4][2]= lhs[k][i][j][BB][4][2] - coeff*lhs[k][i][j][BB][4][3];
+  lhs[k][i][j][CC][0][2] = lhs[k][i][j][CC][0][2] - coeff*lhs[k][i][j][CC][0][3];
+  lhs[k][i][j][CC][1][2] = lhs[k][i][j][CC][1][2] - coeff*lhs[k][i][j][CC][1][3];
+  lhs[k][i][j][CC][2][2] = lhs[k][i][j][CC][2][2] - coeff*lhs[k][i][j][CC][2][3];
+  lhs[k][i][j][CC][3][2] = lhs[k][i][j][CC][3][2] - coeff*lhs[k][i][j][CC][3][3];
+  lhs[k][i][j][CC][4][2] = lhs[k][i][j][CC][4][2] - coeff*lhs[k][i][j][CC][4][3];
+  rhs[k][j][i][2]   = rhs[k][j][i][2]   - coeff*rhs[k][j][i][3];
+
+  coeff = lhs[k][i][j][BB][3][4];
+  lhs[k][i][j][BB][4][4]= lhs[k][i][j][BB][4][4] - coeff*lhs[k][i][j][BB][4][3];
+  lhs[k][i][j][CC][0][4] = lhs[k][i][j][CC][0][4] - coeff*lhs[k][i][j][CC][0][3];
+  lhs[k][i][j][CC][1][4] = lhs[k][i][j][CC][1][4] - coeff*lhs[k][i][j][CC][1][3];
+  lhs[k][i][j][CC][2][4] = lhs[k][i][j][CC][2][4] - coeff*lhs[k][i][j][CC][2][3];
+  lhs[k][i][j][CC][3][4] = lhs[k][i][j][CC][3][4] - coeff*lhs[k][i][j][CC][3][3];
+  lhs[k][i][j][CC][4][4] = lhs[k][i][j][CC][4][4] - coeff*lhs[k][i][j][CC][4][3];
+  rhs[k][j][i][4]   = rhs[k][j][i][4]   - coeff*rhs[k][j][i][3];
+
+
+  pivot = 1.00/lhs[k][i][j][BB][4][4];
+  lhs[k][i][j][CC][0][4] = lhs[k][i][j][CC][0][4]*pivot;
+  lhs[k][i][j][CC][1][4] = lhs[k][i][j][CC][1][4]*pivot;
+  lhs[k][i][j][CC][2][4] = lhs[k][i][j][CC][2][4]*pivot;
+  lhs[k][i][j][CC][3][4] = lhs[k][i][j][CC][3][4]*pivot;
+  lhs[k][i][j][CC][4][4] = lhs[k][i][j][CC][4][4]*pivot;
+  rhs[k][j][i][4]   = rhs[k][j][i][4]  *pivot;
+
+  coeff = lhs[k][i][j][BB][4][0];
+  lhs[k][i][j][CC][0][0] = lhs[k][i][j][CC][0][0] - coeff*lhs[k][i][j][CC][0][4];
+  lhs[k][i][j][CC][1][0] = lhs[k][i][j][CC][1][0] - coeff*lhs[k][i][j][CC][1][4];
+  lhs[k][i][j][CC][2][0] = lhs[k][i][j][CC][2][0] - coeff*lhs[k][i][j][CC][2][4];
+  lhs[k][i][j][CC][3][0] = lhs[k][i][j][CC][3][0] - coeff*lhs[k][i][j][CC][3][4];
+  lhs[k][i][j][CC][4][0] = lhs[k][i][j][CC][4][0] - coeff*lhs[k][i][j][CC][4][4];
+  rhs[k][j][i][0]   = rhs[k][j][i][0]   - coeff*rhs[k][j][i][4];
+
+  coeff = lhs[k][i][j][BB][4][1];
+  lhs[k][i][j][CC][0][1] = lhs[k][i][j][CC][0][1] - coeff*lhs[k][i][j][CC][0][4];
+  lhs[k][i][j][CC][1][1] = lhs[k][i][j][CC][1][1] - coeff*lhs[k][i][j][CC][1][4];
+  lhs[k][i][j][CC][2][1] = lhs[k][i][j][CC][2][1] - coeff*lhs[k][i][j][CC][2][4];
+  lhs[k][i][j][CC][3][1] = lhs[k][i][j][CC][3][1] - coeff*lhs[k][i][j][CC][3][4];
+  lhs[k][i][j][CC][4][1] = lhs[k][i][j][CC][4][1] - coeff*lhs[k][i][j][CC][4][4];
+  rhs[k][j][i][1]   = rhs[k][j][i][1]   - coeff*rhs[k][j][i][4];
+
+  coeff = lhs[k][i][j][BB][4][2];
+  lhs[k][i][j][CC][0][2] = lhs[k][i][j][CC][0][2] - coeff*lhs[k][i][j][CC][0][4];
+  lhs[k][i][j][CC][1][2] = lhs[k][i][j][CC][1][2] - coeff*lhs[k][i][j][CC][1][4];
+  lhs[k][i][j][CC][2][2] = lhs[k][i][j][CC][2][2] - coeff*lhs[k][i][j][CC][2][4];
+  lhs[k][i][j][CC][3][2] = lhs[k][i][j][CC][3][2] - coeff*lhs[k][i][j][CC][3][4];
+  lhs[k][i][j][CC][4][2] = lhs[k][i][j][CC][4][2] - coeff*lhs[k][i][j][CC][4][4];
+  rhs[k][j][i][2]   = rhs[k][j][i][2]   - coeff*rhs[k][j][i][4];
+
+  coeff = lhs[k][i][j][BB][4][3];
+  lhs[k][i][j][CC][0][3] = lhs[k][i][j][CC][0][3] - coeff*lhs[k][i][j][CC][0][4];
+  lhs[k][i][j][CC][1][3] = lhs[k][i][j][CC][1][3] - coeff*lhs[k][i][j][CC][1][4];
+  lhs[k][i][j][CC][2][3] = lhs[k][i][j][CC][2][3] - coeff*lhs[k][i][j][CC][2][4];
+  lhs[k][i][j][CC][3][3] = lhs[k][i][j][CC][3][3] - coeff*lhs[k][i][j][CC][3][4];
+  lhs[k][i][j][CC][4][3] = lhs[k][i][j][CC][4][3] - coeff*lhs[k][i][j][CC][4][4];
+  rhs[k][j][i][3]   = rhs[k][j][i][3]   - coeff*rhs[k][j][i][4];
       }
 
       //---------------------------------------------------------------------
