@@ -13,7 +13,7 @@
 //---------------------------------------------------------------------
 void y_solve()
 {
-  int i, j, k, m, n, isize, jsize, ksize;
+  int i, j, k, m, n, m1, isize, jsize, ksize;
 
   double tmp1, tmp2, tmp3;
   //---------------------------------------------------------------------
@@ -35,7 +35,7 @@ void y_solve()
   // Compute the indices for storing the tri-diagonal matrix;
   // determine a (labeled f) and n jacobians for cell c
   //---------------------------------------------------------------------
-  #pragma acc parallel loop collapse(2) private(i,j,k,m,n,tmp1,tmp2,tmp3)
+  #pragma acc parallel loop collapse(2) private(i,j,k,m,m1,n,tmp1,tmp2,tmp3,pivot,coeff)
   for (k = 1; k <= ksize; k++) {
     //#pragma acc loop
     for (i = 1; i <= isize; i++) {
@@ -315,7 +315,29 @@ void y_solve()
       // multiply rhs(0) by b_inverse(0) and copy to rhs
       //---------------------------------------------------------------------
       //#pragma acc routine (binvcrhs) worker
-      binvcrhs( k, i, 0, BB, k, i, 0, CC, k, 0, i, lhs, rhs );//y_binvcrhs( lhs[k][i][0][BB], lhs[k][i][0][CC], rhs[k][0][i] );
+      //binvcrhs( k, i, 0, BB, k, i, 0, CC, k, 0, i, lhs, rhs );//y_binvcrhs( lhs[k][i][0][BB], lhs[k][i][0][CC], rhs[k][0][i] );
+      for (m=0;m<5;m++){
+        pivot = 1.00/lhs[k][i][0][BB][m][m];
+        for (n=m+1;n<5;n++){
+          lhs[k][i][0][BB][n][m] = lhs[k][i][0][BB][n][m]*pivot;
+        }
+        for (n=0;n<5;n++){
+          lhs[k][i][0][CC][n][m] = lhs[k][i][0][CC][n][m]*pivot;
+        }
+        rhs[k][0][i][m]   = rhs[k][0][i][m]  *pivot;
+          for (m1=0;m1<5;m1++){
+            if (m1 != m){
+              coeff = lhs[k][i][0][BB][m][m1];
+              for (n=m+1;n<5;n++){
+                lhs[k][i][0][BB][n][m1]= lhs[k][i][0][BB][n][m1] - coeff*lhs[k][i][0][BB][n][m];
+              }
+              for (n=0;n<5;n++){
+                lhs[k][i][0][CC][n][m1] = lhs[k][i][0][CC][n][m1] - coeff*lhs[k][i][0][CC][n][m];
+              }
+              rhs[k][0][i][m1]   = rhs[k][0][i][m1]   - coeff*rhs[k][0][i][m];
+            }
+          }
+      }
 
       //---------------------------------------------------------------------
       // begin inner most do loop
@@ -492,7 +514,29 @@ void y_solve()
         // multiply rhs[k][0][i] by b_inverse[k][0][i] and copy to rhs
         //-------------------------------------------------------------------
         //#pragma acc routine (binvcrhs) worker
-        binvcrhs( k, i, j, BB, k, i, j, CC, k, j, i, lhs, rhs );//y_binvcrhs( lhs[k][i][j][BB], lhs[k][i][j][CC], rhs[k][j][i] );
+        //binvcrhs( k, i, j, BB, k, i, j, CC, k, j, i, lhs, rhs );//y_binvcrhs( lhs[k][i][j][BB], lhs[k][i][j][CC], rhs[k][j][i] );
+        for (m=0;m<5;m++){
+          pivot = 1.00/lhs[k][i][j][BB][m][m];
+          for (n=m+1;n<5;n++){
+            lhs[k][i][j][BB][n][m] = lhs[k][i][j][BB][n][m]*pivot;
+          }
+          for (n=0;n<5;n++){
+            lhs[k][i][j][CC][n][m] = lhs[k][i][j][CC][n][m]*pivot;
+          }
+          rhs[k][j][i][m]   = rhs[k][j][i][m]  *pivot;
+            for (m1=0;m1<5;m1++){
+              if (m1 != m){
+                coeff = lhs[k][i][j][BB][m][m1];
+                for (n=m+1;n<5;n++){
+                  lhs[k][i][j][BB][n][m1]= lhs[k][i][j][BB][n][m1] - coeff*lhs[k][i][j][BB][n][m];
+                }
+                for (n=0;n<5;n++){
+                  lhs[k][i][j][CC][n][m1] = lhs[k][i][j][CC][n][m1] - coeff*lhs[k][i][j][CC][n][m];
+                }
+                rhs[k][j][i][m1]   = rhs[k][j][i][m1]   - coeff*rhs[k][j][i][m];
+              }
+            }
+        }
       }
 
       //---------------------------------------------------------------------
