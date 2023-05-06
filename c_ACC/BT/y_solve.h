@@ -328,7 +328,32 @@ void y_solve()
         // rhs(j) = rhs(j) - A*rhs(j-1)
         //-------------------------------------------------------------------
         //#pragma acc routine (matvec_sub) worker
-        matvec_sub(k, i, j, AA, k, j-1, i, k, j, i, lhs, rhs);//y_matvec_sub(lhs[k][i][j][AA], rhs[k][j-1][i], rhs[k][j][i]);
+        //matvec_sub(k, i, j, AA, k, j-1, i, k, j, i, lhs, rhs);//y_matvec_sub(lhs[k][i][j][AA], rhs[k][j-1][i], rhs[k][j][i]);
+        rhs[k][j][i][0] = rhs[k][j][i][0] - lhs[k][i][j][AA][0][0]*rhs[k][j-1][i][0]
+                    - lhs[k][i][j][AA][1][0]*rhs[k][j-1][i][1]
+                    - lhs[k][i][j][AA][2][0]*rhs[k][j-1][i][2]
+                    - lhs[k][i][j][AA][3][0]*rhs[k][j-1][i][3]
+                    - lhs[k][i][j][AA][4][0]*rhs[k][j-1][i][4];
+        rhs[k][j][i][1] = rhs[k][j][i][1] - lhs[k][i][j][AA][0][1]*rhs[k][j-1][i][0]
+                    - lhs[k][i][j][AA][1][1]*rhs[k][j-1][i][1]
+                    - lhs[k][i][j][AA][2][1]*rhs[k][j-1][i][2]
+                    - lhs[k][i][j][AA][3][1]*rhs[k][j-1][i][3]
+                    - lhs[k][i][j][AA][4][1]*rhs[k][j-1][i][4];
+        rhs[k][j][i][2] = rhs[k][j][i][2] - lhs[k][i][j][AA][0][2]*rhs[k][j-1][i][0]
+                    - lhs[k][i][j][AA][1][2]*rhs[k][j-1][i][1]
+                    - lhs[k][i][j][AA][2][2]*rhs[k][j-1][i][2]
+                    - lhs[k][i][j][AA][3][2]*rhs[k][j-1][i][3]
+                    - lhs[k][i][j][AA][4][2]*rhs[k][j-1][i][4];
+        rhs[k][j][i][3] = rhs[k][j][i][3] - lhs[k][i][j][AA][0][3]*rhs[k][j-1][i][0]
+                    - lhs[k][i][j][AA][1][3]*rhs[k][j-1][i][1]
+                    - lhs[k][i][j][AA][2][3]*rhs[k][j-1][i][2]
+                    - lhs[k][i][j][AA][3][3]*rhs[k][j-1][i][3]
+                    - lhs[k][i][j][AA][4][3]*rhs[k][j-1][i][4];
+        rhs[k][j][i][4] = rhs[k][j][i][4] - lhs[k][i][j][AA][0][4]*rhs[k][j-1][i][0]
+                    - lhs[k][i][j][AA][1][4]*rhs[k][j-1][i][1]
+                    - lhs[k][i][j][AA][2][4]*rhs[k][j-1][i][2]
+                    - lhs[k][i][j][AA][3][4]*rhs[k][j-1][i][3]
+                    - lhs[k][i][j][AA][4][4]*rhs[k][j-1][i][4];
 
         //-------------------------------------------------------------------
         // B(j) = B(j) - C(j-1)*A(j)
@@ -348,7 +373,32 @@ void y_solve()
       // rhs(jsize) = rhs(jsize) - A*rhs(jsize-1)
       //---------------------------------------------------------------------
       //#pragma acc routine (matvec_sub) worker
-      matvec_sub(k, i, jsize, AA, k, jsize-1, i, k, jsize, i, lhs, rhs);//y_matvec_sub(lhs[k][i][jsize][AA], rhs[k][jsize-1][i], rhs[k][jsize][i]);
+      //matvec_sub(k, i, jsize, AA, k, jsize-1, i, k, jsize, i, lhs, rhs);//y_matvec_sub(lhs[k][i][jsize][AA], rhs[k][jsize-1][i], rhs[k][jsize][i]);
+      rhs[k][jsize][i][0] = rhs[k][jsize][i][0] - lhs[k][i][jsize][AA][0][0]*rhs[k][jsize-1][i][0]
+                    - lhs[k][i][jsize][AA][1][0]*rhs[k][jsize-1][i][1]
+                    - lhs[k][i][jsize][AA][2][0]*rhs[k][jsize-1][i][2]
+                    - lhs[k][i][jsize][AA][3][0]*rhs[k][jsize-1][i][3]
+                    - lhs[k][i][jsize][AA][4][0]*rhs[k][jsize-1][i][4];
+      rhs[k][jsize][i][1] = rhs[k][jsize][i][1] - lhs[k][i][jsize][AA][0][1]*rhs[k][jsize-1][i][0]
+                    - lhs[k][i][jsize][AA][1][1]*rhs[k][jsize-1][i][1]
+                    - lhs[k][i][jsize][AA][2][1]*rhs[k][jsize-1][i][2]
+                    - lhs[k][i][jsize][AA][3][1]*rhs[k][jsize-1][i][3]
+                    - lhs[k][i][jsize][AA][4][1]*rhs[k][jsize-1][i][4];
+      rhs[k][jsize][i][2] = rhs[k][jsize][i][2] - lhs[k][i][jsize][AA][0][2]*rhs[k][jsize-1][i][0]
+                    - lhs[k][i][jsize][AA][1][2]*rhs[k][jsize-1][i][1]
+                    - lhs[k][i][jsize][AA][2][2]*rhs[k][jsize-1][i][2]
+                    - lhs[k][i][jsize][AA][3][2]*rhs[k][jsize-1][i][3]
+                    - lhs[k][i][jsize][AA][4][2]*rhs[k][jsize-1][i][4];
+      rhs[k][jsize][i][3] = rhs[k][jsize][i][3] - lhs[k][i][jsize][AA][0][3]*rhs[k][jsize-1][i][0]
+                    - lhs[k][i][jsize][AA][1][3]*rhs[k][jsize-1][i][1]
+                    - lhs[k][i][jsize][AA][2][3]*rhs[k][jsize-1][i][2]
+                    - lhs[k][i][jsize][AA][3][3]*rhs[k][jsize-1][i][3]
+                    - lhs[k][i][jsize][AA][4][3]*rhs[k][jsize-1][i][4];
+      rhs[k][jsize][i][4] = rhs[k][jsize][i][4] - lhs[k][i][jsize][AA][0][4]*rhs[k][jsize-1][i][0]
+                    - lhs[k][i][jsize][AA][1][4]*rhs[k][jsize-1][i][1]
+                    - lhs[k][i][jsize][AA][2][4]*rhs[k][jsize-1][i][2]
+                    - lhs[k][i][jsize][AA][3][4]*rhs[k][jsize-1][i][3]
+                    - lhs[k][i][jsize][AA][4][4]*rhs[k][jsize-1][i][4];
 
       //---------------------------------------------------------------------
       // B(jsize) = B(jsize) - C(jsize-1)*A(jsize)

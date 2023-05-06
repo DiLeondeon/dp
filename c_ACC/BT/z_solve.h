@@ -332,7 +332,32 @@ void z_solve()
         // rhs(k) = rhs(k) - A*rhs(k-1)
         //-------------------------------------------------------------------
         //#pragma acc routine (matvec_sub) worker
-        matvec_sub(j, i, k, AA, k-1, j, i, k, j, i, lhs, rhs);//z_matvec_sub(lhs[j][i][k][AA], rhs[k-1][j][i], rhs[k][j][i]);
+        //matvec_sub(j, i, k, AA, k-1, j, i, k, j, i, lhs, rhs);//z_matvec_sub(lhs[j][i][k][AA], rhs[k-1][j][i], rhs[k][j][i]);
+        rhs[k][j][i][0] = rhs[k][j][i][0] - lhs[j][i][k][AA][0][0]*rhs[k-1][j][i][0]
+                    - lhs[j][i][k][AA][1][0]*rhs[k-1][j][i][1]
+                    - lhs[j][i][k][AA][2][0]*rhs[k-1][j][i][2]
+                    - lhs[j][i][k][AA][3][0]*rhs[k-1][j][i][3]
+                    - lhs[j][i][k][AA][4][0]*rhs[k-1][j][i][4];
+        rhs[k][j][i][1] = rhs[k][j][i][1] - lhs[j][i][k][AA][0][1]*rhs[k-1][j][i][0]
+                    - lhs[j][i][k][AA][1][1]*rhs[k-1][j][i][1]
+                    - lhs[j][i][k][AA][2][1]*rhs[k-1][j][i][2]
+                    - lhs[j][i][k][AA][3][1]*rhs[k-1][j][i][3]
+                    - lhs[j][i][k][AA][4][1]*rhs[k-1][j][i][4];
+        rhs[k][j][i][2] = rhs[k][j][i][2] - lhs[j][i][k][AA][0][2]*rhs[k-1][j][i][0]
+                    - lhs[j][i][k][AA][1][2]*rhs[k-1][j][i][1]
+                    - lhs[j][i][k][AA][2][2]*rhs[k-1][j][i][2]
+                    - lhs[j][i][k][AA][3][2]*rhs[k-1][j][i][3]
+                    - lhs[j][i][k][AA][4][2]*rhs[k-1][j][i][4];
+        rhs[k][j][i][3] = rhs[k][j][i][3] - lhs[j][i][k][AA][0][3]*rhs[k-1][j][i][0]
+                    - lhs[j][i][k][AA][1][3]*rhs[k-1][j][i][1]
+                    - lhs[j][i][k][AA][2][3]*rhs[k-1][j][i][2]
+                    - lhs[j][i][k][AA][3][3]*rhs[k-1][j][i][3]
+                    - lhs[j][i][k][AA][4][3]*rhs[k-1][j][i][4];
+        rhs[k][j][i][4] = rhs[k][j][i][4] - lhs[j][i][k][AA][0][4]*rhs[k-1][j][i][0]
+                    - lhs[j][i][k][AA][1][4]*rhs[k-1][j][i][1]
+                    - lhs[j][i][k][AA][2][4]*rhs[k-1][j][i][2]
+                    - lhs[j][i][k][AA][3][4]*rhs[k-1][j][i][3]
+                    - lhs[j][i][k][AA][4][4]*rhs[k-1][j][i][4];
 
         //-------------------------------------------------------------------
         // B(k) = B(k) - C(k-1)*A(k)
@@ -357,7 +382,32 @@ void z_solve()
       // rhs(ksize) = rhs(ksize) - A*rhs(ksize-1)
       //---------------------------------------------------------------------
       //#pragma acc routine (matvec_sub) worker
-      matvec_sub(j, i, ksize, AA, ksize-1, j, i, ksize, j, i, lhs, rhs);//z_matvec_sub(lhs[j][i][ksize][AA], rhs[ksize-1][j][i], rhs[ksize][j][i]);
+      //matvec_sub(j, i, ksize, AA, ksize-1, j, i, ksize, j, i, lhs, rhs);//z_matvec_sub(lhs[j][i][ksize][AA], rhs[ksize-1][j][i], rhs[ksize][j][i]);
+      rhs[ksize][j][i][0] = rhs[ksize][j][i][0] - lhs[j][i][ksize][AA][0][0]*rhs[ksize-1][j][i][0]
+                    - lhs[j][i][ksize][AA][1][0]*rhs[ksize-1][j][i][1]
+                    - lhs[j][i][ksize][AA][2][0]*rhs[ksize-1][j][i][2]
+                    - lhs[j][i][ksize][AA][3][0]*rhs[ksize-1][j][i][3]
+                    - lhs[j][i][ksize][AA][4][0]*rhs[ksize-1][j][i][4];
+      rhs[ksize][j][i][1] = rhs[ksize][j][i][1] - lhs[j][i][ksize][AA][0][1]*rhs[ksize-1][j][i][0]
+                    - lhs[j][i][ksize][AA][1][1]*rhs[ksize-1][j][i][1]
+                    - lhs[j][i][ksize][AA][2][1]*rhs[ksize-1][j][i][2]
+                    - lhs[j][i][ksize][AA][3][1]*rhs[ksize-1][j][i][3]
+                    - lhs[j][i][ksize][AA][4][1]*rhs[ksize-1][j][i][4];
+      rhs[ksize][j][i][2] = rhs[ksize][j][i][2] - lhs[j][i][ksize][AA][0][2]*rhs[ksize-1][j][i][0]
+                    - lhs[j][i][ksize][AA][1][2]*rhs[ksize-1][j][i][1]
+                    - lhs[j][i][ksize][AA][2][2]*rhs[ksize-1][j][i][2]
+                    - lhs[j][i][ksize][AA][3][2]*rhs[ksize-1][j][i][3]
+                    - lhs[j][i][ksize][AA][4][2]*rhs[ksize-1][j][i][4];
+      rhs[ksize][j][i][3] = rhs[ksize][j][i][3] - lhs[j][i][ksize][AA][0][3]*rhs[ksize-1][j][i][0]
+                    - lhs[j][i][ksize][AA][1][3]*rhs[ksize-1][j][i][1]
+                    - lhs[j][i][ksize][AA][2][3]*rhs[ksize-1][j][i][2]
+                    - lhs[j][i][ksize][AA][3][3]*rhs[ksize-1][j][i][3]
+                    - lhs[j][i][ksize][AA][4][3]*rhs[ksize-1][j][i][4];
+      rhs[ksize][j][i][4] = rhs[ksize][j][i][4] - lhs[j][i][ksize][AA][0][4]*rhs[ksize-1][j][i][0]
+                    - lhs[j][i][ksize][AA][1][4]*rhs[ksize-1][j][i][1]
+                    - lhs[j][i][ksize][AA][2][4]*rhs[ksize-1][j][i][2]
+                    - lhs[j][i][ksize][AA][3][4]*rhs[ksize-1][j][i][3]
+                    - lhs[j][i][ksize][AA][4][4]*rhs[ksize-1][j][i][4];
 
       //---------------------------------------------------------------------
       // B(ksize) = B(ksize) - C(ksize-1)*A(ksize)
