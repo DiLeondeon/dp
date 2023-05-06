@@ -121,7 +121,27 @@ void x_solve()
       // now jacobians set, so form left hand side in x direction
       //---------------------------------------------------------------------
       //#pragma acc routine (lhsinit) worker
-      lhsinit(k, j, isize, lhs);//x_lhsinit(lhs[k][j], isize);
+      //lhsinit(k, j, isize, lhs);//x_lhsinit(lhs[k][j], isize);
+      for (n = 0; n < 5; n++) {
+        for (m = 0; m < 5; m++) {
+          lhs[k][j][0][0][n][m] = 0.0;
+          lhs[k][j][0][1][n][m] = 0.0;
+          lhs[k][j][0][2][n][m] = 0.0;
+          lhs[k][j][isize][0][n][m] = 0.0;
+          lhs[k][j][isize][1][n][m] = 0.0;
+          lhs[k][j][isize][2][n][m] = 0.0;
+        }
+        lhs[k][j][0][1][n][n] = 1.0;
+        lhs[k][j][isize][1][n][n] = 1.0;
+      }
+      /*for (n = 0; n < 5; n++) {
+        for (m = 0; m < 5; m++) {
+          lhs[k][j][isize][0][n][m] = 0.0;
+          lhs[k][j][isize][1][n][m] = 0.0;
+          lhs[k][j][isize][2][n][m] = 0.0;
+        }
+        lhs[k][j][isize][1][n][n] = 1.0;
+      }*/
       for (i = 1; i <= isize-1; i++) {
         tmp1 = dt * tx1;
         tmp2 = dt * tx2;

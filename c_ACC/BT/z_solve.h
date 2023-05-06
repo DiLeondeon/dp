@@ -119,7 +119,19 @@ void z_solve()
       // now jacobians set, so form left hand side in z direction
       //---------------------------------------------------------------------
       //#pragma acc routine (lhsinit) worker
-      lhsinit(j, i, ksize, lhs);//z_lhsinit(lhs[j][i], ksize);
+      //lhsinit(j, i, ksize, lhs);//z_lhsinit(lhs[j][i], ksize);
+      for (n = 0; n < 5; n++) {
+        for (m = 0; m < 5; m++) {
+          lhs[j][i][0][0][n][m] = 0.0;
+          lhs[j][i][0][1][n][m] = 0.0;
+          lhs[j][i][0][2][n][m] = 0.0;
+          lhs[j][i][ksize][0][n][m] = 0.0;
+          lhs[j][i][ksize][1][n][m] = 0.0;
+          lhs[j][i][ksize][2][n][m] = 0.0;
+        }
+        lhs[j][i][0][1][n][n] = 1.0;
+        lhs[j][i][ksize][1][n][n] = 1.0;
+      }
       for (k = 1; k <= ksize-1; k++) {
         tmp1 = dt * tz1;
         tmp2 = dt * tz2;

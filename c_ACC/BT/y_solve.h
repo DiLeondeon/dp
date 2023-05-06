@@ -119,7 +119,19 @@ void y_solve()
       // now joacobians set, so form left hand side in y direction
       //---------------------------------------------------------------------
       //#pragma acc routine (lhsinit) worker
-      lhsinit(k, i, jsize, lhs);//y_lhsinit(lhs[k][i], jsize);
+      //lhsinit(k, i, jsize, lhs);//y_lhsinit(lhs[k][i], jsize);
+      for (n = 0; n < 5; n++) {
+        for (m = 0; m < 5; m++) {
+          lhs[k][i][0][0][n][m] = 0.0;
+          lhs[k][i][0][1][n][m] = 0.0;
+          lhs[k][i][0][2][n][m] = 0.0;
+          lhs[k][i][jsize][0][n][m] = 0.0;
+          lhs[k][i][jsize][1][n][m] = 0.0;
+          lhs[k][i][jsize][2][n][m] = 0.0;
+        }
+        lhs[k][i][0][1][n][n] = 1.0;
+        lhs[k][i][jsize][1][n][n] = 1.0;
+      }
       for (j = 1; j <= jsize-1; j++) {
         tmp1 = dt * ty1;
         tmp2 = dt * ty2;
